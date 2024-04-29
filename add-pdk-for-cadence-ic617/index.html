@@ -26,20 +26,20 @@
 <meta property="og:site_name" content="Ricardo&#39;s Blog">
 <meta property="og:description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.Now I will try to install TSMC 180nm RF as an exa">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ricardosung.github.io/_post-images/1637245461033.png">
-<meta property="og:image" content="https://ricardosung.github.io/_post-images/1637286857242.png">
-<meta property="og:image" content="https://ricardosung.github.io/_post-images/1637287422170.png">
-<meta property="og:image" content="https://ricardosung.github.io/_post-images/1637287432034.png">
-<meta property="og:image" content="https://ricardosung.github.io/_post-images/1637288558812.png">
+<meta property="og:image" content="https://ricardosung.github.io/1637245461033.png">
+<meta property="og:image" content="https://ricardosung.github.io/1637286857242.png">
+<meta property="og:image" content="https://ricardosung.github.io/1637287422170.png">
+<meta property="og:image" content="https://ricardosung.github.io/1637287432034.png">
+<meta property="og:image" content="https://ricardosung.github.io/1637288558812.png">
 <meta property="article:published_time" content="2021-11-18T14:12:06.000Z">
-<meta property="article:modified_time" content="2024-04-29T08:15:25.524Z">
+<meta property="article:modified_time" content="2024-04-29T08:18:32.701Z">
 <meta property="article:author" content="Ricardo Sung">
 <meta property="article:tag" content="IC Design">
 <meta property="article:tag" content="English">
 <meta property="article:tag" content="Virtuoso">
 <meta property="article:tag" content="Tutorial">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ricardosung.github.io/_post-images/1637245461033.png">
+<meta name="twitter:image" content="https://ricardosung.github.io/1637245461033.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
@@ -528,11 +528,11 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unar xxx.part01.rar</span><br></pre></td></tr></table></figure>
 <h2 id="Enter-your-workspace-and-install-PDK"><a href="#Enter-your-workspace-and-install-PDK" class="headerlink" title="Enter your workspace and install PDK"></a>Enter your workspace and install PDK</h2><ol>
 <li>Here my workspace is <code>/home/ricardo/Project</code> and my PDK folder is <code>/home/ricardo/Project/PDK</code>.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/ricardo/Download/tsmc180</span><br><span class="line">perl pdkInstall.pl </span><br></pre></td></tr></table></figure>
-<img src="/_post-images/1637245461033.png" alt="1"><br>Here <code>1P6M</code> means <code>1 Poly Layer with 6 Metal Layer</code>.</li>
+<img src="/1637245461033.png" alt="1"><br>Here <code>1P6M</code> means <code>1 Poly Layer with 6 Metal Layer</code>.</li>
 <li>Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">enter the father folder <span class="built_in">where</span> you store your PDK <span class="keyword">in</span> you workspace</span></span><br><span class="line">cd /home/ricardo/Project/PDK</span><br><span class="line">mkdir tsmc180OA</span><br><span class="line">mkdir tsmc180OA/cdb</span><br><span class="line">cp tsmc180/cds.lib tsmc180OA/cdb</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">modify cds.lib <span class="keyword">in</span> tsmc180OA/cdb</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">delet all lines and add the CDB PDK path pointing to pdk</span></span><br><span class="line">DEFINE tsmc18rf /home/ricardo/Project/PDK/tsmc180/tsmc18rf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">use the conversion tool to convert CDB to OA</span></span><br><span class="line">cd /home/ricardo/Project/PDK/tsmc180OA</span><br><span class="line">virtuoso&amp;</span><br></pre></td></tr></table></figure>
-Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to OpenAccess Translator</code> and select the <code>cds.lib</code> which is modified in OA path.<br><img src="/_post-images/1637286857242.png" alt="2"><br>Then you will see a folder called <code>tsmc18rf</code> generated in <code>tsmc180OA</code>.<br><img src="/_post-images/1637287422170.png" alt="3"><br>And copy the folder to merge the same name folder <code>tsmc18rf</code> to <code>tsmc180</code>.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /home/ricardo/Project/PDK/tsmc180OA/tsmc18rf /home/ricardo/Project/PDK/tsmc180</span><br></pre></td></tr></table></figure></li>
-<li>Go to <code>/home/ricardo/Project/PDK/tsmc180/tsmc19rf</code>, edit <code>libInit.il</code> and commit <code>hspiceS</code> using <code>;;</code>.<br><img src="/_post-images/1637287432034.png" alt="4"><br>*Actually I do not know why to commit <code>hspiceS</code>, but it do work well after I add the PDK in Cadence with uncommited <code>libInit.il</code>. *</li>
-<li>Cut and Passte “CONTROLS” section to the <code>fist</code> section in <code>teckfile</code><br><img src="/_post-images/1637288558812.png" alt="5"></li>
+Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to OpenAccess Translator</code> and select the <code>cds.lib</code> which is modified in OA path.<br><img src="/1637286857242.png" alt="2"><br>Then you will see a folder called <code>tsmc18rf</code> generated in <code>tsmc180OA</code>.<br><img src="/1637287422170.png" alt="3"><br>And copy the folder to merge the same name folder <code>tsmc18rf</code> to <code>tsmc180</code>.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /home/ricardo/Project/PDK/tsmc180OA/tsmc18rf /home/ricardo/Project/PDK/tsmc180</span><br></pre></td></tr></table></figure></li>
+<li>Go to <code>/home/ricardo/Project/PDK/tsmc180/tsmc19rf</code>, edit <code>libInit.il</code> and commit <code>hspiceS</code> using <code>;;</code>.<br><img src="/1637287432034.png" alt="4"><br>*Actually I do not know why to commit <code>hspiceS</code>, but it do work well after I add the PDK in Cadence with uncommited <code>libInit.il</code>. *</li>
+<li>Cut and Passte “CONTROLS” section to the <code>fist</code> section in <code>teckfile</code><br><img src="/1637288558812.png" alt="5"></li>
 <li>Back to workspcae and run <code>virtuoso&amp;</code>. </li>
 <li>Add lib to <code>Tools</code>-&gt;<code>Library Manager</code>.</li>
 <li>Enjoy it!</li>
@@ -545,7 +545,7 @@ Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to Op
             <p>Author：<a href="https://ricardosung.github.io">Ricardo Sung</a>
             <p>Link：<a href="https://ricardosung.github.io/add-pdk-for-cadence-ic617/">https://ricardosung.github.io/add-pdk-for-cadence-ic617/</a>
             <p>Publish date：<a href="https://ricardosung.github.io/add-pdk-for-cadence-ic617/">November 18th 2021, 10:12:06 pm</a>
-            <p>Update date：<a href="https://ricardosung.github.io/add-pdk-for-cadence-ic617/">April 29th 2024, 4:15:25 pm</a>
+            <p>Update date：<a href="https://ricardosung.github.io/add-pdk-for-cadence-ic617/">April 29th 2024, 4:18:32 pm</a>
             <p>License：<a rel="license" >All rights reserved by Ricardo Sung.</a></p>
         </div>
     
@@ -969,11 +969,6 @@ Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to Op
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Research Process">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Research Process
-        </span>
-    
         <span class="sidebar-category-name" data-categories="Travel tips">
             <span class="iconfont-archer">&#xe60a;</span>
             Travel tips
@@ -987,6 +982,11 @@ Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to Op
         <span class="sidebar-category-name" data-categories="Analog Design Environment">
             <span class="iconfont-archer">&#xe60a;</span>
             Analog Design Environment
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Research Process">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Research Process
         </span>
     
         <span class="sidebar-category-name" data-categories="Unbox">
