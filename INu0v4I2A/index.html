@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en,zh/CN,default">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Ricardo Sung">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Ricardo Sung">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog,Ricardo,Analog Integrated Circuit Design,Circuit">
+    
+    <meta name="description" content="Let bygones be by-gones.">
+    <meta name="description" content="讲在前面，其实我只组装过山地车，对于公路自行车还是不甚了解，此文更多的是我在公路自行车选择过程中的一些纠结和记录，最后我大概率还是选择成品的国产公路车。 零件入门与选购变速及传动系统Sram(速联)、Shimano(禧玛诺)、Campagnolo(康帕纽罗)是变速系统的三巨头。一般来说，Shimano是三者中最具有性价比的，Sram同价位比Shimano更贵一些，而Campagnolo不是我等普通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自组公路车指北">
+<meta property="og:url" content="https://github.com/RicardoSung/ricardosung.github.io/INu0v4I2A/index.html">
+<meta property="og:site_name" content="Ricardo&#39;s Blog">
+<meta property="og:description" content="讲在前面，其实我只组装过山地车，对于公路自行车还是不甚了解，此文更多的是我在公路自行车选择过程中的一些纠结和记录，最后我大概率还是选择成品的国产公路车。 零件入门与选购变速及传动系统Sram(速联)、Shimano(禧玛诺)、Campagnolo(康帕纽罗)是变速系统的三巨头。一般来说，Shimano是三者中最具有性价比的，Sram同价位比Shimano更贵一些，而Campagnolo不是我等普通">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1680061214365.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1680061241817.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1680061262688.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1680061281771.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1680061298854.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1680061311781.png">
+<meta property="article:published_time" content="2023-03-29T03:39:23.000Z">
+<meta property="article:modified_time" content="2024-04-29T05:16:17.999Z">
+<meta property="article:author" content="Ricardo Sung">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ricardosung.tech/post-images/1680061214365.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/RicardoSung/ricardosung.github.io/assets/favicon.ico">
+    
+    <title>自组公路车指北 · Ricardo&#39;s Blog</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/RicardoSung/ricardosung.github.io/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/RicardoSung/ricardosung.github.io/css/dark.css">
+    <link rel="stylesheet" href="/RicardoSung/ricardosung.github.io/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- Google tag (gtag.js) -->
+    
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/RicardoSung/ricardosung.github.io/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/RicardoSung/ricardosung.github.io/>Ricardo's Blog</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/RicardoSung/ricardosung.github.io/">Ricardo&#39;s Blog</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">自组公路车指北</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+    
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/RicardoSung/ricardosung.github.io/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                自组公路车指北
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Cycling"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Cycling
+            </span>
+        </span>
+    
+    
+</div>
+
+                
+                <!-- 文章字数统计 -->
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2023/03/29</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/RicardoSung/ricardosung.github.io/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/RicardoSung/ricardosung.github.io/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <p><em><strong>讲在前面，其实我只组装过山地车，对于公路自行车还是不甚了解，此文更多的是我在公路自行车选择过程中的一些纠结和记录，最后我大概率还是选择成品的国产公路车。</strong></em></p>
+<h1 id="零件入门与选购"><a href="#零件入门与选购" class="headerlink" title="零件入门与选购"></a>零件入门与选购</h1><h2 id="变速及传动系统"><a href="#变速及传动系统" class="headerlink" title="变速及传动系统"></a>变速及传动系统</h2><p><a target="_blank" rel="noopener" href="https://www.sram.com/en/sram">Sram(速联)</a>、<a target="_blank" rel="noopener" href="https://www.shimano.com/en/">Shimano(禧玛诺)</a>、<a target="_blank" rel="noopener" href="https://www.campagnolo.com/US/en">Campagnolo(康帕纽罗)</a>是变速系统的三巨头。一般来说，Shimano是三者中最具有性价比的，Sram同价位比Shimano更贵一些，而Campagnolo不是我等普通人玩得起的东西。当然，厂家的变速和传动系统是有等级划分的，以Shimano为例，其分为了适用于休闲通勤的<code>Claris系列(R2000)</code>，入门级别的<code>Sora系列(R3000)</code>，入门高级的<code>Tiagra系列(4700)</code>，竞速入门的<code>105系列(R7000)</code>，竞速中级的<code>Ultegra系列(R8000)</code>和终极的<code>Dura Ace (R9100)</code>。关于套件的具体分别请见美骑网的博文<a target="_blank" rel="noopener" href="http://www.biketo.com/knowledge/38192.html">《公路车入门指南：5分钟带小白了解套件等级》</a>。</p>
+<p>我们所讲的变速和传动系统其实包括前拨、后拨、手变、曲柄牙盘、飞轮、链条、刹车(夹器)<del>和中轴</del>。但是目前大多数变速套件都不提供中轴了，因为车架厂的中轴现在做的五花八门，没办法统一，所以这里我们把中轴刨去。</p>
+<h3 id="大套和小套？"><a href="#大套和小套？" class="headerlink" title="大套和小套？"></a>大套和小套？</h3><p>大套和小套是很多车友挂在嘴边的话，其实是一种俗称。大套就是一套完全的变速和传动系统，而小套则仅包含前拨、后拨、手变、飞轮、链条。在组车的过程中，可以根据自己的选择购买套件，当然也可以不买套件，单买部分零件，实现定制最大化。但是其实厂家并没有什么大套和小套是说法哦~~~</p>
+<p><del>希望不会有人误会大套小套是避孕套的直径，不会真的有人脑中黄色废料这么多吧……</del></p>
+<h4 id="曲柄牙盘"><a href="#曲柄牙盘" class="headerlink" title="曲柄牙盘"></a>曲柄牙盘</h4><p>因为大部分套件取消了中轴，曲柄组则包含了曲柄臂和链条运行的牙盘。一般曲柄上有2~3种尺寸不同的牙盘，以供变速需要。但是近年，Sram推出的牙盘取消为一个了，据说可以实现更好的变速效率。下图为Shimano 105 series曲柄牙盘图。如果要考虑到骑行环境，平路居多可以选择曲柄较长的牙盘，如果以爬坡居多可以选择相对较短的牙盘。</p>
+<p><img src="https://ricardosung.tech/post-images/1680061214365.png" alt="曲柄"></p>
+<h4 id="飞轮"><a href="#飞轮" class="headerlink" title="飞轮"></a>飞轮</h4><p>飞轮，是与后轮联动提供变速的轮盘组，具有不同的尺寸和齿数。</p>
+<p><img src="https://ricardosung.tech/post-images/1680061241817.png" alt="飞轮"></p>
+<h4 id="前拨"><a href="#前拨" class="headerlink" title="前拨"></a>前拨</h4><p>前拨，前拨链器，用来波动牙盘上的链条。在部分高级Sram套件上没有前拨。</p>
+<p><img src="https://ricardosung.tech/post-images/1680061262688.png" alt="前拨"></p>
+<h4 id="后拨"><a href="#后拨" class="headerlink" title="后拨"></a>后拨</h4><p>后拨，全称为后拨链器，顾名思义是用来在后牙盘上波动链条的。</p>
+<p><img src="https://ricardosung.tech/post-images/1680061281771.png" alt="后拨"></p>
+<h4 id="手变"><a href="#手变" class="headerlink" title="手变"></a>手变</h4><p>公路车在前把的变速控制器和刹车全部继承于手变上。这也是为什么小套会包含手变和前后拨的原因之一。</p>
+<p><img src="https://ricardosung.tech/post-images/1680061298854.png" alt="手变"></p>
+<h4 id="刹车-夹器"><a href="#刹车-夹器" class="headerlink" title="刹车(夹器)"></a>刹车(夹器)</h4><p>主流的刹车方式为碟刹、鼓刹和V&#x2F;C刹。碟刹采用刹车碟制动方式，鼓刹采用制动鼓刹车，V&#x2F;C刹车采用V&#x2F;C型摩擦片在车圈处刹车(表述可能不准确)。关于鼓刹、碟刹、V&#x2F;C刹车的具体请见知乎阿尔法的博文<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/452790460">《碟刹vs鼓刹》</a>和美骑网<a target="_blank" rel="noopener" href="https://www.biketo.com/knowledge/4988.html">《**山地车碟刹与V刹，新人必看！(图文)**》</a>。下图为油碟刹车图。</p>
+<p><img src="https://ricardosung.tech/post-images/1680061311781.png" alt="刹车"></p>
+<h4 id="链条"><a href="#链条" class="headerlink" title="链条"></a>链条</h4><p>链条就不用放图片了吧，大家都认识……</p>
+<h3 id="价格与推荐"><a href="#价格与推荐" class="headerlink" title="价格与推荐"></a>价格与推荐</h3><h4 id="大套价格对比"><a href="#大套价格对比" class="headerlink" title="大套价格对比"></a>大套价格对比</h4><p>对于入门骑行的玩家，一般105顶天了，Tiagra级别已经是优秀的配置。这里以<code>105 R7000</code>为例对比各个渠道的价格。</p>
+<table>
+<thead>
+<tr>
+<th>渠道</th>
+<th>淘宝</th>
+<th>闲鱼</th>
+<th>闲鱼</th>
+<th><a target="_blank" rel="noopener" href="https://www.chainreactioncycles.com/shimano-105-r7020-11-speed-disc-brake-groupset/rp-prod214189">CRC</a></th>
+<th><a target="_blank" rel="noopener" href="https://www.wiggle.co.uk/shimano-105-r7020-11-speed-disc-brake-groupset">wiggle</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全新</td>
+<td>是</td>
+<td>否(拆车)</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>套装</td>
+<td>大套</td>
+<td>大套</td>
+<td>大套</td>
+<td>大套</td>
+<td>大套</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>4800</td>
+<td>4500</td>
+<td>3500</td>
+<td>3850</td>
+<td>3850</td>
+</tr>
+</tbody></table>
+<p>这里的价格是裸价不包含运费的，如果考虑到运费，我当前在澳门，使用<a target="_blank" rel="noopener" href="https://mo.buynship.com/pricing/">Buyandship</a>从英国转运，大概需要200MOP合170RMB(以3Kg记重)，以此来看即使转运在英国购买也比在大陆购买便宜。当然，也可以从闲鱼上购买拆车件，价格相对较低，但是油管一般要自己重新购买咯。</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>但是大多数人应该不会直接买大套的吧……所以，仅购买小套然后选择其他品牌的零件相对来说是cp值比较高的。</p>
+<p>这里推荐一些国产品牌，比如曲柄牙盘可以买<a target="_blank" rel="noopener" href="http://pro-wheel.com/main/">Prowheel</a>，油碟刹车可以买<a target="_blank" rel="noopener" href="https://www.tektro.com/">Tektro</a>、IIIPRO(ANV好像是IIIPRO换壳，也可能以前叫ANV)、ONIRII等等很多优秀的国产品牌都值得选购。</p>
+<h2 id="车架"><a href="#车架" class="headerlink" title="车架"></a>车架</h2><p>如果你顺利熬过了上一个section，那么恭喜你，你将进入另一个大坑——车架。</p>
+<p>车架的选择大体上可以分为三个因素，涂装，材料&#x2F;重量，几何。</p>
+<h3 id="涂装"><a href="#涂装" class="headerlink" title="涂装"></a>涂装</h3><p>涂装是最显而易见的，也是影响入门者选择的重点。</p>
+<p>但是这个是最啥可以说的，涂装就你看着好就是好咯，没啥可以推荐的。</p>
+<h3 id="材料-重量"><a href="#材料-重量" class="headerlink" title="材料&#x2F;重量"></a>材料&#x2F;重量</h3><p>目前公路车的材料主要有碳钢、铝合金和碳纤维以及钛合金。</p>
+<p>从寿命的角度来说，碳钢的寿命当然是最长的，甚至有可能你摔了，你不在了，它还在。</p>
+<p>铝合金和碳纤维其实质量相近，寿命也相近。铝合金因为可塑比较困难，所以车身几何相对固定；极致的碳纤维能够把车身的重量压倒比顶级铝合金低1.5Kg吧。但是碳纤维的抗扭能力其实是不如铝合金的。铝合金和碳纤维的寿命大多数在5、6年，所以不用担心寿命问题，等它真正到寿命了，你可能都换了好几台车了。</p>
+<p>钛合金继承了碳钢的强度和寿命，铝合金的轻量化，但是太贵了……</p>
+<h3 id="车身几何"><a href="#车身几何" class="headerlink" title="车身几何"></a>车身几何</h3><p>车身几何是一件极其复杂的事情，对于想要一直骑行下去的人，我还是建议做fitting<del>虽然我没有做过fitting</del>。</p>
+<p>在这里推荐B站ARTOUCH岸塔的视频<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1124y1s77H/">《骑行入坑第一步！选对车架！》</a>，我就不班门弄斧了。</p>
+<h3 id="购买车架"><a href="#购买车架" class="headerlink" title="购买车架"></a>购买车架</h3><p>车圈子里面流行一句话——“DIY已死”，确实，在现在国产品牌强势进入的过程中，DIY低端车的成本很接近于直接购买整车，因而导致车架的选择范围较少。</p>
+<h4 id="钢车架"><a href="#钢车架" class="headerlink" title="钢车架"></a>钢车架</h4><p><a target="_blank" rel="noopener" href="https://tsunamibicycle.com/">Tsunami</a>的子品牌Seaboard 云岸是硕果仅存的钢架品牌了(大概<del>确信</del>)</p>
+<h4 id="铝合金车架"><a href="#铝合金车架" class="headerlink" title="铝合金车架"></a>铝合金车架</h4><p>整车中常见的铝合金和碳钢材质的车架已经很少见了，现在所售卖的车架以碳纤维为主。不过还是有一些值得推荐的铝合金车架品牌，比如<a target="_blank" rel="noopener" href="http://www.kinesis-bikes.com/index_c.php">卜威 Kinesis</a>、<a target="_blank" rel="noopener" href="http://www.mosso.com.tw/">峰大 Mosso</a>、<a target="_blank" rel="noopener" href="https://www.izipbikes.com/">IZIP</a>、<a target="_blank" rel="noopener" href="https://www.cannondale.com/en-us">Cannondale 佳能戴尔</a>、<a target="_blank" rel="noopener" href="http://www.twitter-bikes.com/">Twitter 骓特</a>。当然也可以购买捷安特、美利达的拆车架……价格也是便宜的，或者<a target="_blank" rel="noopener" href="http://www.uccbikes.com/">UCC 环球自行车</a>、Dagger变色龙的车架。如果有关注B站一位UP叫<a target="_blank" rel="noopener" href="https://space.bilibili.com/498632306?spm_id_from=333.337.search-card.all.click">乐百客Lebycle单车</a>，他们家的铝合金车架还是不错的，做工和拓展性都是一流也可以考虑。</p>
+<h4 id="钛合金车架"><a href="#钛合金车架" class="headerlink" title="钛合金车架"></a>钛合金车架</h4><p>钛合金车架，能把孙子送走的车架，实在是太昂贵了，如果不是重装骑行，真的不建议购买。</p>
+<p>比较好好的钛合金车架有<a target="_blank" rel="noopener" href="http://cn.tibicycle.com/">北京航轮 Hilight</a>、<a target="_blank" rel="noopener" href="https://www.ticycles.com/#home-tcf">Ti Cycles</a>和Tiris。我个人觉得钛合金，没啥好对比的，反正坏的时候就是你重孙的时候了……</p>
+<h4 id="碳纤维车架"><a href="#碳纤维车架" class="headerlink" title="碳纤维车架"></a>碳纤维车架</h4><p>现在的碳纤维车架属于是鱼龙混杂，好多爱好者说国碳不行，不过，有一说一，一般真的买这种千元国碳的也不会涉及到什么高强度摇车、压弯等应用吧……从这个角度来说，我觉得国碳没有什么可以黑的。之前千元爆款野兽SpeedX车架，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X3411A7CN/">各位大佬直播锯开不是用料也很扎实嘛</a>。</p>
+<p>不过，一旦你决定要买碳纤维车架，那就必须要接受低价碳纤维车架的一些小瑕疵，比如坐管有倒刺、五通有公差等等，克服了这些问题，那低价碳纤维车架就适合你。</p>
+<p>比较优秀的碳纤维车架品牌，可以选择<a target="_blank" rel="noopener" href="http://www.mosso.com.tw/">峰大 Mosso</a>、<a target="_blank" rel="noopener" href="http://www.uccbikes.com/">UCC 环球自行车</a>、<a target="_blank" rel="noopener" href="http://www.zglbike.com/sy">ZGL 神鹰</a>、<a target="_blank" rel="noopener" href="https://www.seraphbikes.com/">Seraph 炽天使</a>、<a target="_blank" rel="noopener" href="https://www.winspace.cc/">Winspace 银贝斯</a>、<a target="_blank" rel="noopener" href="https://www.parduscycle.com/">Pardus 瑞豹</a>、<a target="_blank" rel="noopener" href="https://www.sp-cycle.com/">Spcycle</a>、<a target="_blank" rel="noopener" href="http://cinelli.it/en/">Cinelli</a>、<a target="_blank" rel="noopener" href="https://store.taobao.com/?shop_id=103057459">Tideace</a>、EARRELL、TFSA、<a target="_blank" rel="noopener" href="https://pinarello.com/">Pinarello</a>、<a target="_blank" rel="noopener" href="https://shop250196618.taobao.com/shop/view_shop.htm?user_number_id=2214042170982">ShotWind</a>、Carbonda。</p>
+<p>在这一众品牌中，Mosso的产品分级最乱；ZGL的实力应该是最强的，可惜营销太差了；EARRELL据说是台湾车厂子，但是没有找到官网，也少有测评；TFSA感觉专注于低端碳纤维公路车，价格都不高，预算不足可以考虑，但是不推荐，小瑕疵很多；Winspace是大牌，贵，其他不用说；Tideace是国内碳纤维T0之一吧，车架没得黑。</p>
+<h2 id="轮组"><a href="#轮组" class="headerlink" title="轮组"></a>轮组</h2><h2 id="车把"><a href="#车把" class="headerlink" title="车把"></a>车把</h2><h2 id="座管和坐垫"><a href="#座管和坐垫" class="headerlink" title="座管和坐垫"></a>座管和坐垫</h2><h1 id="开始组装"><a href="#开始组装" class="headerlink" title="开始组装"></a>开始组装</h1>
+    </article>
+    <!-- license -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://github.com/RicardoSung/ricardosung.github.io">Ricardo Sung</a>
+            <p>Link：<a href="https://github.com/RicardoSung/ricardosung.github.io/INu0v4I2A/">https://github.com/RicardoSung/ricardosung.github.io/INu0v4I2A/</a>
+            <p>Publish date：<a href="https://github.com/RicardoSung/ricardosung.github.io/INu0v4I2A/">March 29th 2023, 11:39:23 am</a>
+            <p>Update date：<a href="https://github.com/RicardoSung/ricardosung.github.io/INu0v4I2A/">April 29th 2024, 1:16:17 pm</a>
+            <p>License：<a rel="license" >All rights reserved by Ricardo Sung.</a></p>
+        </div>
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/RicardoSung/ricardosung.github.io/u7Z5_oDii/" title="国产小众公路车的选择">
+                    <div class="nextTitle">国产小众公路车的选择</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/RicardoSung/ricardosung.github.io/D7vaTKv5z/" title="Travel Tips for Macau SAR">
+                    <div class="prevTitle">Travel Tips for Macau SAR</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:Ricardo.Sung@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/RicardoSung" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://t.me/RICARDOSONG" class="iconfont-archer telegram" target="_blank" title=telegram></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://twitter.com/Rethinker5" class="iconfont-archer twitter" target="_blank" title=twitter></a>
+            
+        
+    
+        
+            
+                <a href="https://www.instagram.com/_ricardo.sung/" class="iconfont-archer instagram" target="_blank" title=instagram></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <!-- <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span> -->
+        <span>All rights reserved by Ricardo Sung.</span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9B%B6%E4%BB%B6%E5%85%A5%E9%97%A8%E4%B8%8E%E9%80%89%E8%B4%AD"><span class="toc-number">1.</span> <span class="toc-text">零件入门与选购</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%80%9F%E5%8F%8A%E4%BC%A0%E5%8A%A8%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text">变速及传动系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%A5%97%E5%92%8C%E5%B0%8F%E5%A5%97%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">大套和小套？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B2%E6%9F%84%E7%89%99%E7%9B%98"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">曲柄牙盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A3%9E%E8%BD%AE"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">飞轮</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8B%A8"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">前拨</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E6%8B%A8"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">后拨</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%8F%98"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">手变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%B9%E8%BD%A6-%E5%A4%B9%E5%99%A8"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">刹车(夹器)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%9D%A1"><span class="toc-number">1.1.1.7.</span> <span class="toc-text">链条</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%B7%E6%A0%BC%E4%B8%8E%E6%8E%A8%E8%8D%90"><span class="toc-number">1.1.2.</span> <span class="toc-text">价格与推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%A7%E5%A5%97%E4%BB%B7%E6%A0%BC%E5%AF%B9%E6%AF%94"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">大套价格对比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%A6%E6%9E%B6"><span class="toc-number">1.2.</span> <span class="toc-text">车架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%82%E8%A3%85"><span class="toc-number">1.2.1.</span> <span class="toc-text">涂装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%90%E6%96%99-%E9%87%8D%E9%87%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">材料&#x2F;重量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%A6%E8%BA%AB%E5%87%A0%E4%BD%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">车身几何</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E8%BD%A6%E6%9E%B6"><span class="toc-number">1.2.4.</span> <span class="toc-text">购买车架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%92%A2%E8%BD%A6%E6%9E%B6"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">钢车架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%9D%E5%90%88%E9%87%91%E8%BD%A6%E6%9E%B6"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">铝合金车架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%92%9B%E5%90%88%E9%87%91%E8%BD%A6%E6%9E%B6"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">钛合金车架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B3%E7%BA%A4%E7%BB%B4%E8%BD%A6%E6%9E%B6"><span class="toc-number">1.2.4.4.</span> <span class="toc-text">碳纤维车架</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AE%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">轮组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%A6%E6%8A%8A"><span class="toc-number">1.4.</span> <span class="toc-text">车把</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%A7%E7%AE%A1%E5%92%8C%E5%9D%90%E5%9E%AB"><span class="toc-number">1.5.</span> <span class="toc-text">座管和坐垫</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E7%BB%84%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">开始组装</span></a></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 10
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2023 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/u7Z5_oDii/">国产小众公路车的选择</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/INu0v4I2A/">自组公路车指北</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/D7vaTKv5z/">Travel Tips for Macau SAR</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/18</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/M73n_L61J/">Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/RGJcA4S5P/">My Research Process</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/oneplus-watch-ti-yan-bao-gao/">OnePlus Watch 体验报告</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/add-pdk-for-cadence-ic617/">Add PDK for Cadence IC617</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/to-improve-rhel-85/">To Improve RHEL 8.5</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/">Build Your IC Design Evironment Based on Cadence IC617 Package</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/resume/">Resume</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="Chinese">
+                <span class="iconfont-archer">&#xe606;</span>
+                Chinese
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Travel Tutorial">
+                <span class="iconfont-archer">&#xe606;</span>
+                Travel Tutorial
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="IC Design">
+                <span class="iconfont-archer">&#xe606;</span>
+                IC Design
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="English">
+                <span class="iconfont-archer">&#xe606;</span>
+                English
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Virtuoso">
+                <span class="iconfont-archer">&#xe606;</span>
+                Virtuoso
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Tutorial">
+                <span class="iconfont-archer">&#xe606;</span>
+                Tutorial
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="体验报告">
+                <span class="iconfont-archer">&#xe606;</span>
+                体验报告
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Linux">
+                <span class="iconfont-archer">&#xe606;</span>
+                Linux
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Resume">
+                <span class="iconfont-archer">&#xe606;</span>
+                Resume
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Travel tips">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Travel tips
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Cycling">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Cycling
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Research Process">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Research Process
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Analog Design Environment">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Analog Design Environment
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Unbox">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Unbox
+        </span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/RicardoSung/ricardosung.github.io/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://github.com/RicardoSung/ricardosung.github.io",
+        root: siteMetaRoot,
+        author: "Ricardo Sung"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/RicardoSung/ricardosung.github.io/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/RicardoSung/ricardosung.github.io/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/RicardoSung/ricardosung.github.io/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+    </body>
+</html>

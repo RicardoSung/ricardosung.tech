@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en,zh/CN,default">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Ricardo Sung">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Ricardo Sung">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog,Ricardo,Analog Integrated Circuit Design,Circuit">
+    
+    <meta name="description" content="Let bygones be by-gones.">
+    <meta name="description" content="出行方式一般情况下，在澳门有三种出行方式：的士，巴士和步行。本人经常感叹来澳门旅游的都是有钱人，原因就在于很多游客都会选择的士来作为主要的出行方式，而的士又是昂贵的…… 的士出行澳门的的士分为电召的士和手招的士（注：此处并非本人将“招”与“召”混淆，“招”描述的是手招的动作，“召”表述的是召唤的方式）。电召和手招的基础价格是相同的，在开始的1.6km都是19mop的起步价，然后每240m费用多收2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Travel Tips for Macau SAR">
+<meta property="og:url" content="https://github.com/RicardoSung/ricardosung.github.io/D7vaTKv5z/index.html">
+<meta property="og:site_name" content="Ricardo&#39;s Blog">
+<meta property="og:description" content="出行方式一般情况下，在澳门有三种出行方式：的士，巴士和步行。本人经常感叹来澳门旅游的都是有钱人，原因就在于很多游客都会选择的士来作为主要的出行方式，而的士又是昂贵的…… 的士出行澳门的的士分为电召的士和手招的士（注：此处并非本人将“招”与“召”混淆，“招”描述的是手招的动作，“召”表述的是召唤的方式）。电召和手招的基础价格是相同的，在开始的1.6km都是19mop的起步价，然后每240m费用多收2">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-21T14:41:00.000Z">
+<meta property="article:modified_time" content="2024-04-29T05:16:32.313Z">
+<meta property="article:author" content="Ricardo Sung">
+<meta property="article:tag" content="Chinese">
+<meta property="article:tag" content="Travel Tutorial">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/RicardoSung/ricardosung.github.io/assets/favicon.ico">
+    
+    <title>Travel Tips for Macau SAR · Ricardo&#39;s Blog</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/RicardoSung/ricardosung.github.io/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/RicardoSung/ricardosung.github.io/css/dark.css">
+    <link rel="stylesheet" href="/RicardoSung/ricardosung.github.io/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- Google tag (gtag.js) -->
+    
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/RicardoSung/ricardosung.github.io/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/RicardoSung/ricardosung.github.io/>Ricardo's Blog</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/RicardoSung/ricardosung.github.io/">Ricardo&#39;s Blog</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Travel Tips for Macau SAR</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+    
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/RicardoSung/ricardosung.github.io/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                Travel Tips for Macau SAR
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Travel tips"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Travel tips
+            </span>
+        </span>
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Chinese">Chinese</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Travel Tutorial">Travel Tutorial</a>
+    
+</div>
+
+                
+                <!-- 文章字数统计 -->
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2023/01/21</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/RicardoSung/ricardosung.github.io/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/RicardoSung/ricardosung.github.io/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="出行方式"><a href="#出行方式" class="headerlink" title="出行方式"></a>出行方式</h2><p>一般情况下，在澳门有三种出行方式：的士，巴士和步行。本人经常感叹来澳门旅游的都是有钱人，原因就在于很多游客都会选择的士来作为主要的出行方式，而的士又是昂贵的……</p>
+<h3 id="的士出行"><a href="#的士出行" class="headerlink" title="的士出行"></a>的士出行</h3><p>澳门的的士分为电召的士和手招的士（<em>注：此处并非本人将“招”与“召”混淆，“招”描述的是手招的动作，“召”表述的是召唤的方式</em>）。电召和手招的基础价格是相同的，在开始的1.6km都是19mop的起步价，然后每240m费用多收2mop。</p>
+<p>这价格看起来还好？</p>
+<p><strong>想多了！！！</strong> 如果要停车等候，每分钟多收2mop，帮助搬运行李一件2mop；如果从氹仔往陆环，加收2mop，从本岛到陆环加收5mop。额外的是，电召还需要收取电召费用5mop。</p>
+<p>OK……如果你觉得还是可以的话……那绕路没有人能顶住，因为本地人从来不打车！！！打的士的一定是游客！！！</p>
+<p>而且，当你想要付款的时候，你就会发现更加离谱的事情，手招的士只能用极其先进的“纸币”支付，澳门元:人民币:港币&#x3D;1:1:1；电召可以用一些电子支付，但是仅限于MPay、信用卡等，WeChat和Alipay是不能使用的。</p>
+<h3 id="巴士出行"><a href="#巴士出行" class="headerlink" title="巴士出行"></a>巴士出行</h3><p>澳门的巴士是很方便的，一个连浦东机场大都没有的地方，有97班巴士，几乎可以带你到任何地方！、</p>
+<p>澳门的巴士价格也是_<strong>相对低廉</strong>_的，如果投币，需要6mop，但是如果使用交通卡只需要3mop，学生则为1.5mop。同时，有些巴士在转车的过程中会有优惠政策，比如免票等（<em>注：免票只是不收钱，但是依然要刷卡</em>）。公交卡是可以在便利店买到的，但是充值和购买卡片只能用纸币——“原始的特色”</p>
+<p>巴士一般情况下是座位充裕的，但是在上午8-9点、下午5-6点是劳工的下班高峰期，会出现人满为患的情况，建议此时步行或者直接去吃饭。</p>
+<p>当然，澳门的巴士还有一个很大的缺点，就是由于澳门的路比较窄，弯道坡道比较多，加上“公交司机都是赛车手出身”，所以澳门的巴士很晃，能把40km&#x2F;h开出120km&#x2F;h的感觉，建议晕车的人不要坐。</p>
+<h3 id="步行"><a href="#步行" class="headerlink" title="步行"></a>步行</h3><p>最最最最最经济实惠的方式当然是步行啦！澳门地方不大，尤其是在本岛，非常建议步行！</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在出行方式，本人最推荐的还是巴士+步行，当然如果有钱可以打车……</p>
+<h2 id="游玩"><a href="#游玩" class="headerlink" title="游玩"></a>游玩</h2><h3 id="本岛"><a href="#本岛" class="headerlink" title="本岛"></a>本岛</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/ruins-of-st-pauls">大三巴</a>：大三巴旁边有恋爱巷，可以去拍照，出片</li>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/mount-fortress">大炮台</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/st-dominics-church">玫瑰圣母堂</a>（<em>不要在周六去，是宗教活动，不开放</em>）</li>
+<li><a target="_blank" rel="noopener" href="https://www.fishermanswharf.com.mo/zh-hant/%E4%B8%BB%E9%A0%81/">渔人码头</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.macautower.com.mo/zh-hant/">澳门旅游塔</a>：比巴黎铁塔高，有一些刺激的玩意比如蹦极之类的，不过价格很高基本都是上千的；也有旋转餐厅，可以俯瞰澳门全景，晚餐一人460，午餐318</li>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/temples/a-ma-temple">妈祖阁</a></li>
+<li><a target="_blank" rel="noopener" href="https://mgpm.macaotourism.gov.mo/zh-hans/">大赛车博物馆</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.msc.org.mo/">澳门科学馆</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.mam.gov.mo/">澳门艺术博物馆</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.macaumuseum.gov.mo/">澳门博物馆</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/mandarins-house">郑家大屋</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/st-lawrences-church">圣老楞佐教堂</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/sir-robert-ho-tung-library">何东图书馆</a></li>
+</ul>
+<h3 id="氹仔"><a href="#氹仔" class="headerlink" title="氹仔"></a>氹仔</h3><ul>
+<li>小潭山观景台：苏利安圆形地下车，有观光电梯直达观景台，可以看到本岛和链接本岛和氹仔的三座桥</li>
+<li>海滨休憩区：在西湾大桥附近下车，沿着海边散步，对面就是横琴岛</li>
+<li>官也街：吃吃吃和网红出片地</li>
+<li>龙环葡韵：有一些葡萄牙建筑或者是葡萄牙风格建筑，以前开过葡语国家文化节，不过现在没了，旁边有一个小公园，公园里有荷花池。</li>
+<li><a target="_blank" rel="noopener" href="https://www.sandsresortsmacao.com.cn/macau-shows/teamlab.html">TeamLab超自然空间</a>：不好形容，自己点链接看</li>
+</ul>
+<h3 id="路环（路氹）"><a href="#路环（路氹）" class="headerlink" title="路环（路氹）"></a>路环（路氹）</h3><p>路环其实可以玩的并不多，但是风景很好，如果喜欢爬山的话不错……</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.a-ma.org.mo/culture">妈祖文化村</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-my/%E9%BB%91%E6%B2%99%E6%B5%B7%E7%81%98">黑沙海滩</a></li>
+</ul>
+<h3 id="购物"><a href="#购物" class="headerlink" title="购物"></a>购物</h3><p>澳门有很多购物中心，或者说，其发达的商业让你30min能一定能在澳门买到你想要的东西。下列是一些主要的购物中心位置。</p>
+<ul>
+<li>大三巴：以卖澳门特产和衣服居多</li>
+<li>水坑尾：又叫波鞋街，以衣服居多</li>
+<li>新马路、殷皇子大马路：以衣服和首饰居多，也有新八佰伴等</li>
+<li><a target="_blank" rel="noopener" href="https://www.galaxymacau.com/zh-hant/">澳门银河</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.broadwaymacau.com.mo/zh-hant/upcoming-events-and-concerts/">澳门百老汇</a>：有很多吃的和剧院</li>
+<li><a target="_blank" rel="noopener" href="https://hk.venetianmacao.com/">威尼斯人</a>：有金光会展和TeamLab，可以划船？</li>
+<li><a target="_blank" rel="noopener" href="https://hk.parisianmacao.com/">巴黎人</a>：有巴黎铁塔和水世界</li>
+<li><a target="_blank" rel="noopener" href="https://www.londonermacaoresort.com/">伦敦人</a>：有时候会有表演</li>
+<li><a target="_blank" rel="noopener" href="https://www.studiocity-macau.com/tc">新濠影汇</a>：有水上乐园</li>
+<li><a target="_blank" rel="noopener" href="https://www.wynnmacau.com/tc">永利澳门</a></li>
+</ul>
+<h2 id="住宿"><a href="#住宿" class="headerlink" title="住宿"></a>住宿</h2><p>澳门的酒店价格较为适中，有时候会有赌场提供的特价酒店，比较大的酒店有：普京酒店，JW万濠，威尼斯人，巴黎人酒店等等很多。但是据我观察，其实价格便宜服务好的，当属回力海立方、东望洋和普京酒店。</p>
+<p>但是回力海立方在外港码头附近，比较偏远。普京酒店在亚马喇前地附近，靠近交通枢纽，会比较吵，而且普京酒店较老，所以相对价格便宜一些。东望洋酒店介于两者之间，当然价格也是。</p>
+<h2 id="美食"><a href="#美食" class="headerlink" title="美食"></a>美食</h2><p>澳门美食太多了，我这里就列出一些我吃过的大店，有些路边小店我就记不住了</p>
+<ul>
+<li>新鸿发美食</li>
+<li>肥仔文美食</li>
+<li>杨枝金捞</li>
+<li>安德鲁蛋挞（<em>之前给谢书翊和海拉带过</em>）</li>
+<li>荣记</li>
+<li>金福龙葡国餐厅</li>
+<li>豚馆</li>
+<li>金玉满堂</li>
+<li>飘亭</li>
+<li>渔兵卫海鲜丼</li>
+<li>扒皇烧</li>
+</ul>
+
+    </article>
+    <!-- license -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://github.com/RicardoSung/ricardosung.github.io">Ricardo Sung</a>
+            <p>Link：<a href="https://github.com/RicardoSung/ricardosung.github.io/D7vaTKv5z/">https://github.com/RicardoSung/ricardosung.github.io/D7vaTKv5z/</a>
+            <p>Publish date：<a href="https://github.com/RicardoSung/ricardosung.github.io/D7vaTKv5z/">January 21st 2023, 10:41:00 pm</a>
+            <p>Update date：<a href="https://github.com/RicardoSung/ricardosung.github.io/D7vaTKv5z/">April 29th 2024, 1:16:32 pm</a>
+            <p>License：<a rel="license" >All rights reserved by Ricardo Sung.</a></p>
+        </div>
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/RicardoSung/ricardosung.github.io/INu0v4I2A/" title="自组公路车指北">
+                    <div class="nextTitle">自组公路车指北</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/RicardoSung/ricardosung.github.io/M73n_L61J/" title="Fix the TSMC018BCD Gen3 Mix-signal Simulation Error">
+                    <div class="prevTitle">Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:Ricardo.Sung@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/RicardoSung" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://t.me/RICARDOSONG" class="iconfont-archer telegram" target="_blank" title=telegram></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://twitter.com/Rethinker5" class="iconfont-archer twitter" target="_blank" title=twitter></a>
+            
+        
+    
+        
+            
+                <a href="https://www.instagram.com/_ricardo.sung/" class="iconfont-archer instagram" target="_blank" title=instagram></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <!-- <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span> -->
+        <span>All rights reserved by Ricardo Sung.</span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">出行方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9A%84%E5%A3%AB%E5%87%BA%E8%A1%8C"><span class="toc-number">1.1.</span> <span class="toc-text">的士出行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%B4%E5%A3%AB%E5%87%BA%E8%A1%8C"><span class="toc-number">1.2.</span> <span class="toc-text">巴士出行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E8%A1%8C"><span class="toc-number">1.3.</span> <span class="toc-text">步行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B8%E7%8E%A9"><span class="toc-number">2.</span> <span class="toc-text">游玩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%B2%9B"><span class="toc-number">2.1.</span> <span class="toc-text">本岛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B9%E4%BB%94"><span class="toc-number">2.2.</span> <span class="toc-text">氹仔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%8E%AF%EF%BC%88%E8%B7%AF%E6%B0%B9%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">路环（路氹）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AD%E7%89%A9"><span class="toc-number">2.4.</span> <span class="toc-text">购物</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8F%E5%AE%BF"><span class="toc-number">3.</span> <span class="toc-text">住宿</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%8E%E9%A3%9F"><span class="toc-number">4.</span> <span class="toc-text">美食</span></a></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 10
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2023 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/u7Z5_oDii/">国产小众公路车的选择</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/INu0v4I2A/">自组公路车指北</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/D7vaTKv5z/">Travel Tips for Macau SAR</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/18</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/M73n_L61J/">Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/RGJcA4S5P/">My Research Process</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/oneplus-watch-ti-yan-bao-gao/">OnePlus Watch 体验报告</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/add-pdk-for-cadence-ic617/">Add PDK for Cadence IC617</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/to-improve-rhel-85/">To Improve RHEL 8.5</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/">Build Your IC Design Evironment Based on Cadence IC617 Package</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/resume/">Resume</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="Chinese">
+                <span class="iconfont-archer">&#xe606;</span>
+                Chinese
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Travel Tutorial">
+                <span class="iconfont-archer">&#xe606;</span>
+                Travel Tutorial
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="IC Design">
+                <span class="iconfont-archer">&#xe606;</span>
+                IC Design
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="English">
+                <span class="iconfont-archer">&#xe606;</span>
+                English
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Virtuoso">
+                <span class="iconfont-archer">&#xe606;</span>
+                Virtuoso
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Tutorial">
+                <span class="iconfont-archer">&#xe606;</span>
+                Tutorial
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="体验报告">
+                <span class="iconfont-archer">&#xe606;</span>
+                体验报告
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Linux">
+                <span class="iconfont-archer">&#xe606;</span>
+                Linux
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Resume">
+                <span class="iconfont-archer">&#xe606;</span>
+                Resume
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Travel tips">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Travel tips
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Cycling">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Cycling
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Research Process">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Research Process
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Analog Design Environment">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Analog Design Environment
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Unbox">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Unbox
+        </span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/RicardoSung/ricardosung.github.io/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://github.com/RicardoSung/ricardosung.github.io",
+        root: siteMetaRoot,
+        author: "Ricardo Sung"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/RicardoSung/ricardosung.github.io/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/RicardoSung/ricardosung.github.io/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/RicardoSung/ricardosung.github.io/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+    </body>
+</html>

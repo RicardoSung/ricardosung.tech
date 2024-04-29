@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en,zh/CN,default">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Ricardo Sung">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Ricardo Sung">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog,Ricardo,Analog Integrated Circuit Design,Circuit">
+    
+    <meta name="description" content="Let bygones be by-gones.">
+    <meta name="description" content="For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about Bandgap, what I thought is that the circuit is so easy, which I could make it as soo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build Your IC Design Evironment Based on Cadence IC617 Package">
+<meta property="og:url" content="https://github.com/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/index.html">
+<meta property="og:site_name" content="Ricardo&#39;s Blog">
+<meta property="og:description" content="For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about Bandgap, what I thought is that the circuit is so easy, which I could make it as soo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636858516697.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636858704056.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636858881895.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636859108686.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636859882501.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636877311327.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636877413523.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636878270478.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636878355774.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636879625814.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636879927220.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636880243906.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636880498067.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636880574268.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636880733670.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636892865063.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636895098426.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636895217134.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636894777772.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636895670501.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636896342861.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636896353583.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636896446769.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636948544144.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636949941818.png">
+<meta property="og:image" content="https://ricardosung.tech/post-images/1636952546558.png">
+<meta property="article:published_time" content="2021-11-14T02:10:47.000Z">
+<meta property="article:modified_time" content="2024-04-29T05:13:36.935Z">
+<meta property="article:author" content="Ricardo Sung">
+<meta property="article:tag" content="IC Design">
+<meta property="article:tag" content="English">
+<meta property="article:tag" content="Virtuoso">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ricardosung.tech/post-images/1636858516697.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/RicardoSung/ricardosung.github.io/assets/favicon.ico">
+    
+    <title>Build Your IC Design Evironment Based on Cadence IC617 Package · Ricardo&#39;s Blog</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/RicardoSung/ricardosung.github.io/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/RicardoSung/ricardosung.github.io/css/dark.css">
+    <link rel="stylesheet" href="/RicardoSung/ricardosung.github.io/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/RicardoSung/ricardosung.github.io/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- Google tag (gtag.js) -->
+    
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/RicardoSung/ricardosung.github.io/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/RicardoSung/ricardosung.github.io/>Ricardo's Blog</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/RicardoSung/ricardosung.github.io/">Ricardo&#39;s Blog</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Build Your IC Design Evironment Based on Cadence IC617 Package</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+    
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/RicardoSung/ricardosung.github.io/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                Build Your IC Design Evironment Based on Cadence IC617 Package
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        
+        
+            
+        
+        
+        <span class="post-category" data-categories="Analog Design Environment"">
+            <i class="fas fa-folder post-category-icon"></i>
+            <span class="post-category-text">
+                Analog Design Environment
+            </span>
+        </span>
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="IC Design">IC Design</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="English">English</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Virtuoso">Virtuoso</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Tutorial">Tutorial</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="Linux">Linux</a>
+    
+</div>
+
+                
+                <!-- 文章字数统计 -->
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2021/11/14</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/RicardoSung/ricardosung.github.io/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/RicardoSung/ricardosung.github.io/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <p>For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about <code>Bandgap</code>, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.<br>So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine). And if you want to install it on a RM (Real Machine), you can follow the same way, too.</p>
+<h2 id="Announcement"><a href="#Announcement" class="headerlink" title="Announcement"></a>Announcement</h2><p>I try my best to protect copyright by using the licensed software. But I don’t have access to the licensed Cadence, also the PDK, so you know …</p>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><ol>
+<li>A DVD installation ISO of <code>RHEL</code> operating system.</li>
+<li><code>Cadence IC617 Pacckage</code>.</li>
+<li><code>WinSCP</code>.</li>
+<li>Virtual machine software, eg. <code>Virtual Box</code>, <code>VMware Workstation Player</code> and <code>Hyper-V</code>.<br><em>I highly recommond you using Vrtual Box or VMware Workstation Player, because I felt the mouse pointer is quite fluent  as in Windows Desk. Maybe Windows11 and my AMD 3900x caused it? Well, I don’t know~~~</em></li>
+</ol>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>I have divided the installation inroduction to two parts - OS installation and Cadence Installation. And I will do it using <code>VMware Workstation Player</code>.</p>
+<h3 id="OS"><a href="#OS" class="headerlink" title="OS"></a>OS</h3><ol>
+<li>Create a new virtual machine and add RHEL iso<br><img src="https://ricardosung.tech/post-images/1636858516697.png" alt="1"></li>
+<li>Create your user name. It doesn’t matter if <code>Full name</code> mismatch <code>User name</code>.<br><img src="https://ricardosung.tech/post-images/1636858704056.png" alt="2"></li>
+<li>Choose the location, where you want to install it and name the VM as your pleases.<br><img src="https://ricardosung.tech/post-images/1636858881895.png" alt="3"></li>
+<li>Space allocation is 40GB at least. Because the operating system costs arround 2GB and the software package costs at least 18GB.<br><img src="https://ricardosung.tech/post-images/1636859108686.png" alt="4"></li>
+<li>Customize hardware. I recommond you to give the VM at least 8GB memory and 4 cores. Then click “finish” button and wait for the auto installation. It may cost you 10-20minutes depending on your PC’s performance.<br><img src="https://ricardosung.tech/post-images/1636859882501.png" alt="5"></li>
+<li>Have fun and enjoy your RHEL? No! After login the system, you need to login your RedHat account to activate the RHEL. </li>
+<li>Go to Settings -&gt; Details -&gt; About, and then type in your RedHat account name and password, if you don’t have any organization, just keep it blank.</li>
+<li>Check for updates using <code>dnf</code> or <code>yum</code>. <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">dnf update &amp;&amp; dnf upgrade</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>Before installing Cadence IC617, you must fit its dependence. Please open a terminal and type in the following.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">dnf install ksh</span><br><span class="line">dnf install csh</span><br><span class="line">dnf install xterm</span><br><span class="line">dnf install libXext.so.6</span><br><span class="line">dnf install libXt.so.6</span><br><span class="line">dnf install libGLU.so.1 --setopt=protected_multilib=false </span><br><span class="line">dnf install libelf.so.1</span><br><span class="line">dnf install libXrender.so.1</span><br><span class="line">dnf install libXp.so.6</span><br><span class="line">dnf install libXrandr.so.2</span><br><span class="line">dnf install libXp</span><br><span class="line">dnf install ld-linux.so.2</span><br><span class="line">dnf install openmotif</span><br><span class="line">dnf install libnsl.so.1</span><br><span class="line">dnf install libnsl</span><br><span class="line">dnf install ncurses</span><br><span class="line">dnf install libXtst</span><br><span class="line">dnf install libXi</span><br><span class="line">dnf install python</span><br><span class="line">dnf install net-tools</span><br><span class="line">dnf install libstdc++</span><br><span class="line">dnf install gcc</span><br><span class="line">dnf install gcc-c++</span><br><span class="line">dnf install redhat-lsb</span><br><span class="line">dnf install libXss.so.1</span><br><span class="line"></span><br><span class="line">ln -s /usr/bin/awk /bin/awk</span><br><span class="line">cd /lib64</span><br><span class="line">ln -s libcrypto.so.1.1 libcrypto.so.6</span><br><span class="line">ln -s libreadline.so.6 libreadline.so.5</span><br><span class="line">cd /usr/lib64</span><br><span class="line">ln -s libhistory.so.6 libhistory.so.5</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">set</span> the hostname of OS</span></span><br><span class="line">hostnamectl --static set-hostname xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cadence"><a href="#Cadence" class="headerlink" title="Cadence"></a>Cadence</h3><p><strong>If it tells you don’t have any permission to do something or some installation failed, just use <code>su</code> to get the root privilege.</strong></p>
+<ol>
+<li>Send the package to VM. First, you need to know the VM ip. Type in <code>ifconfig</code> in shell and your VM ip is shown like this:<br><img src="https://ricardosung.tech/post-images/1636877311327.png" alt="6"><br>Then add the VM in WinSCP using SCP protocol. And save the details, so that you can transfer files between the RM and VM without type in the ip and so on again.<br><img src="https://ricardosung.tech/post-images/1636877413523.png" alt="7"><br>Finally, drag the package from RM to VM in WinSCP. But before that, create a folder firstly and set the privilige of the folder to 777.<br><img src="https://ricardosung.tech/post-images/1636878270478.png" alt="8"><br>Wait until transfer completed.<br><img src="https://ricardosung.tech/post-images/1636878355774.png" alt="9"></li>
+<li>Create a folder to install Cadence IC617, and to avoid some potential problems, I use <code>/opt/Cadence</code>.<br><img src="https://ricardosung.tech/post-images/1636879625814.png" alt="10"></li>
+<li>Back to the package archive folder, and install <code>Iscape</code> first. Because <code>Iscape</code> is a tool to install IC617. Use this command <code>sh iscape.sh</code><br><img src="https://ricardosung.tech/post-images/1636879927220.png" alt="11"></li>
+<li>Click <code>Preferences</code> -&gt; <code>InstallScape</code> -&gt; <code>Directions</code>, and change <code>Default Install Directory</code> to the new created folder <code>/opt/Cadence</code>. What’s more, you can change other directions whatever you like, but keep others as default.<br><img src="https://ricardosung.tech/post-images/1636880243906.png" alt="12"></li>
+<li>Choose <code>Local directory/Media install</code> and browse to find the install package <code>IC617Hotfix</code><br><img src="https://ricardosung.tech/post-images/1636880498067.png" alt="13"></li>
+<li>Check the checkbox of <code>IC_617</code> and next.<br><img src="https://ricardosung.tech/post-images/1636880574268.png" alt="14"></li>
+<li>Select all <code>PIC</code> and check if the install directin is right.<br><img src="https://ricardosung.tech/post-images/1636880733670.png" alt="15"><br>Choose the base CD in the same directory <code>IC617xxx_base</code>, which is the original install file of Cadence. You know <code>hotfix</code> means <code>kpi</code> of programmers, which doesn’t contain the original version.<br><img src="https://ricardosung.tech/post-images/1636892865063.png" alt="16"><br>Keep pressing <code>Enter</code> and <code>y</code> to  install “Valid library and Sim primitives” and “XL library and Gate primitives”.<br><img src="https://ricardosung.tech/post-images/1636895098426.png" alt="18"><br>When you are asked if “Prepare libraries for AMS Designer”. type in <code>2</code> to “Quit”.<br><img src="https://ricardosung.tech/post-images/1636895217134.png" alt="19"><br>Do not press <code>n</code> until the program asks “Do you want to use a different OpenAccess installation (y&#x2F;n&#x2F;q)?”.<br><img src="https://ricardosung.tech/post-images/1636894777772.png" alt="17"><br>If you see both “Install Status” and “Configure Status” are “success”, you can go to the next step or you can <code>Configure releases</code> to reconfigure.<br><img src="https://ricardosung.tech/post-images/1636895670501.png" alt="20"></li>
+<li>Install “Spectre18” and “XCELIUMMAIN” in the same way as installing “IC617”. And <strong>Do type in <code>n</code></strong> when bing asked if you want to  use a different OpenAccess installation (y&#x2F;n&#x2F;q).<br><img src="https://ricardosung.tech/post-images/1636896342861.png" alt="21"><br><img src="https://ricardosung.tech/post-images/1636896353583.png" alt="22"><br><img src="https://ricardosung.tech/post-images/1636896446769.png" alt="23"></li>
+<li>I believe you may feel amazed when you see the file type of Calibre installation package. It is “.exe”! Yes, it is “.exe”, but you cannot install it on Windows.<br>First, create an installation folder in <code>/opt/mentor/Calibre2019</code><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/mentor/Calibre2019</span><br><span class="line">mv /(original place)/Calibre/*  /opt/mentor/Calibre2019</span><br><span class="line">cd /opt/mentor/Calibre2019</span><br><span class="line">chmod 777 aoj_cal_2019.3_15.11_mib.exe</span><br><span class="line">./aoj_cal_2019.3_15.11_mib.exe ( -tgt /target_folder)</span><br></pre></td></tr></table></figure>
+Then type in <code>D</code> and <code>yes</code>.<br><img src="https://ricardosung.tech/post-images/1636948544144.png" alt="24"><br>And wait …<br><img src="https://ricardosung.tech/post-images/1636949941818.png" alt="25"></li>
+</ol>
+<h3 id="Patch"><a href="#Patch" class="headerlink" title="Patch"></a>Patch</h3><ol>
+<li>Generate IC617 license.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">cd patch</span><br><span class="line">python3 cdslicgen.py</span><br><span class="line">cp ./license.dat /opt/Cadence/IC617/share/license</span><br><span class="line">chmod 777 /opt/Cadence/IC617/share/license/license.dat</span><br></pre></td></tr></table></figure></li>
+<li>Generate Calibre license.<br>Type in <code>ifconfig</code> to find the local “Mac address”, which is called “ether”.<br><img src="https://ricardosung.tech/post-images/1636952546558.png" alt="26"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 mgclicgen.py (Mac address)</span><br></pre></td></tr></table></figure>
+You may meet an error. I’m sorry, but I don’t know how to solve it by adding a command in the python file. You can replace “HOSTID” by the Mac address manually and save the crack code as a new “license.dat”. Then<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cp license.dat /opt/mentor/license/</span><br><span class="line">chmod 777 /opt/mentor/license/license.dat</span><br><span class="line">````</span><br><span class="line">3. The only difference between IC617 license and XCELIUMMAIN license is </span><br><span class="line">```shell</span><br><span class="line">FEATURE Xcelium_Limited_Single_Core</span><br><span class="line">FEATURE XceliumLimitedSingleCoreLegacy</span><br><span class="line">FEATURE Xcelium_Single_Core</span><br><span class="line">FEATURE Xcelium_Single_Core_Legacy</span><br><span class="line">FEATURE Xcelium_Safety</span><br><span class="line">FEATURE Xcelium_Safety_Option</span><br><span class="line">FEATURE Xcelium_Multi_Core</span><br><span class="line">FEATURE Xcelium_For_Partners</span><br><span class="line">FEATURE Xcelium_SC_DMS_Option</span><br><span class="line">FEATURE Xcelium_MC_GLS_SDF_Option</span><br><span class="line">FEATURE Xcelium_MC_LP_Option</span><br><span class="line">FEATURE Xcelium_MC_DFT_Option</span><br><span class="line">FEATURE Integrated_Metrics_Center</span><br></pre></td></tr></table></figure>
+which you need to add to <code>/opt/cadence/IC617/share/license/license.dat</code>.</li>
+<li>Patch to crack Cadence IC617.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">cd patch</span><br><span class="line">sh ./1patch.sh /opt/Cadence/IC617</span><br><span class="line">sh ./1patch.sh /opt/Cadence/SPECTRE181</span><br><span class="line">sh ./1patch.sh /opt/Cadence/XCELIUM1803</span><br><span class="line">sh ./1patch.sh /opt/mentor/Calibre2019</span><br></pre></td></tr></table></figure></li>
+<li>Add to path. Modify <code>.bashrc</code> in home location and paste them to the following lines. Remember to change the “hostname” below.<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">--------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> User<span class="string">&#x27;s Guide</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#  Copy this .bashrc environment setting file to the working (design project) directory, e.g.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> /home/johndoe/project1, /home/johndoe/project2, ...., etc.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#  On terminal, cd to the working directory and then source the .bashrc file by typing the</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> following at the shell prompt $:</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> . .bashrc</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> Note:  a space is required between &quot;.&quot; and &quot;.bashrc&quot; in the above command.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#  Now all the environment variables in .bashrc file have been loaded into the current shell</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> terminal and commands can be issued at the shell prompt $ to launch various Cadence</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> tools, for instance, &quot;virtuoso &amp;&quot; (without the quotes).  Some frequently used commands are</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> listed in this file together with corresponding environment settings.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#  You may finish the Cadence session at any time by closing the running Cadence tool.  To</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> start up another Cadence session, just issue another Cadence command at the shell</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> prompt $, e.g. &quot;innovus &amp;&quot; (without the quotes), etc. To exit the entire Cadence</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> environment, close the terminal.  By closing the terminal, all loaded Cadence and Calibre</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> environment variables are terminated since all of these variables are loaded and</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> contained in the terminated shell terminal.  The benefit of sourcing .bashrc to a local shell</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> terminal instead of setting them in the $HOME/.bashrc is that all of the loaded Cadence &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> Calibre environment variables don&#x27;</span>t globally affect system environment settings and</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> therefore you can run other programs on the system normally and won<span class="string">&#x27;t disturb the</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> Cadence session or vice versa.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#  If you&#x27;</span>re setting up a multiuser server, create a client copy of this .bashrc file and make</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> necessary changes accordingly, e.g. point CDS_LIC_FILE to the server<span class="string">&#x27;s license directory</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> as port@hostname.  Instruct users to download it to the working directory on the client</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> machine and source the client copy before starting up any Cadence tool.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">--------------------------------------------------------------------------------------------------</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">For proper distributed processing execution using Cadence PVS software, it requires</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">that the following is set as the first line in .bashrc</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Note: the space between the ! and $prompt is required!</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">if (! $prompt); then</span><br><span class="line">  exit</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence Design Systems</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># Master IC CAD flow including schematic capture, simulation, layout, and verification.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line">export CADHOME=/opt/Cadence</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Requied for Cadence on Linux</span></span></span><br><span class="line">export LANG=C</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set netlisting mode</span></span></span><br><span class="line">export CDS_Netlisting_Mode=Analog</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Specify a search order for .cdsenv</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># Load .cdsenv in the working directory ($CWD)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export CDS_LOAD_ENV=CWD</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">browser setup for Cadence Help</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export MOZILLA_HOME=/usr/bin/firefox</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence - IC</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># IC Schematic Entry, Simulation, Layout, Verification (Diva)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line">export CDS=$CADHOME/IC617</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Some of these variables are used by various other tools, e.g. foundry&#x27;</span>s PDK.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set them to be safe</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line">export CDSDIR=$CDS</span><br><span class="line">export CDSHOME=$CDS</span><br><span class="line">export Cadence_DIR=$CDS</span><br><span class="line">export CDS_INST_DIR=$CDS</span><br><span class="line">export CDS_ROOT=$CDS</span><br><span class="line">export CDSROOT=$CDS</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set up either CDS_LIC_FILE or LM_LICENSE_FILE, but NOT both or it<span class="string">&#x27;ll</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">take long time to search license!!!</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># Set variable CDS_LIC_ONLY to ignore LM_LICENSE_FILE if it exists.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># Use absolute PATH to license.dat file instead of port@hostname</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># The license server is no longer needed once all features are set to uncounted or 0</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">(unlimited use) for the FEATURE lines in license.dat.  The SERVER, VENDOR and</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">USE_SERVER lines can be safely removed from license.dat file, i.e. license.dat here</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">contains FEATURE lines only.  DO NOT START UP LICENSE SERVER DAEMON!!!</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line">export CDS_LIC_FILE=$CDS/share/license/license.dat</span><br><span class="line">export CDS_LIC_ONLY=1</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Support for 64-bit executables (this should be set for 64-bit hosts - IMPORTANT!!!)</span></span></span><br><span class="line">export CDS_AUTO_64BIT=ALL</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Master IC PATH</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export PATH=$PATH:$CDSDIR/tools/dfII/bin:$CDSDIR/tools/plot/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set up OA (OpenAccess)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># It is STRONGLY recommended that you DO NOT change the OA installation that</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">each tool uses because tools are tested with the version of OA shipped with the</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">particular tool such as EDI142. However, if it is necessary to use a different</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">version of OA, you can do so with one of the following approaches:</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">1) Use the Configure utility on InstallScape to specify a different OA installation.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">2) Use the OA_HOME environment variable to override the default OA installation.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># DO NOT set up OA_HOME as recommended above!  Instead use the default OA</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">installed within each Cadence tool, or use Configure utility on InstallScape to</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">re-set OA back to the original default OA installation in each product such as.EDI,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">EXT, etc. if they were ever changed.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set up Cadence unsupported systems such as Ubuntu Linux</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">IC617 supports Ubuntu14.04 so this variable is no longer required</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">export OA_UNSUPPORTED_PLAT=linux_rhel50_gcc44x</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">To run Virtuoso Schematic and Verilog Driven Mixed-Signal Flow,  the following</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">environment variable must be set before starting Virtuoso.</span></span></span><br><span class="line">export CDS_ENABLE_VMS=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence Analog Simulators (MMSIM) - Spectre, SpectreRF, &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">RelXpert (Reliability Simulator)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line">export MMSIMHOME=$CADHOME/SPECTRE181</span><br><span class="line">export PATH=$PATH:$MMSIMHOME/bin:$MMSIMHOME/tools/relxpert/bin</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence QRC Extraction, Advanced Analysis &amp; Modeling (EXT)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># Note: QRC must appear in the PATH before Assura executables</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export QRC_HOME=$CADHOME/EXT151</span><br><span class="line">export PATH=$PATH:$QRC_HOME/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Enhance precision of QRC for DFM MOS extraction</span></span></span><br><span class="line">export QRC_MOS_LW_PRECISION=Y</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence Assura (ASSURA) - DRC. LVS, parasitic extraction</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># These executables should be on the PATH after DFII executables</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">export ASSURAHOME=$CADHOME/ASSURA41</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">export PATH=$PATH:$ASSURAHOME/tools/bin:$ASSURAHOME/tools/assura/bin</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Setting this variable enables Assura to work with PVS licenses only without</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">attempts to check-out Assura licenses first and thus speeds up execution.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">export ASSURA_USE_PVS_LICENSE=1</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set up foundry DFM PATH for Assura - CRNxxG/CRNxxLP process for current project</span></span></span><br><span class="line">export TSMC_ASU_DFM_PATH=/opt/PDKs/tsmc/CRNxxG/Assura/lvs_rcx/DFM</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">export TSMC_ASU_DFM_PATH=/opt/PDKs/tsmc/CRNxxLP/Assura/lvs_rcx/DFM</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence Physical Verification System, MaskCompose, &amp; QuickView (PVS)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># K2_VIEWER_HOME must be set before Quickview is invoked. LM_LICENSE_FILE</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">is required to run any K2 product.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export K2_HOME=$CADHOME/PVS151/tools/K2</span><br><span class="line">export K2_VIEWER_HOME=$K2_HOME/Viewer</span><br><span class="line">export K2_MASKCOMPOSE_HOME=$K2_HOME/MaskCompose</span><br><span class="line">export K2_MC_DATA=$HOME/Projects</span><br><span class="line">export LM_LICENSE_FILE=$CDS_LIC_FILE</span><br><span class="line">export PATH=$PATH:$CADHOME/PVS151/bin:$CADHOME/PVS151/tools/bin:$K2_MASKCOMPOSE_HOME/bin</span><br><span class="line">export XKEYSYMDB=$CDSDIR/tools/plot/etc/XKeysymDB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Commands on terminal to launch Quickview or MaskCompose</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">k2_viewer &amp;</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">k2_mcs &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">#############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence Digital Flow - HDL Simulations, Synthesis, P&amp;R</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">##############################################################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Genus Synthesis Solution (GENUS) - Logic &amp; Physical Synthesis</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/GENUS152/tools/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch Genus</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">genus</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">RTL Power Analysis (Joules)</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/JLS151/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to start Joules</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">joules &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Innovus Implementation System (INNOVUS) - P&amp;R</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/INNOVUS152/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch Innovus</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">innovus &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Cadence C-to-Silicon Compiler (CTOS)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/CTOS142/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch CTOS</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">ctosgui &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Encounter Conformal (CONFRML) - Constraint Designer, Low Power Designer,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">&amp; ECO Designer</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/CONFRML152/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch Confirmal with license options:</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">-xl/-gxl/-rcv/-eco/-ecogxl/-lp/-lpxl/-ccd/-ccdxl/-lpgxl/-verify;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string"> default is set to -l if no option is given.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">example:  &quot;lec -lp -verify -gui &amp;&quot; for Low Power license and Verify license</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">lec -lpgxl -verify -gui &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Silicon Signoff &amp; Verification (SSV) - including Tempus Timing Signoff</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">&amp; Voltus IC Power Integrity</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/SSV152/tools/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch tempus or voltus</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">tempus &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">voltus &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Incisive Verification Platform - Digital HDL simulators</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/INCISIVE151/bin:$CADHOME/INCISIVE151/tools/bin::$CADHOME/INCISIVE151/tools/vtools/vfault/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">For 3-step (ncvlog, ncelab, and ncsim) flow to run Virtuoso AMS Designer simulator,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">the following library path environment variable has to be set.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># For single-step (irun) running AMS simulator, LD_LIBRARY_PATH is not required.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export LD_LIBRARY_PATH=$CADHOME/INCISIVE151/tools/lib/64bit:$CADHOME/INCISIVE151/tools/lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Enable noise analysis in AMS designer</span></span></span><br><span class="line">AMS_ENABLE_NOISE=YES</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set up Universal Verification Methodology (UVM) Environment Variables</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># uvm_home defines the path to the UVM class library</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">ml_uvm defines the path to the ml_uvm code</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">ml_seq_dir defines the path to the SystemVerilog ml_uvm_seq package for using</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">sequencer stubs</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">The SystemVerilog package ml_uvm_seq is included in the Specman installation.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">To use it, you must add the following command-line options to your compilation flow,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">as additional command-line arguments to irun or ncvlog :</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">irun ... $&#123;ML_SEQ_DIR&#125;/ml_uvm_seq.sv -incdir $&#123;ML_SEQ_DIR&#125;</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export uvm_home=$CADHOME/INCISIVE151/tools/uvm</span><br><span class="line">export ml_uvm=$CADHOME/INCISIVE151/tools/uvm/uvm_lib/uvm_ml/sc/ml_uvm</span><br><span class="line">export ml_seq_dir=$CADHOME/INCISIVE151/specman/src</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set up the HOME Environment Variable for Incisive Verification Kits</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Source the appropriate environment setup file (Note: a space is required</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">between . and $SOCV_KIT_HOME/env.sh)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export SOCV_KIT_HOME=$CADHOME/INCISIVE151/kits/VerificationKit</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">. $SOCV_KIT_HOME/env.sh</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to start up Incisive Verification Kits</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">start_kit &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">***********************************************************************</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch NClaunch</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">***********************************************************************</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">nclaunch &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to start up Specman &amp; SimVision</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">specman -gui &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to invoke Desktop Manager</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">emanager -desktop &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">vmanager &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Encounter Diagnostics &amp; Test (ET)</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/ET151/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch ET,  or with license options: -architect/-truetime/-diag</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">commands eta, ett and ediag are equivalent to et -architect, et -truetime and et -diag</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">which invokes Encounter Test Architect,  Encounter True_time Delay Test and</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Encounter Diagnostics, respectively.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">eta &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">ett &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">ediag &amp;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Verification IP Product Catalog (VIPCAT)</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string"></span></span></span><br><span class="line"><span class="string"><span class="language-bash"># VIP products are configured using a GUI called PureView.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export CDN_VIP_ROOT=$CADHOME/VIPCAT113</span><br><span class="line">export Cadence_VIP_LIC_ORDER=newrev:soc:portfolio:alacarte</span><br><span class="line">export ABVIP_ISNT_DIR=$CDN_VIP_ROOT/tools/abvip</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">In e , set SPECMAN_PATH to the location of the specific UVC directory</span></span></span><br><span class="line">export SPECMAN_PATH=$PATH:$CDN_VIP_ROOT/utils:$CDN_VIP_ROOT/packages:$CDN_VIP_ROOT/vips/enet/vr_enet</span><br><span class="line">export DENALI=$CDN_VIP_ROOT/tools/denali_64bit</span><br><span class="line">export PATH=$PATH:$DENALI/bin</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">In SV, add the UVC by including the specific VIP SV directory in the irun command:</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">irun -incdir $CDN_VIP_ROOT/vips/enet/vr_enet/sv</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Command on terminal to launch PureView to configure VIP products.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">pureview</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Manufacturability and Variability Sign-Off (MVS) - Litho Analyzers,</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">CMP Predictor</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span></span><br><span class="line">export PATH=$PATH:$CADHOME/MVS152/tools/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Commands on terminal to launch Litho Analyzers, CMP Predictor</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">lpa &amp;</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">lea &amp;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">need to figure out correct license keys in license.dat for CMP Predictor</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">(current ones don&#x27;</span>t work)</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">cmms -ccp &amp;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">cmms -ccpo &amp;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Library Characterizer (Liberate)</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># Include the integrated Spectre in PATH</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">export</span> ALTOSHOME=<span class="variable">$CADHOME</span>/LIBERATE151</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ALTOSHOME</span>/bin</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ALTOSHOME</span>/tools.lnx86/spectre/bin</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">export</span> ALTOS_64=1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set up NCSU CDK</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># This is optional for educational purpose; use foundry provided PDKs</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">instead <span class="keyword">for</span> production projects by including foundry PDKs <span class="keyword">in</span> cds.lib</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">in</span> the working directory.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<span class="comment">#</span></span></span><br><span class="line">export CDK_DIR=/opt/PDKs/ncsu-cdk-1.6.0.beta</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<span class="comment">#</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Mentor Graphics Calibre</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line">export MGC_HOME=/opt/mentor</span><br><span class="line">export CALIBRE_HOME=$MGC_HOME/Calibre2019/aoj_cal_2019.3_15.11</span><br><span class="line">export MGLS_LICENSE_FILE=$MGC_HOME/license/license.dat</span><br><span class="line">export PATH=$PATH:$CALIBRE_HOME/bin</span><br><span class="line">export MGC_LIB_PATH=$CALIBRE_HOME/lib</span><br><span class="line"></span><br><span class="line">export CALIBRE_OS_MSG_LEVEL=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">***********************************************************************</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Enable Calibre RealTime with Cadence Virtuoso</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">***********************************************************************</span></span><br><span class="line">export MGC_CALIBRE_REALTIME_VIRTUOSO_ENABLED=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This variable enables Calibre Interactive to save all GUI settings including default</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">values to a runset file <span class="keyword">for</span> future re-run</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line">export MGC_CALIBRE_SAVE_ALL_RUNSET_VALUES=1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set up socket connection with Virtuoso schematic or layout viewer (using default ports</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">9199 <span class="keyword">for</span> schematic and 9189 <span class="keyword">for</span> layout) <span class="keyword">in</span> the form of host:port</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line">export MGC_CALIBRE_SCHEMATIC_SERVER=hostname:9199S</span><br><span class="line">export MGC_CALIBRE_LAYOUT_SERVER=hostname:9189</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The license server is no longer needed once all features are <span class="built_in">set</span> to uncounted or 0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">(unlimited use) <span class="keyword">for</span> the FEATURE lines <span class="keyword">in</span> license.dat. file.  The SERVER, VENDOR and</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">USE_SERVER lines can be safely removed from license.dat file, i.e. license.dat here</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">contains FEATURE lines only.  DO NOT START UP LICENSE SERVER DAEMON!!!</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">***********************************************************************</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set the name of the executable <span class="keyword">for</span> displaying PDF documentation from Calibre Help</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">menu. The default is acroread <span class="keyword">if</span> it exists.  Make sure evince has been installed before</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">setting up the following (on Ubuntu <span class="built_in">type</span> <span class="built_in">command</span> <span class="string">&quot;sudo apt-get install evince&quot;</span>).</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">***********************************************************************</span></span><br><span class="line">export MGC_PDF_READER=evince</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Command on terminal to launch Cadence Virtuoso tools</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># Adding &amp; runs the process in the background allowing to continue using</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the current terminal.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">virtuoso &amp;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<span class="comment">#</span></span></span><br><span class="line">export SYSTEM_CDS_LIB_DIR=/opt/Cadence/IC617/share/cdssetup</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<span class="comment">#</span></span></span><br><span class="line">export OA_UNSUPPORTED_PLAT=linux_rhel50_gcc48x</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">User specific aliases and <span class="built_in">functions</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">User specific aliases and <span class="built_in">functions</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">###################</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Cadence</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">####################</span></span></span><br><span class="line">export INCISIVDIR=/opt/Cadence/XCELIUM1803/</span><br><span class="line">export VRST_HOME=/opt/Cadence/XCELIUM1803/</span><br><span class="line">export LM_LICENSE_FILE=/opt/Cadence/license/Cadence.dat</span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/Cadence/XCELIUM1803/tools.lnx86/lib</span><br><span class="line">alias irun=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/lib/bin/irun&quot;</span><br><span class="line">alias simv=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/lib/bin/simvision&quot;</span><br><span class="line">alias simvision=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/simvision -64 &amp;&quot;</span><br><span class="line">alias ncvlog=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvlog&quot;</span><br><span class="line">alias ncsim=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvsim&quot;</span><br><span class="line">alias ncelab=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncelab&quot;</span><br><span class="line">alias ncvhdl_p=&quot;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvhdl_p&quot;</span><br><span class="line">export SPECMAN_HOME=$INCISIVDIR/components/sn</span><br><span class="line">export SPECMAN_DIR=$SPECMAN_HOME/</span><br><span class="line">export PATH=&quot;$PATH:$INCISIVDIR/bin&quot;</span><br><span class="line">export PATH=&quot;$PATH:$INCISIVDIR/tools.lnx86/bin&quot;</span><br><span class="line">export PATH=&quot;$PATH:$INCISIVDIR/tools.lnx86/dfII/bin&quot;</span><br><span class="line"></span><br><span class="line">alias i=&quot;icfb&amp;&quot;</span><br><span class="line">alias v=&quot;virtuoso&amp;&quot;</span><br><span class="line">WORKdir=&quot;~/newpdk/HHGRACE_PDK_BCD350GE/prj&quot;</span><br><span class="line">alias cdw=&quot;cd $WORKdir&quot;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Enjoy-it"><a href="#Enjoy-it" class="headerlink" title="Enjoy it"></a>Enjoy it</h2><p>Go to your workspace and start it.<br>But to use it gracefully I highly recommand you to create a start bash and a desktop icon.</p>
+<p><code>start.sh</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">cd /home/ricardo/Project</span><br><span class="line">virtuoso&amp;</span><br></pre></td></tr></table></figure>
+
+<p>Then give the privilige to run the shell script using <code>chmod 777 start.sh</code>.</p>
+<p><code>Virtuoso.desktop</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Encoding=UTF-8</span><br><span class="line">Version=1.0</span><br><span class="line">Type=Application</span><br><span class="line">Terminal=true</span><br><span class="line">Exec=/home/ricardo/Project/start.sh</span><br><span class="line">Name=Virtuoso</span><br><span class="line">Icon=&quot;the folder where you save the jpg of Virtuoso&quot;</span><br></pre></td></tr></table></figure>
+<p>Finally give the privilige to run the  <code>.desktop</code> using <code>chmod 777 Virtuoso.desktop</code>.</p>
+<p><em>Enjoy it!</em></p>
+
+    </article>
+    <!-- license -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://github.com/RicardoSung/ricardosung.github.io">Ricardo Sung</a>
+            <p>Link：<a href="https://github.com/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/">https://github.com/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/</a>
+            <p>Publish date：<a href="https://github.com/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/">November 14th 2021, 10:10:47 am</a>
+            <p>Update date：<a href="https://github.com/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/">April 29th 2024, 1:13:36 pm</a>
+            <p>License：<a rel="license" >All rights reserved by Ricardo Sung.</a></p>
+        </div>
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/RicardoSung/ricardosung.github.io/to-improve-rhel-85/" title="To Improve RHEL 8.5">
+                    <div class="nextTitle">To Improve RHEL 8.5</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/RicardoSung/ricardosung.github.io/resume/" title="Resume">
+                    <div class="prevTitle">Resume</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:Ricardo.Sung@outlook.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/RicardoSung" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://t.me/RICARDOSONG" class="iconfont-archer telegram" target="_blank" title=telegram></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="https://twitter.com/Rethinker5" class="iconfont-archer twitter" target="_blank" title=twitter></a>
+            
+        
+    
+        
+            
+                <a href="https://www.instagram.com/_ricardo.sung/" class="iconfont-archer instagram" target="_blank" title=instagram></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <!-- <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span> -->
+        <span>All rights reserved by Ricardo Sung.</span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Announcement"><span class="toc-number">1.</span> <span class="toc-text">Announcement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparation"><span class="toc-number">2.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation"><span class="toc-number">3.</span> <span class="toc-text">Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OS"><span class="toc-number">3.1.</span> <span class="toc-text">OS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment"><span class="toc-number">3.2.</span> <span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cadence"><span class="toc-number">3.3.</span> <span class="toc-text">Cadence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patch"><span class="toc-number">3.4.</span> <span class="toc-text">Patch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enjoy-it"><span class="toc-number">4.</span> <span class="toc-text">Enjoy it</span></a></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 10
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2023 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/u7Z5_oDii/">国产小众公路车的选择</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/INu0v4I2A/">自组公路车指北</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/D7vaTKv5z/">Travel Tips for Macau SAR</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/18</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/M73n_L61J/">Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/RGJcA4S5P/">My Research Process</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/oneplus-watch-ti-yan-bao-gao/">OnePlus Watch 体验报告</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/add-pdk-for-cadence-ic617/">Add PDK for Cadence IC617</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/to-improve-rhel-85/">To Improve RHEL 8.5</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/build-your-ic-design-evironment-based-on-cadence-ic617-package/">Build Your IC Design Evironment Based on Cadence IC617 Package</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span>
+            <a class="archive-post-title" href="/RicardoSung/ricardosung.github.io/resume/">Resume</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="Chinese">
+                <span class="iconfont-archer">&#xe606;</span>
+                Chinese
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Travel Tutorial">
+                <span class="iconfont-archer">&#xe606;</span>
+                Travel Tutorial
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="IC Design">
+                <span class="iconfont-archer">&#xe606;</span>
+                IC Design
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="English">
+                <span class="iconfont-archer">&#xe606;</span>
+                English
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Virtuoso">
+                <span class="iconfont-archer">&#xe606;</span>
+                Virtuoso
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Tutorial">
+                <span class="iconfont-archer">&#xe606;</span>
+                Tutorial
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="体验报告">
+                <span class="iconfont-archer">&#xe606;</span>
+                体验报告
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Linux">
+                <span class="iconfont-archer">&#xe606;</span>
+                Linux
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="Resume">
+                <span class="iconfont-archer">&#xe606;</span>
+                Resume
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="Travel tips">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Travel tips
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Cycling">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Cycling
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Research Process">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Research Process
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Analog Design Environment">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Analog Design Environment
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Unbox">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Unbox
+        </span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/RicardoSung/ricardosung.github.io/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://github.com/RicardoSung/ricardosung.github.io",
+        root: siteMetaRoot,
+        author: "Ricardo Sung"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/RicardoSung/ricardosung.github.io/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/RicardoSung/ricardosung.github.io/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/RicardoSung/ricardosung.github.io/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+    </body>
+</html>
