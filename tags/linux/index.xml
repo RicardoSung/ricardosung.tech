@@ -13,10 +13,10 @@
     
     <item>
       <title>Build Your IC Design Evironment Based on Cadence IC617 Package</title>
-      <link>/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
+      <link>/posts/en_build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
       <pubDate>Sun, 14 Nov 2021 10:10:47 +0000</pubDate>
       
-      <guid>/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
+      <guid>/posts/en_build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
       <description>&lt;p&gt;For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about &lt;code&gt;Bandgap&lt;/code&gt;, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.
 So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine). And if you want to install it on a RM (Real Machine), you can follow the same way, too.&lt;/p&gt;
 &lt;h2 id=&#34;announcement&#34; &gt;
@@ -62,15 +62,15 @@ So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Mach
 &lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Create a new virtual machine and add RHEL iso
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636858516697.png&#34; alt=&#34;1&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636858516697.png&#34; alt=&#34;1&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Create your user name. It doesn&amp;rsquo;t matter if &lt;code&gt;Full name&lt;/code&gt; mismatch &lt;code&gt;User name&lt;/code&gt;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636858704056.png&#34; alt=&#34;2&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636858704056.png&#34; alt=&#34;2&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Choose the location, where you want to install it and name the VM as your pleases.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636858881895.png&#34; alt=&#34;3&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636858881895.png&#34; alt=&#34;3&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Space allocation is 40GB at least. Because the operating system costs arround 2GB and the software package costs at least 18GB.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636859108686.png&#34; alt=&#34;4&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636859108686.png&#34; alt=&#34;4&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Customize hardware. I recommond you to give the VM at least 8GB memory and 4 cores. Then click &amp;ldquo;finish&amp;rdquo; button and wait for the auto installation. It may cost you 10-20minutes depending on your PC&amp;rsquo;s performance.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636859882501.png&#34; alt=&#34;5&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636859882501.png&#34; alt=&#34;5&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Have fun and enjoy your RHEL? No! After login the system, you need to login your RedHat account to activate the RHEL.&lt;/li&gt;
 &lt;li&gt;Go to Settings -&amp;gt; Details -&amp;gt; About, and then type in your RedHat account name and password, if you don&amp;rsquo;t have any organization, just keep it blank.&lt;/li&gt;
 &lt;li&gt;Check for updates using &lt;code&gt;dnf&lt;/code&gt; or &lt;code&gt;yum&lt;/code&gt;.&lt;/li&gt;
@@ -132,39 +132,39 @@ So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Mach
 &lt;p&gt;&lt;strong&gt;If it tells you don&amp;rsquo;t have any permission to do something or some installation failed, just use &lt;code&gt;su&lt;/code&gt; to get the root privilege.&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Send the package to VM. First, you need to know the VM ip. Type in &lt;code&gt;ifconfig&lt;/code&gt; in shell and your VM ip is shown like this:
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636877311327.png&#34; alt=&#34;6&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636877311327.png&#34; alt=&#34;6&#34;&gt;
 Then add the VM in WinSCP using SCP protocol. And save the details, so that you can transfer files between the RM and VM without type in the ip and so on again.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636877413523.png&#34; alt=&#34;7&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636877413523.png&#34; alt=&#34;7&#34;&gt;
 Finally, drag the package from RM to VM in WinSCP. But before that, create a folder firstly and set the privilige of the folder to 777.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636878270478.png&#34; alt=&#34;8&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636878270478.png&#34; alt=&#34;8&#34;&gt;
 Wait until transfer completed.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636878355774.png&#34; alt=&#34;9&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636878355774.png&#34; alt=&#34;9&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Create a folder to install Cadence IC617, and to avoid some potential problems, I use &lt;code&gt;/opt/Cadence&lt;/code&gt;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636879625814.png&#34; alt=&#34;10&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636879625814.png&#34; alt=&#34;10&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Back to the package archive folder, and install &lt;code&gt;Iscape&lt;/code&gt; first. Because &lt;code&gt;Iscape&lt;/code&gt; is a tool to install IC617. Use this command &lt;code&gt;sh iscape.sh&lt;/code&gt;
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636879927220.png&#34; alt=&#34;11&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636879927220.png&#34; alt=&#34;11&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Click &lt;code&gt;Preferences&lt;/code&gt; -&amp;gt; &lt;code&gt;InstallScape&lt;/code&gt; -&amp;gt; &lt;code&gt;Directions&lt;/code&gt;, and change &lt;code&gt;Default Install Directory&lt;/code&gt; to the new created folder &lt;code&gt;/opt/Cadence&lt;/code&gt;. What&amp;rsquo;s more, you can change other directions whatever you like, but keep others as default.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636880243906.png&#34; alt=&#34;12&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636880243906.png&#34; alt=&#34;12&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Choose &lt;code&gt;Local directory/Media install&lt;/code&gt; and browse to find the install package &lt;code&gt;IC617Hotfix&lt;/code&gt;
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636880498067.png&#34; alt=&#34;13&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636880498067.png&#34; alt=&#34;13&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Check the checkbox of &lt;code&gt;IC_617&lt;/code&gt; and next.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636880574268.png&#34; alt=&#34;14&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636880574268.png&#34; alt=&#34;14&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Select all &lt;code&gt;PIC&lt;/code&gt; and check if the install directin is right.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636880733670.png&#34; alt=&#34;15&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636880733670.png&#34; alt=&#34;15&#34;&gt;
 Choose the base CD in the same directory &lt;code&gt;IC617xxx_base&lt;/code&gt;, which is the original install file of Cadence. You know &lt;code&gt;hotfix&lt;/code&gt; means &lt;code&gt;kpi&lt;/code&gt; of programmers, which doesn&amp;rsquo;t contain the original version.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636892865063.png&#34; alt=&#34;16&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636892865063.png&#34; alt=&#34;16&#34;&gt;
 Keep pressing &lt;code&gt;Enter&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; to  install &amp;ldquo;Valid library and Sim primitives&amp;rdquo; and &amp;ldquo;XL library and Gate primitives&amp;rdquo;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636895098426.png&#34; alt=&#34;18&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636895098426.png&#34; alt=&#34;18&#34;&gt;
 When you are asked if &amp;ldquo;Prepare libraries for AMS Designer&amp;rdquo;. type in &lt;code&gt;2&lt;/code&gt; to &amp;ldquo;Quit&amp;rdquo;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636895217134.png&#34; alt=&#34;19&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636895217134.png&#34; alt=&#34;19&#34;&gt;
 Do not press &lt;code&gt;n&lt;/code&gt; until the program asks &amp;ldquo;Do you want to use a different OpenAccess installation (y/n/q)?&amp;rdquo;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636894777772.png&#34; alt=&#34;17&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636894777772.png&#34; alt=&#34;17&#34;&gt;
 If you see both &amp;ldquo;Install Status&amp;rdquo; and &amp;ldquo;Configure Status&amp;rdquo; are &amp;ldquo;success&amp;rdquo;, you can go to the next step or you can &lt;code&gt;Configure releases&lt;/code&gt; to reconfigure.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636895670501.png&#34; alt=&#34;20&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636895670501.png&#34; alt=&#34;20&#34;&gt;&lt;/li&gt;
 &lt;li&gt;Install &amp;ldquo;Spectre18&amp;rdquo; and &amp;ldquo;XCELIUMMAIN&amp;rdquo; in the same way as installing &amp;ldquo;IC617&amp;rdquo;. And &lt;strong&gt;Do type in &lt;code&gt;n&lt;/code&gt;&lt;/strong&gt; when bing asked if you want to  use a different OpenAccess installation (y/n/q).
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636896342861.png&#34; alt=&#34;21&#34;&gt;
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636896353583.png&#34; alt=&#34;22&#34;&gt;
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636896446769.png&#34; alt=&#34;23&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636896342861.png&#34; alt=&#34;21&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636896353583.png&#34; alt=&#34;22&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636896446769.png&#34; alt=&#34;23&#34;&gt;&lt;/li&gt;
 &lt;li&gt;I believe you may feel amazed when you see the file type of Calibre installation package. It is &amp;ldquo;.exe&amp;rdquo;! Yes, it is &amp;ldquo;.exe&amp;rdquo;, but you cannot install it on Windows.
 First, create an installation folder in &lt;code&gt;/opt/mentor/Calibre2019&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
@@ -174,9 +174,9 @@ First, create an installation folder in &lt;code&gt;/opt/mentor/Calibre2019&lt;/
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#ff9f43&#34;&gt;777&lt;/span&gt; aoj_cal_2019.3_15.11_mib.exe
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./aoj_cal_2019.3_15.11_mib.exe &lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt; -tgt /target_folder&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then type in &lt;code&gt;D&lt;/code&gt; and &lt;code&gt;yes&lt;/code&gt;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636948544144.png&#34; alt=&#34;24&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636948544144.png&#34; alt=&#34;24&#34;&gt;
 And wait &amp;hellip;
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636949941818.png&#34; alt=&#34;25&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636949941818.png&#34; alt=&#34;25&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;patch&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#patch&#34;&gt;
@@ -196,7 +196,7 @@ And wait &amp;hellip;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;Generate Calibre license.
 Type in &lt;code&gt;ifconfig&lt;/code&gt; to find the local &amp;ldquo;Mac address&amp;rdquo;, which is called &amp;ldquo;ether&amp;rdquo;.
-&lt;img src=&#34;https://ricardosung.tech/post-images/1636952546558.png&#34; alt=&#34;26&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://ricardosung.tech/img/1636952546558.png&#34; alt=&#34;26&#34;&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 mgclicgen.py &lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;Mac address&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You may meet an error. I&amp;rsquo;m sorry, but I don&amp;rsquo;t know how to solve it by adding a command in the python file. You can replace &amp;ldquo;HOSTID&amp;rdquo; by the Mac address manually and save the crack code as a new &amp;ldquo;license.dat&amp;rdquo;. Then&lt;/p&gt;

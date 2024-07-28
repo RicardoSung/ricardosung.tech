@@ -576,7 +576,7 @@
 </ol>
 <div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> /home/ricardo/Download/tsmc180
 </span></span><span style="display:flex;"><span>perl pdkInstall.pl 
-</span></span></code></pre></div><p><img src="1637245461033.png" alt="1">
+</span></span></code></pre></div><p><img src="/img/1637245461033.png" alt="1">
 Here <code>1P6M</code> means <code>1 Poly Layer with 6 Metal Layer</code>.
 2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#78787e"># enter the father folder where you store your PDK in you workspace</span>
@@ -591,17 +591,17 @@ Here <code>1P6M</code> means <code>1 Poly Layer with 6 Metal Layer</code>.
 </span></span><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> /home/ricardo/Project/PDK/tsmc180OA
 </span></span><span style="display:flex;"><span>virtuoso&amp;
 </span></span></code></pre></div><p>Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to OpenAccess Translator</code> and select the <code>cds.lib</code> which is modified in OA path.
-<img src="1637286857242.png" alt="2">
+<img src="/img/1637286857242.png" alt="2">
 Then you will see a folder called <code>tsmc18rf</code> generated in <code>tsmc180OA</code>.
-<img src="1637287422170.png" alt="3">
+<img src="/img/1637287422170.png" alt="3">
 And copy the folder to merge the same name folder <code>tsmc18rf</code> to <code>tsmc180</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cp /home/ricardo/Project/PDK/tsmc180OA/tsmc18rf /home/ricardo/Project/PDK/tsmc180
 </span></span></code></pre></div><ol start="3">
 <li>Go to <code>/home/ricardo/Project/PDK/tsmc180/tsmc19rf</code>, edit <code>libInit.il</code> and commit <code>hspiceS</code> using <code>;;</code>.
-<img src="1637287432034.png" alt="4">
+<img src="/img/1637287432034.png" alt="4">
 *Actually I do not know why to commit <code>hspiceS</code>, but it do work well after I add the PDK in Cadence with uncommited <code>libInit.il</code>. *</li>
 <li>Cut and Passte &ldquo;CONTROLS&rdquo; section to the <code>fist</code> section in <code>teckfile</code>
-<img src="1637288558812.png" alt="5"></li>
+<img src="/img/1637288558812.png" alt="5"></li>
 <li>Back to workspcae and run <code>virtuoso&amp;</code>.</li>
 <li>Add lib to <code>Tools</code>-&gt;<code>Library Manager</code>.</li>
 <li>Enjoy it!</li>
@@ -622,11 +622,11 @@ And copy the folder to merge the same name folder <code>tsmc18rf</code> to <code
             <h3 class="read-next-title noselect">Read next</h3>
             <ul class="read-next-posts noselect">
                 
+                <li><a href="/posts/add-pdk-for-cadence-ic617/">Add PDK for Cadence IC617</a></li>
+                
                 <li><a href="/posts/to-improve-rhel-85/">To Improve RHEL 8.5</a></li>
                 
                 <li><a href="/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/">Build Your IC Design Evironment Based on Cadence IC617 Package</a></li>
-                
-                <li><a href="/posts/resume/">Resume</a></li>
                 
             </ul>
         

@@ -579,15 +579,15 @@
 <li><a href="https://blog.csdn.net/mymatin1004/article/details/98804521">mymatin1004, 使用 Cadence ams 仿真器 对 混合信号电路 进行仿真</a>.</li>
 </ol>
 <p>As the figure below shows, <em>instance of design is unresolved</em>.
-<img src="https://ricardosung.tech/post-images/1674051785447.png" alt="error">
+<img src="/img/1674051785447.png" alt="error">
 Yes, I did search the error, but all the &ldquo;solutions&rdquo; I&rsquo;ve tested  didn&rsquo;t work. Hera are the &ldquo;solutions&rdquo;, though which don&rsquo;t work in my case, but sometime they may help you out.</p>
 <ol>
 <li>Go to <code>ADE -&gt; Setup -&gt; Model Library Setup</code>, and check if the <code>model files </code>are the same as those when using spectre only.</li>
 <li>Go to <code>ADE -&gt; Setup -&gt; Connect Rules/IE Setup</code>, then change <code>global supply value/net</code> or just use <code>connectLib.ConnRules</code> in <code>Connect Rule/Connect Module Based Setup</code>. Well, you can switch from this one to the other one, just try it.
-<img src="https://ricardosung.tech/post-images/1674053083453.png" alt="1">
-<img src="https://ricardosung.tech/post-images/1674053133407.png" alt=""></li>
+<img src="/img/1674053083453.png" alt="1">
+<img src="/img/1674053133407.png" alt=""></li>
 <li>Go to <code>ADE -&gt; Simulation -&gt;Netlist and Run Options</code>, change <code>NETLIST AND RUN MODE</code> from <code>Cellview-based netlister with ncvlog ncelab, nsim</code> to <code>OSS-base netlister with irun</code> or <code>AMS Unified Netlister with irun</code>.
-<img src="https://ricardosung.tech/post-images/1674053659612.png" alt=""></li>
+<img src="/img/1674053659612.png" alt=""></li>
 <li>Check if you have configured <code>config</code> correctly, especially <code>stop list</code>. Most time this solution is not necessary, because beginners always use templates to start <code>config</code> configuration.</li>
 </ol>
 <h2 id="the-way-to-fix-the-error" >
@@ -641,7 +641,7 @@ So in a word, my solution is to change the simulation enviroment. <code>Xcelium<
             <h3 class="read-next-title noselect">Read next</h3>
             <ul class="read-next-posts noselect">
                 
-                <li><a href="/posts/add-pdk-for-cadence-ic617/add-pdk-for-cadence-ic617/">Add PDK for Cadence IC617</a></li>
+                <li><a href="/posts/add-pdk-for-cadence-ic617/">Add PDK for Cadence IC617</a></li>
                 
                 <li><a href="/posts/to-improve-rhel-85/">To Improve RHEL 8.5</a></li>
                 
