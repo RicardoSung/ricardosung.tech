@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Virtuoso on Ricardo Sung&#39;s Blog</title>
+    <link>/tags/virtuoso/</link>
+    <description>Ricardo Sung&#39;s Blog (Virtuoso)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Jan 2023 21:16:08 +0000</lastBuildDate>
+    
+    <atom:link href="/tags/virtuoso/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</title>
+      <link>/posts/m73n_l61j/</link>
+      <pubDate>Wed, 18 Jan 2023 21:16:08 +0000</pubDate>
+      
+      <guid>/posts/m73n_l61j/</guid>
+      <description>&lt;p&gt;The post is suitable for one working in AMSV(IME) of UM. I&amp;rsquo;m not sure if the error comes from the incomplete PDK or lack of some connection libraries. But actully I&amp;rsquo;ve fixed them with Lewis&amp;rsquo;s help, who is a stuff of IME.&lt;/p&gt;
+&lt;h2 id=&#34;what-are-the-errors&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#what-are-the-errors&#34;&gt;
+        #
+    &lt;/a&gt;
+    What are the errors?
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;The error popped out when I followed the steps of some tutorial videos or blogs, like&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=skym0kck5ho&amp;amp;list=PLOQ7ARw-angeaYSo4psMkmxF6AW7yPvDj&#34;&gt;Hussein Hussein, AMS - Verilog code in cadence&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=-4ANK_fL7oY&amp;amp;t=600s&#34;&gt;沅晉李, Run mixed-signal in cadence virtuoso. Take a digital low-dropout regulator (DLDO) for example.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.bilibili.com/video/BV1Ji4y1P7uV/?spm_id_from=333.337.search-card.all.click&amp;amp;vd_source=a87efd00681832a103a8c00e390d7ff8&#34;&gt;核弹军, 如何在Virtuoso中进行AMS混合信号仿真&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.csdn.net/mymatin1004/article/details/98804521&#34;&gt;mymatin1004, 使用 Cadence ams 仿真器 对 混合信号电路 进行仿真&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As the figure below shows, &lt;em&gt;instance of design is unresolved&lt;/em&gt;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1674051785447.png&#34; alt=&#34;error&#34;&gt;
+Yes, I did search the error, but all the &amp;ldquo;solutions&amp;rdquo; I&amp;rsquo;ve tested  didn&amp;rsquo;t work. Hera are the &amp;ldquo;solutions&amp;rdquo;, though which don&amp;rsquo;t work in my case, but sometime they may help you out.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to &lt;code&gt;ADE -&amp;gt; Setup -&amp;gt; Model Library Setup&lt;/code&gt;, and check if the &lt;code&gt;model files &lt;/code&gt;are the same as those when using spectre only.&lt;/li&gt;
+&lt;li&gt;Go to &lt;code&gt;ADE -&amp;gt; Setup -&amp;gt; Connect Rules/IE Setup&lt;/code&gt;, then change &lt;code&gt;global supply value/net&lt;/code&gt; or just use &lt;code&gt;connectLib.ConnRules&lt;/code&gt; in &lt;code&gt;Connect Rule/Connect Module Based Setup&lt;/code&gt;. Well, you can switch from this one to the other one, just try it.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1674053083453.png&#34; alt=&#34;1&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/post-images/1674053133407.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Go to &lt;code&gt;ADE -&amp;gt; Simulation -&amp;gt;Netlist and Run Options&lt;/code&gt;, change &lt;code&gt;NETLIST AND RUN MODE&lt;/code&gt; from &lt;code&gt;Cellview-based netlister with ncvlog ncelab, nsim&lt;/code&gt; to &lt;code&gt;OSS-base netlister with irun&lt;/code&gt; or &lt;code&gt;AMS Unified Netlister with irun&lt;/code&gt;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1674053659612.png&#34; alt=&#34;&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Check if you have configured &lt;code&gt;config&lt;/code&gt; correctly, especially &lt;code&gt;stop list&lt;/code&gt;. Most time this solution is not necessary, because beginners always use templates to start &lt;code&gt;config&lt;/code&gt; configuration.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;the-way-to-fix-the-error&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#the-way-to-fix-the-error&#34;&gt;
+        #
+    &lt;/a&gt;
+    The way to fix the error
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;I asked Lewis for help, and he told me to try &lt;code&gt;Xcelium&lt;/code&gt; rather than &lt;code&gt;irun&lt;/code&gt; or &lt;code&gt;ncvlog&lt;/code&gt;. As soon as I read the e-mail, &lt;code&gt;Xcelium&lt;/code&gt; made me confused. But &lt;code&gt;Google.com&lt;/code&gt; is a nice tool, right? &lt;a href=&#34;http://www.lujun.org.cn/?p=3714&#34;&gt;Jun&amp;rsquo;s blog&lt;/a&gt; explains it perfectly.
+So in a word, my solution is to change the simulation enviroment. &lt;code&gt;Xcelium&lt;/code&gt; is the newest tool, and at the same time, the version of &lt;code&gt;Virtuoso&lt;/code&gt; needs changing, too. The correct &lt;code&gt;conf.sh&lt;/code&gt; is shown below, which you may change some softeares&amp;rsquo; versions (To see versions of software, plz open &lt;code&gt;Terminal&lt;/code&gt; and type in &lt;code&gt;module av&lt;/code&gt;.), and in my case, it works well.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;setenv CDS_AUTO_64BIT spectre
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload icfb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload assura
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload cadence/mmsim
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# module load cadence/icfb/ic6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# module load cadence/spectre/171_627&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload cadence/icfb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module load cadence/icfb/618_250
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload cadence/spectre
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module load cadence/spectre/21_10_173
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload calibre
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload mentor/calibre
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module load mentor/calibre/2015.4_33.23
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# module unload incisiv&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# module load cadence/incisiv/1520_047&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module unload cadence/xcelium
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module load cadence/xcelium/2203_01
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module load sonnet/sonnetsuites/sonnet
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;module load empyrean/alps/2019_12_SP2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;virtuoso &amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then open &lt;code&gt;Virtuoso&lt;/code&gt;, and check if &lt;code&gt;NETLIST AND RUN MODE&lt;/code&gt; of &lt;code&gt;ADE -&amp;gt; Simulation -&amp;gt; Netlist and Run Options&lt;/code&gt; is changed to &lt;code&gt;AMS Unified Netlister with xrun&lt;/code&gt;. After that, you can continue the tutorial vidoes or blogs, and have a good time doing mix-signal simualtion.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Add PDK for Cadence IC617</title>
+      <link>/posts/add-pdk-for-cadence-ic617/add-pdk-for-cadence-ic617/</link>
+      <pubDate>Thu, 18 Nov 2021 22:12:06 +0000</pubDate>
+      
+      <guid>/posts/add-pdk-for-cadence-ic617/add-pdk-for-cadence-ic617/</guid>
+      <description>&lt;p&gt;No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.&lt;/p&gt;
+&lt;p&gt;Now I will try to install TSMC 180nm RF as an example.&lt;/p&gt;
+&lt;h1 id=&#34;download-and-extract-the-files&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#download-and-extract-the-files&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Download and extract the files
+&lt;/div&gt;
+&lt;/h1&gt;
+&lt;p&gt;The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are &lt;code&gt;.rar&lt;/code&gt; type,&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;unar xxx.part01.rar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;enter-your-workspace-and-install-pdk&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#enter-your-workspace-and-install-pdk&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Enter your workspace and install PDK
+&lt;/div&gt;
+&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;Here my workspace is &lt;code&gt;/home/ricardo/Project&lt;/code&gt; and my PDK folder is &lt;code&gt;/home/ricardo/Project/PDK&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /home/ricardo/Download/tsmc180
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;perl pdkInstall.pl 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;1637245461033.png&#34; alt=&#34;1&#34;&gt;
+Here &lt;code&gt;1P6M&lt;/code&gt; means &lt;code&gt;1 Poly Layer with 6 Metal Layer&lt;/code&gt;.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# enter the father folder where you store your PDK in you workspace&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /home/ricardo/Project/PDK
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir tsmc180OA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir tsmc180OA/cdb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp tsmc180/cds.lib tsmc180OA/cdb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# modify cds.lib in tsmc180OA/cdb&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# delet all lines and add the CDB PDK path pointing to pdk&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DEFINE tsmc18rf /home/ricardo/Project/PDK/tsmc180/tsmc18rf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# use the conversion tool to convert CDB to OA&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /home/ricardo/Project/PDK/tsmc180OA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;virtuoso&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Click &lt;code&gt;tools&lt;/code&gt;-&amp;gt;&lt;code&gt;Conversion Toolbox&lt;/code&gt;-&amp;gt;&lt;code&gt;CDB to OpenAccess Translator&lt;/code&gt; and select the &lt;code&gt;cds.lib&lt;/code&gt; which is modified in OA path.
+&lt;img src=&#34;1637286857242.png&#34; alt=&#34;2&#34;&gt;
+Then you will see a folder called &lt;code&gt;tsmc18rf&lt;/code&gt; generated in &lt;code&gt;tsmc180OA&lt;/code&gt;.
+&lt;img src=&#34;1637287422170.png&#34; alt=&#34;3&#34;&gt;
+And copy the folder to merge the same name folder &lt;code&gt;tsmc18rf&lt;/code&gt; to &lt;code&gt;tsmc180&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp /home/ricardo/Project/PDK/tsmc180OA/tsmc18rf /home/ricardo/Project/PDK/tsmc180
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Go to &lt;code&gt;/home/ricardo/Project/PDK/tsmc180/tsmc19rf&lt;/code&gt;, edit &lt;code&gt;libInit.il&lt;/code&gt; and commit &lt;code&gt;hspiceS&lt;/code&gt; using &lt;code&gt;;;&lt;/code&gt;.
+&lt;img src=&#34;1637287432034.png&#34; alt=&#34;4&#34;&gt;
+*Actually I do not know why to commit &lt;code&gt;hspiceS&lt;/code&gt;, but it do work well after I add the PDK in Cadence with uncommited &lt;code&gt;libInit.il&lt;/code&gt;. *&lt;/li&gt;
+&lt;li&gt;Cut and Passte &amp;ldquo;CONTROLS&amp;rdquo; section to the &lt;code&gt;fist&lt;/code&gt; section in &lt;code&gt;teckfile&lt;/code&gt;
+&lt;img src=&#34;1637288558812.png&#34; alt=&#34;5&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Back to workspcae and run &lt;code&gt;virtuoso&amp;amp;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add lib to &lt;code&gt;Tools&lt;/code&gt;-&amp;gt;&lt;code&gt;Library Manager&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Enjoy it!&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>To Improve RHEL 8.5</title>
+      <link>/posts/to-improve-rhel-85/</link>
+      <pubDate>Wed, 17 Nov 2021 09:27:22 +0000</pubDate>
+      
+      <guid>/posts/to-improve-rhel-85/</guid>
+      <description>&lt;p&gt;After installing RHEL, there is something that must be done. Actually, I have tested the latest RHEL 9, but as a comsumer, I think it is to hard to use, because EPEL packages are not as much as that in RHEL 8.5. So I switch my OS to RHEL 8.5.&lt;/p&gt;
+&lt;h2 id=&#34;enable-epel&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#enable-epel&#34;&gt;
+        #
+    &lt;/a&gt;
+    Enable EPEL
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf clean all
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf update
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;subscription-manager repos --enable &lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;codeready-builder-for-rhel-8-&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;$(&lt;/span&gt;arch&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;-rpms&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;install-nvidia-driver&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#install-nvidia-driver&#34;&gt;
+        #
+    &lt;/a&gt;
+    Install NVIDIA driver
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lspci -vnn | grep VGA
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Download NVIDIA driver for Linux x86_64 from [official website](https://www.nvidia.com/Download/index.aspx?lang=en-us).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; Download
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf group install &lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;Development Tools&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Disable nouveau&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nano /etc/modprobe.d/blacklist.conf 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;blacklist nouveau
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mv  /boot/initramfs-&lt;span style=&#34;color:#ff6ac1&#34;&gt;$(&lt;/span&gt;uname -r&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;.img   /boot/initramfs-&lt;span style=&#34;color:#ff6ac1&#34;&gt;$(&lt;/span&gt;uname -r&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;.img.bak
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dracut --force /boot/initramfs-&lt;span style=&#34;color:#ff6ac1&#34;&gt;$(&lt;/span&gt;uname -r&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;.img
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lsmod | grep nouveau &lt;span style=&#34;color:#78787e&#34;&gt;# Check if you have disabled nouveau correctly. No responce is right.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;init &lt;span style=&#34;color:#ff9f43&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#78787e&#34;&gt;#to go to no-graphic mode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# alt + F2 to enter tty2 and then login&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;su
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./&lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;nvidia_driver&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;.run
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# do not install 32-bit and press &amp;#34;yes&amp;#34; to restart x.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Check if NVIDIA driver is installed.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nvidia-smi
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nvidia-settings
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;install-google-chrome&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#install-google-chrome&#34;&gt;
+        #
+    &lt;/a&gt;
+    Install Google-Chrome
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;Download google-chrome installation package from google.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install liberation-fonts
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libvulkan.so.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rpm -ivh ./&lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;google-chrome&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;mount-ntfs-disk&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#mount-ntfs-disk&#34;&gt;
+        #
+    &lt;/a&gt;
+    Mount NTFS disk
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;To mount NTFS disk, I need a package called &lt;code&gt;NTFS-3G&lt;/code&gt;. When I search for solution, it is amazing that almost everyone says that &amp;ldquo;yum install ntfs-3g&amp;rdquo; after adding &lt;code&gt;EPEL&lt;/code&gt; to yum can work, but actually it do works!
+hhh.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yum install ntfs-3g
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# then double-click the disk in file manager, and you can access to it.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# you can still mount the disk manually&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /mnt/win/temp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /mnt/win/doc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t ntfs-3g /dev/nvme0n1p4 /mnt/win/temp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t ntfs-3g /dev/sda1 /mnt/win/doc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;onedriver&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#onedriver&#34;&gt;
+        #
+    &lt;/a&gt;
+    OneDriver
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;I use OneDrive to sync my files so I struggled to find an easy use tool to access to onedrive, until I find &lt;a href=&#34;https://github.com/jstaf/onedriver&#34;&gt;OneDriver&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo dnf copr &lt;span style=&#34;color:#ff5c57&#34;&gt;enable&lt;/span&gt; jstaf/onedriver
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo dnf install onedriver
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;gridea&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#gridea&#34;&gt;
+        #
+    &lt;/a&gt;
+    Gridea
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;Gridea is what I use to build my blog, however, no rpm version is provided. I need to convert deb or dmg to rpm, or I will need to use the &amp;ldquo;junk&amp;rdquo; AppImage. Jesus! I finally take &lt;code&gt;.snap&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum install snapd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl &lt;span style=&#34;color:#ff5c57&#34;&gt;enable&lt;/span&gt; --now snapd.socket
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ln -s /var/lib/snapd/snap /snap
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wget https://github.com/getgridea/gridea/releases/download/v0.9.2/gridea_0.9.2_amd64.snap
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo snap install &lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;gricea&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;.snap --dangerous
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;snap run gridea
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;v2raya&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#v2raya&#34;&gt;
+        #
+    &lt;/a&gt;
+    V2rayA
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;There is no version for RHEL8 actually, so you cannot add copr by &lt;code&gt;dnf copr enable zhullyb/v2rayA&lt;/code&gt;. Follow these:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf copr &lt;span style=&#34;color:#ff5c57&#34;&gt;enable&lt;/span&gt; zhullyb/v2rayA centos-steam-8-x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install v2ray-core v2rayA
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;convert-deb-to-rpm&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#convert-deb-to-rpm&#34;&gt;
+        #
+    &lt;/a&gt;
+    Convert deb to rpm
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yum install alien
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;alien --to-rpm --scripts xxx.deb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rpm -Uvh xxx.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# if some errors occur&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yum install https://rpmfind.net/linux/fedora/linux/releases/35/Everything/x86_64/os/Packages/r/rpmrebuild-2.16-1.fc35.noarch.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rpmrebuild -pe xxx.rpm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# remove the error path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rpm -e --nodeps xxx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;rar&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#rar&#34;&gt;
+        #
+    &lt;/a&gt;
+    RAR
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yum install unar
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;unar xxx.rar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Build Your IC Design Evironment Based on Cadence IC617 Package</title>
+      <link>/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
+      <pubDate>Sun, 14 Nov 2021 10:10:47 +0000</pubDate>
+      
+      <guid>/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
+      <description>&lt;p&gt;For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about &lt;code&gt;Bandgap&lt;/code&gt;, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.
+So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine). And if you want to install it on a RM (Real Machine), you can follow the same way, too.&lt;/p&gt;
+&lt;h2 id=&#34;announcement&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#announcement&#34;&gt;
+        #
+    &lt;/a&gt;
+    Announcement
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;I try my best to protect copyright by using the licensed software. But I don&amp;rsquo;t have access to the licensed Cadence, also the PDK, so you know &amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;preparation&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#preparation&#34;&gt;
+        #
+    &lt;/a&gt;
+    Preparation
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;A DVD installation ISO of &lt;code&gt;RHEL&lt;/code&gt; operating system.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Cadence IC617 Pacckage&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;WinSCP&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Virtual machine software, eg. &lt;code&gt;Virtual Box&lt;/code&gt;, &lt;code&gt;VMware Workstation Player&lt;/code&gt; and &lt;code&gt;Hyper-V&lt;/code&gt;.
+&lt;em&gt;I highly recommond you using Vrtual Box or VMware Workstation Player, because I felt the mouse pointer is quite fluent  as in Windows Desk. Maybe Windows11 and my AMD 3900x caused it? Well, I don&amp;rsquo;t know~~~&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;installation&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#installation&#34;&gt;
+        #
+    &lt;/a&gt;
+    Installation
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;I have divided the installation inroduction to two parts - OS installation and Cadence Installation. And I will do it using &lt;code&gt;VMware Workstation Player&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;os&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#os&#34;&gt;
+        ##
+    &lt;/a&gt;
+    OS
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a new virtual machine and add RHEL iso
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636858516697.png&#34; alt=&#34;1&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Create your user name. It doesn&amp;rsquo;t matter if &lt;code&gt;Full name&lt;/code&gt; mismatch &lt;code&gt;User name&lt;/code&gt;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636858704056.png&#34; alt=&#34;2&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Choose the location, where you want to install it and name the VM as your pleases.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636858881895.png&#34; alt=&#34;3&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Space allocation is 40GB at least. Because the operating system costs arround 2GB and the software package costs at least 18GB.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636859108686.png&#34; alt=&#34;4&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Customize hardware. I recommond you to give the VM at least 8GB memory and 4 cores. Then click &amp;ldquo;finish&amp;rdquo; button and wait for the auto installation. It may cost you 10-20minutes depending on your PC&amp;rsquo;s performance.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636859882501.png&#34; alt=&#34;5&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Have fun and enjoy your RHEL? No! After login the system, you need to login your RedHat account to activate the RHEL.&lt;/li&gt;
+&lt;li&gt;Go to Settings -&amp;gt; Details -&amp;gt; About, and then type in your RedHat account name and password, if you don&amp;rsquo;t have any organization, just keep it blank.&lt;/li&gt;
+&lt;li&gt;Check for updates using &lt;code&gt;dnf&lt;/code&gt; or &lt;code&gt;yum&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;su
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf update &lt;span style=&#34;color:#ff6ac1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; dnf upgrade
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;environment&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#environment&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Environment
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;p&gt;Before installing Cadence IC617, you must fit its dependence. Please open a terminal and type in the following.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install ksh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install csh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install xterm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXext.so.6
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXt.so.6
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libGLU.so.1 --setopt&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;protected_multilib&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;false&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libelf.so.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXrender.so.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXp.so.6
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXrandr.so.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install ld-linux.so.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install openmotif
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libnsl.so.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libnsl
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install ncurses
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXtst
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXi
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install python
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install net-tools
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libstdc++
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install gcc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install gcc-c++
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install redhat-lsb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dnf install libXss.so.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ln -s /usr/bin/awk /bin/awk
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ln -s libcrypto.so.1.1 libcrypto.so.6
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ln -s libreadline.so.6 libreadline.so.5
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /usr/lib64
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ln -s libhistory.so.6 libhistory.so.5
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# set the hostname of OS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hostnamectl --static set-hostname xxx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;cadence&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#cadence&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Cadence
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;If it tells you don&amp;rsquo;t have any permission to do something or some installation failed, just use &lt;code&gt;su&lt;/code&gt; to get the root privilege.&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Send the package to VM. First, you need to know the VM ip. Type in &lt;code&gt;ifconfig&lt;/code&gt; in shell and your VM ip is shown like this:
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636877311327.png&#34; alt=&#34;6&#34;&gt;
+Then add the VM in WinSCP using SCP protocol. And save the details, so that you can transfer files between the RM and VM without type in the ip and so on again.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636877413523.png&#34; alt=&#34;7&#34;&gt;
+Finally, drag the package from RM to VM in WinSCP. But before that, create a folder firstly and set the privilige of the folder to 777.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636878270478.png&#34; alt=&#34;8&#34;&gt;
+Wait until transfer completed.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636878355774.png&#34; alt=&#34;9&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Create a folder to install Cadence IC617, and to avoid some potential problems, I use &lt;code&gt;/opt/Cadence&lt;/code&gt;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636879625814.png&#34; alt=&#34;10&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Back to the package archive folder, and install &lt;code&gt;Iscape&lt;/code&gt; first. Because &lt;code&gt;Iscape&lt;/code&gt; is a tool to install IC617. Use this command &lt;code&gt;sh iscape.sh&lt;/code&gt;
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636879927220.png&#34; alt=&#34;11&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Click &lt;code&gt;Preferences&lt;/code&gt; -&amp;gt; &lt;code&gt;InstallScape&lt;/code&gt; -&amp;gt; &lt;code&gt;Directions&lt;/code&gt;, and change &lt;code&gt;Default Install Directory&lt;/code&gt; to the new created folder &lt;code&gt;/opt/Cadence&lt;/code&gt;. What&amp;rsquo;s more, you can change other directions whatever you like, but keep others as default.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636880243906.png&#34; alt=&#34;12&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Choose &lt;code&gt;Local directory/Media install&lt;/code&gt; and browse to find the install package &lt;code&gt;IC617Hotfix&lt;/code&gt;
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636880498067.png&#34; alt=&#34;13&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Check the checkbox of &lt;code&gt;IC_617&lt;/code&gt; and next.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636880574268.png&#34; alt=&#34;14&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Select all &lt;code&gt;PIC&lt;/code&gt; and check if the install directin is right.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636880733670.png&#34; alt=&#34;15&#34;&gt;
+Choose the base CD in the same directory &lt;code&gt;IC617xxx_base&lt;/code&gt;, which is the original install file of Cadence. You know &lt;code&gt;hotfix&lt;/code&gt; means &lt;code&gt;kpi&lt;/code&gt; of programmers, which doesn&amp;rsquo;t contain the original version.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636892865063.png&#34; alt=&#34;16&#34;&gt;
+Keep pressing &lt;code&gt;Enter&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; to  install &amp;ldquo;Valid library and Sim primitives&amp;rdquo; and &amp;ldquo;XL library and Gate primitives&amp;rdquo;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636895098426.png&#34; alt=&#34;18&#34;&gt;
+When you are asked if &amp;ldquo;Prepare libraries for AMS Designer&amp;rdquo;. type in &lt;code&gt;2&lt;/code&gt; to &amp;ldquo;Quit&amp;rdquo;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636895217134.png&#34; alt=&#34;19&#34;&gt;
+Do not press &lt;code&gt;n&lt;/code&gt; until the program asks &amp;ldquo;Do you want to use a different OpenAccess installation (y/n/q)?&amp;rdquo;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636894777772.png&#34; alt=&#34;17&#34;&gt;
+If you see both &amp;ldquo;Install Status&amp;rdquo; and &amp;ldquo;Configure Status&amp;rdquo; are &amp;ldquo;success&amp;rdquo;, you can go to the next step or you can &lt;code&gt;Configure releases&lt;/code&gt; to reconfigure.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636895670501.png&#34; alt=&#34;20&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Install &amp;ldquo;Spectre18&amp;rdquo; and &amp;ldquo;XCELIUMMAIN&amp;rdquo; in the same way as installing &amp;ldquo;IC617&amp;rdquo;. And &lt;strong&gt;Do type in &lt;code&gt;n&lt;/code&gt;&lt;/strong&gt; when bing asked if you want to  use a different OpenAccess installation (y/n/q).
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636896342861.png&#34; alt=&#34;21&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636896353583.png&#34; alt=&#34;22&#34;&gt;
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636896446769.png&#34; alt=&#34;23&#34;&gt;&lt;/li&gt;
+&lt;li&gt;I believe you may feel amazed when you see the file type of Calibre installation package. It is &amp;ldquo;.exe&amp;rdquo;! Yes, it is &amp;ldquo;.exe&amp;rdquo;, but you cannot install it on Windows.
+First, create an installation folder in &lt;code&gt;/opt/mentor/Calibre2019&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /opt/mentor/Calibre2019
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mv /&lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;original place&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;/Calibre/*  /opt/mentor/Calibre2019
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /opt/mentor/Calibre2019
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#ff9f43&#34;&gt;777&lt;/span&gt; aoj_cal_2019.3_15.11_mib.exe
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./aoj_cal_2019.3_15.11_mib.exe &lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt; -tgt /target_folder&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then type in &lt;code&gt;D&lt;/code&gt; and &lt;code&gt;yes&lt;/code&gt;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636948544144.png&#34; alt=&#34;24&#34;&gt;
+And wait &amp;hellip;
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636949941818.png&#34; alt=&#34;25&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;patch&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#patch&#34;&gt;
+        ##
+    &lt;/a&gt;
+    Patch
+&lt;/div&gt;
+&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Generate IC617 license.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;su
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; patch
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 cdslicgen.py
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp ./license.dat /opt/Cadence/IC617/share/license
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#ff9f43&#34;&gt;777&lt;/span&gt; /opt/Cadence/IC617/share/license/license.dat
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Generate Calibre license.
+Type in &lt;code&gt;ifconfig&lt;/code&gt; to find the local &amp;ldquo;Mac address&amp;rdquo;, which is called &amp;ldquo;ether&amp;rdquo;.
+&lt;img src=&#34;https://ricardosung.tech/post-images/1636952546558.png&#34; alt=&#34;26&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 mgclicgen.py &lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;Mac address&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You may meet an error. I&amp;rsquo;m sorry, but I don&amp;rsquo;t know how to solve it by adding a command in the python file. You can replace &amp;ldquo;HOSTID&amp;rdquo; by the Mac address manually and save the crack code as a new &amp;ldquo;license.dat&amp;rdquo;. Then&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cp license.dat /opt/mentor/license/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#ff9f43&#34;&gt;777&lt;/span&gt; /opt/mentor/license/license.dat
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;The only difference between IC617 license and XCELIUMMAIN license is&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_Limited_Single_Core
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE XceliumLimitedSingleCoreLegacy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_Single_Core
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_Single_Core_Legacy
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_Safety
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_Safety_Option
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_Multi_Core
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_For_Partners
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_SC_DMS_Option
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_MC_GLS_SDF_Option
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_MC_LP_Option
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Xcelium_MC_DFT_Option
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;FEATURE Integrated_Metrics_Center
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;which you need to add to &lt;code&gt;/opt/cadence/IC617/share/license/license.dat&lt;/code&gt;.
+4. Patch to crack Cadence IC617.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;su
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; patch
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sh ./1patch.sh /opt/Cadence/IC617
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sh ./1patch.sh /opt/Cadence/SPECTRE181
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sh ./1patch.sh /opt/Cadence/XCELIUM1803
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sh ./1patch.sh /opt/mentor/Calibre2019
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Add to path. Modify &lt;code&gt;.bashrc&lt;/code&gt; in home location and paste them to the following lines. Remember to change the &amp;ldquo;hostname&amp;rdquo; below.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#--------------------------------------------------------------------------------------------------&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  User&amp;#39;s Guide&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  Copy this .bashrc environment setting file to the working (design project) directory, e.g.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  /home/johndoe/project1, /home/johndoe/project2, ...., etc.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  On terminal, cd to the working directory and then source the .bashrc file by typing the&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  following at the shell prompt $:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  . .bashrc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  Note:  a space is required between &amp;#34;.&amp;#34; and &amp;#34;.bashrc&amp;#34; in the above command.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  Now all the environment variables in .bashrc file have been loaded into the current shell&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  terminal and commands can be issued at the shell prompt $ to launch various Cadence&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  tools, for instance, &amp;#34;virtuoso &amp;amp;&amp;#34; (without the quotes).  Some frequently used commands are&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  listed in this file together with corresponding environment settings.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  You may finish the Cadence session at any time by closing the running Cadence tool.  To&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  start up another Cadence session, just issue another Cadence command at the shell&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  prompt $, e.g. &amp;#34;innovus &amp;amp;&amp;#34; (without the quotes), etc. To exit the entire Cadence&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  environment, close the terminal.  By closing the terminal, all loaded Cadence and Calibre&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  environment variables are terminated since all of these variables are loaded and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  contained in the terminated shell terminal.  The benefit of sourcing .bashrc to a local shell&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  terminal instead of setting them in the $HOME/.bashrc is that all of the loaded Cadence &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  Calibre environment variables don&amp;#39;t globally affect system environment settings and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  therefore you can run other programs on the system normally and won&amp;#39;t disturb the&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  Cadence session or vice versa.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  If you&amp;#39;re setting up a multiuser server, create a client copy of this .bashrc file and make&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  necessary changes accordingly, e.g. point CDS_LIC_FILE to the server&amp;#39;s license directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  as port@hostname.  Instruct users to download it to the working directory on the client&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  machine and source the client copy before starting up any Cadence tool.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#--------------------------------------------------------------------------------------------------&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# For proper distributed processing execution using Cadence PVS software, it requires&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# that the following is set as the first line in .bashrc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Note: the space between the ! and $prompt is required!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ff6ac1&#34;&gt;(&lt;/span&gt;! &lt;span style=&#34;color:#ff5c57&#34;&gt;$prompt&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;)&lt;/span&gt;; &lt;span style=&#34;color:#ff6ac1&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ff5c57&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;##############################################################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence Design Systems&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Master IC CAD flow including schematic capture, simulation, layout, and verification.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;##############################################################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CADHOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/Cadence
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Requied for Cadence on Linux&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;LANG&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;C
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set netlisting mode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_Netlisting_Mode&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;Analog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Specify a search order for .cdsenv&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Load .cdsenv in the working directory ($CWD)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_LOAD_ENV&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;CWD
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# browser setup for Cadence Help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MOZILLA_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/usr/bin/firefox
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence - IC&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# IC Schematic Entry, Simulation, Layout, Verification (Diva)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/IC617
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Some of these variables are used by various other tools, e.g. foundry&amp;#39;s PDK.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set them to be safe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDSDIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDSHOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;Cadence_DIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_INST_DIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_ROOT&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDSROOT&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up either CDS_LIC_FILE or LM_LICENSE_FILE, but NOT both or it&amp;#39;ll&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# take long time to search license!!!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set variable CDS_LIC_ONLY to ignore LM_LICENSE_FILE if it exists.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Use absolute PATH to license.dat file instead of port@hostname&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# The license server is no longer needed once all features are set to uncounted or 0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# (unlimited use) for the FEATURE lines in license.dat.  The SERVER, VENDOR and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# USE_SERVER lines can be safely removed from license.dat file, i.e. license.dat here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# contains FEATURE lines only.  DO NOT START UP LICENSE SERVER DAEMON!!!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_LIC_FILE&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS&lt;/span&gt;/share/license/license.dat
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_LIC_ONLY&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff9f43&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Support for 64-bit executables (this should be set for 64-bit hosts - IMPORTANT!!!)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_AUTO_64BIT&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;ALL
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Master IC PATH&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDSDIR&lt;/span&gt;/tools/dfII/bin:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDSDIR&lt;/span&gt;/tools/plot/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up OA (OpenAccess)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# It is STRONGLY recommended that you DO NOT change the OA installation that&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# each tool uses because tools are tested with the version of OA shipped with the&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# particular tool such as EDI142. However, if it is necessary to use a different&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# version of OA, you can do so with one of the following approaches:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# 1) Use the Configure utility on InstallScape to specify a different OA installation.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# 2) Use the OA_HOME environment variable to override the default OA installation.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# DO NOT set up OA_HOME as recommended above!  Instead use the default OA&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# installed within each Cadence tool, or use Configure utility on InstallScape to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# re-set OA back to the original default OA installation in each product such as.EDI,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# EXT, etc. if they were ever changed.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up Cadence unsupported systems such as Ubuntu Linux&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# IC617 supports Ubuntu14.04 so this variable is no longer required&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export OA_UNSUPPORTED_PLAT=linux_rhel50_gcc44x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# To run Virtuoso Schematic and Verilog Driven Mixed-Signal Flow,  the following&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# environment variable must be set before starting Virtuoso.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDS_ENABLE_VMS&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff9f43&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence Analog Simulators (MMSIM) - Spectre, SpectreRF, &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# RelXpert (Reliability Simulator)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MMSIMHOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/SPECTRE181
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$MMSIMHOME&lt;/span&gt;/bin:&lt;span style=&#34;color:#ff5c57&#34;&gt;$MMSIMHOME&lt;/span&gt;/tools/relxpert/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence QRC Extraction, Advanced Analysis &amp;amp; Modeling (EXT)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Note: QRC must appear in the PATH before Assura executables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;QRC_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/EXT151
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$QRC_HOME&lt;/span&gt;/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Enhance precision of QRC for DFM MOS extraction&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;QRC_MOS_LW_PRECISION&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;Y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence Assura (ASSURA) - DRC. LVS, parasitic extraction&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# These executables should be on the PATH after DFII executables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export ASSURAHOME=$CADHOME/ASSURA41&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export PATH=$PATH:$ASSURAHOME/tools/bin:$ASSURAHOME/tools/assura/bin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Setting this variable enables Assura to work with PVS licenses only without&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# attempts to check-out Assura licenses first and thus speeds up execution.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export ASSURA_USE_PVS_LICENSE=1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up foundry DFM PATH for Assura - CRNxxG/CRNxxLP process for current project&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;TSMC_ASU_DFM_PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/PDKs/tsmc/CRNxxG/Assura/lvs_rcx/DFM
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export TSMC_ASU_DFM_PATH=/opt/PDKs/tsmc/CRNxxLP/Assura/lvs_rcx/DFM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence Physical Verification System, MaskCompose, &amp;amp; QuickView (PVS)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# K2_VIEWER_HOME must be set before Quickview is invoked. LM_LICENSE_FILE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# is required to run any K2 product.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;K2_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/PVS151/tools/K2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;K2_VIEWER_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$K2_HOME&lt;/span&gt;/Viewer
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;K2_MASKCOMPOSE_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$K2_HOME&lt;/span&gt;/MaskCompose
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;K2_MC_DATA&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$HOME&lt;/span&gt;/Projects
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;LM_LICENSE_FILE&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDS_LIC_FILE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/PVS151/bin:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/PVS151/tools/bin:&lt;span style=&#34;color:#ff5c57&#34;&gt;$K2_MASKCOMPOSE_HOME&lt;/span&gt;/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;XKEYSYMDB&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDSDIR&lt;/span&gt;/tools/plot/etc/XKeysymDB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Commands on terminal to launch Quickview or MaskCompose&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#k2_viewer &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#k2_mcs &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;##############################################################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence Digital Flow - HDL Simulations, Synthesis, P&amp;amp;R&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;##############################################################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Genus Synthesis Solution (GENUS) - Logic &amp;amp; Physical Synthesis&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/GENUS152/tools/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch Genus&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# genus&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# RTL Power Analysis (Joules)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/JLS151/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to start Joules&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# joules &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Innovus Implementation System (INNOVUS) - P&amp;amp;R&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INNOVUS152/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch Innovus&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# innovus &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence C-to-Silicon Compiler (CTOS)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/CTOS142/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch CTOS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# ctosgui &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Encounter Conformal (CONFRML) - Constraint Designer, Low Power Designer,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# &amp;amp; ECO Designer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/CONFRML152/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch Confirmal with license options:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# -xl/-gxl/-rcv/-eco/-ecogxl/-lp/-lpxl/-ccd/-ccdxl/-lpgxl/-verify;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#  default is set to -l if no option is given.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# example:  &amp;#34;lec -lp -verify -gui &amp;amp;&amp;#34; for Low Power license and Verify license&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# lec -lpgxl -verify -gui &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Silicon Signoff &amp;amp; Verification (SSV) - including Tempus Timing Signoff&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# &amp;amp; Voltus IC Power Integrity&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/SSV152/tools/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch tempus or voltus&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# tempus &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# voltus &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Incisive Verification Platform - Digital HDL simulators&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/bin:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/tools/bin::&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/tools/vtools/vfault/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# For 3-step (ncvlog, ncelab, and ncsim) flow to run Virtuoso AMS Designer simulator,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# the following library path environment variable has to be set.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# For single-step (irun) running AMS simulator, LD_LIBRARY_PATH is not required.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/tools/lib/64bit:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/tools/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Enable noise analysis in AMS designer&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;AMS_ENABLE_NOISE&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;YES
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up Universal Verification Methodology (UVM) Environment Variables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# uvm_home defines the path to the UVM class library&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# ml_uvm defines the path to the ml_uvm code&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# ml_seq_dir defines the path to the SystemVerilog ml_uvm_seq package for using&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# sequencer stubs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# The SystemVerilog package ml_uvm_seq is included in the Specman installation.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# To use it, you must add the following command-line options to your compilation flow,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# as additional command-line arguments to irun or ncvlog :&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# irun ... ${ML_SEQ_DIR}/ml_uvm_seq.sv -incdir ${ML_SEQ_DIR}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;uvm_home&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/tools/uvm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ml_uvm&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/tools/uvm/uvm_lib/uvm_ml/sc/ml_uvm
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ml_seq_dir&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/specman/src
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up the HOME Environment Variable for Incisive Verification Kits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Source the appropriate environment setup file (Note: a space is required&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# between . and $SOCV_KIT_HOME/env.sh)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;SOCV_KIT_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/INCISIVE151/kits/VerificationKit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#. $SOCV_KIT_HOME/env.sh&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to start up Incisive Verification Kits&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# start_kit &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#***********************************************************************&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch NClaunch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#***********************************************************************&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# nclaunch &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to start up Specman &amp;amp; SimVision&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# specman -gui &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to invoke Desktop Manager&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# emanager -desktop &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# vmanager &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Encounter Diagnostics &amp;amp; Test (ET)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/ET151/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch ET,  or with license options: -architect/-truetime/-diag&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# commands eta, ett and ediag are equivalent to et -architect, et -truetime and et -diag&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# which invokes Encounter Test Architect,  Encounter True_time Delay Test and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Encounter Diagnostics, respectively.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# eta &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# ett &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# ediag &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Verification IP Product Catalog (VIPCAT)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# VIP products are configured using a GUI called PureView.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDN_VIP_ROOT&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/VIPCAT113
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;Cadence_VIP_LIC_ORDER&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;newrev:soc:portfolio:alacarte
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ABVIP_ISNT_DIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDN_VIP_ROOT&lt;/span&gt;/tools/abvip
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# In e , set SPECMAN_PATH to the location of the specific UVC directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;SPECMAN_PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDN_VIP_ROOT&lt;/span&gt;/utils:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDN_VIP_ROOT&lt;/span&gt;/packages:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDN_VIP_ROOT&lt;/span&gt;/vips/enet/vr_enet
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;DENALI&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CDN_VIP_ROOT&lt;/span&gt;/tools/denali_64bit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$DENALI&lt;/span&gt;/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# In SV, add the UVC by including the specific VIP SV directory in the irun command:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#irun -incdir $CDN_VIP_ROOT/vips/enet/vr_enet/sv&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch PureView to configure VIP products.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# pureview&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Manufacturability and Variability Sign-Off (MVS) - Litho Analyzers,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# CMP Predictor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CADHOME&lt;/span&gt;/MVS152/tools/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Commands on terminal to launch Litho Analyzers, CMP Predictor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#lpa &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#lea &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# need to figure out correct license keys in license.dat for CMP Predictor&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# (current ones don&amp;#39;t work)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#cmms -ccp &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#cmms -ccpo &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Library Characterizer (Liberate)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Include the integrated Spectre in PATH&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export ALTOSHOME=$CADHOME/LIBERATE151&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export PATH=$PATH:$ALTOSHOME/bin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export PATH=$PATH:$ALTOSHOME/tools.lnx86/spectre/bin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#export ALTOS_64=1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up NCSU CDK&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# This is optional for educational purpose; use foundry provided PDKs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# instead for production projects by including foundry PDKs in cds.lib&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# in the working directory.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CDK_DIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/PDKs/ncsu-cdk-1.6.0.beta
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Mentor Graphics Calibre&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/mentor
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CALIBRE_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$MGC_HOME&lt;/span&gt;/Calibre2019/aoj_cal_2019.3_15.11
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGLS_LICENSE_FILE&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$MGC_HOME&lt;/span&gt;/license/license.dat
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;:&lt;span style=&#34;color:#ff5c57&#34;&gt;$CALIBRE_HOME&lt;/span&gt;/bin
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_LIB_PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$CALIBRE_HOME&lt;/span&gt;/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;CALIBRE_OS_MSG_LEVEL&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff9f43&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#***********************************************************************&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Enable Calibre RealTime with Cadence Virtuoso&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#***********************************************************************&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_CALIBRE_REALTIME_VIRTUOSO_ENABLED&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff9f43&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# This variable enables Calibre Interactive to save all GUI settings including default&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# values to a runset file for future re-run&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_CALIBRE_SAVE_ALL_RUNSET_VALUES&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff9f43&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set up socket connection with Virtuoso schematic or layout viewer (using default ports&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# 9199 for schematic and 9189 for layout) in the form of host:port&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_CALIBRE_SCHEMATIC_SERVER&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;hostname:9199S
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_CALIBRE_LAYOUT_SERVER&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;hostname:9189
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# The license server is no longer needed once all features are set to uncounted or 0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# (unlimited use) for the FEATURE lines in license.dat. file.  The SERVER, VENDOR and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# USE_SERVER lines can be safely removed from license.dat file, i.e. license.dat here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# contains FEATURE lines only.  DO NOT START UP LICENSE SERVER DAEMON!!!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#***********************************************************************&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Set the name of the executable for displaying PDF documentation from Calibre Help&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# menu. The default is acroread if it exists.  Make sure evince has been installed before&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# setting up the following (on Ubuntu type command &amp;#34;sudo apt-get install evince&amp;#34;).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#***********************************************************************&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;MGC_PDF_READER&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;evince
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Command on terminal to launch Cadence Virtuoso tools&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Adding &amp;amp; runs the process in the background allowing to continue using&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# the current terminal.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#virtuoso &amp;amp;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;SYSTEM_CDS_LIB_DIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/Cadence/IC617/share/cdssetup
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;OA_UNSUPPORTED_PLAT&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;linux_rhel50_gcc48x
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# User specific aliases and functions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# User specific aliases and functions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;####################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;# Cadence&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#####################&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;INCISIVDIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/Cadence/XCELIUM1803/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;VRST_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/Cadence/XCELIUM1803/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;LM_LICENSE_FILE&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/opt/Cadence/license/Cadence.dat
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$LD_LIBRARY_PATH&lt;/span&gt;:/opt/Cadence/XCELIUM1803/tools.lnx86/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;irun&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/lib/bin/irun&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;simv&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/lib/bin/simvision&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;simvision&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/simvision -64 &amp;amp;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ncvlog&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvlog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ncsim&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvsim&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ncelab&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncelab&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;ncvhdl_p&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvhdl_p&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;SPECMAN_HOME&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$INCISIVDIR&lt;/span&gt;/components/sn
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;SPECMAN_DIR&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$SPECMAN_HOME&lt;/span&gt;/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$INCISIVDIR&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$INCISIVDIR&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;/tools.lnx86/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;PATH&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$PATH&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$INCISIVDIR&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;/tools.lnx86/dfII/bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;icfb&amp;amp;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;v&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;virtuoso&amp;amp;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;WORKdir&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;~/newpdk/HHGRACE_PDK_BCD350GE/prj&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color:#ff5c57&#34;&gt;cdw&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;cd &lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;$WORKdir&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;enjoy-it&#34; &gt;
+&lt;div&gt;
+    &lt;a href=&#34;#enjoy-it&#34;&gt;
+        #
+    &lt;/a&gt;
+    Enjoy it
+&lt;/div&gt;
+&lt;/h2&gt;
+&lt;p&gt;Go to your workspace and start it.
+But to use it gracefully I highly recommand you to create a start bash and a desktop icon.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;start.sh&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#78787e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;cd&lt;/span&gt; /home/ricardo/Project
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;virtuoso&amp;amp;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then give the privilige to run the shell script using &lt;code&gt;chmod 777 start.sh&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Virtuoso.desktop&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;[&lt;/span&gt;Desktop Entry&lt;span style=&#34;color:#ff6ac1&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Encoding&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;UTF-8
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Version&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;1.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Type&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;Application
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Terminal&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Exec&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;/home/ricardo/Project/start.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Name&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;Virtuoso
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ff5c57&#34;&gt;Icon&lt;/span&gt;&lt;span style=&#34;color:#ff6ac1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#5af78e&#34;&gt;&amp;#34;the folder where you save the jpg of Virtuoso&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally give the privilige to run the  &lt;code&gt;.desktop&lt;/code&gt; using &lt;code&gt;chmod 777 Virtuoso.desktop&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Enjoy it!&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

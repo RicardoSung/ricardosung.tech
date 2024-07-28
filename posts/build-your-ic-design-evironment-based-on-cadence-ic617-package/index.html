@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Build Your IC Design Evironment Based on Cadence IC617 Package - Ricardo Sung&rsquo;s Blog</title>
+
+<meta name="description" content="The post aims to teach beginners to set up their Integrated Circuit Design Environment.">
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="http://localhost:1313/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="http://localhost:1313/favicon.png">
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+<style>
+  body {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>
+
+<noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.03df79c682b91915c7cd261ecd1a6ec4d0fe668c98fa46310d0fbade319b11bd.css" integrity="sha256-A995xoK5GRXHzSYezRpuxND&#43;ZoyY&#43;kYxDQ&#43;63jGbEb0=">
+    
+
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.9c1888ebff42c0224ce04dac10cb2c401f1b77f54f78e8d87d73c3bed781c263.css" integrity="sha256-nBiI6/9CwCJM4E2sEMssQB8bd/VPeOjYfXPDvteBwmM=">
+    
+
+
+
+
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <link rel="stylesheet" href="/css/style.acd606c0fce58853afe0248d37bb41acbbcdd8b1aca2412b6c0fa760da0137f3.css" integrity="sha256-rNYGwPzliFOv4CSNN7tBrLvN2LGsokErbA&#43;nYNoBN/M=">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+    
+
+    
+        <script src="/js/script.672e2309c296e07c18bcd08b28d797a56222ff941d65f308fba3158c44885b14.js" type="text/javascript" charset="utf-8" integrity="sha256-Zy4jCcKW4HwYvNCLKNeXpWIi/5QdZfMI&#43;6MVjESIWxQ="></script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header">
+            
+                <div class="header-top">
+    <div class="header-top-left">
+        <h1 class="site-title noselect">
+    <a href="/">Ricardo Sung&#39;s Blog</a>
+</h1>
+
+        
+
+
+
+    
+
+
+
+    
+
+
+
+    
+        <div class="theme-switcher">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-sun-high"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg>
+
+
+</span>
+
+        </div>
+    
+
+    <script>
+        const STORAGE_KEY = 'user-color-scheme'
+        const defaultTheme = "auto"
+
+        let currentTheme
+        let switchButton
+        let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+        function switchTheme(e) {
+            currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+            if (localStorage) localStorage.setItem(STORAGE_KEY, currentTheme);
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            changeGiscusTheme(currentTheme);
+            document.body.dispatchEvent(new CustomEvent(currentTheme + "-theme-set"));
+        }
+
+        const autoChangeScheme = e => {
+            currentTheme = e.matches ? 'dark' : 'light'
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            changeGiscusTheme(currentTheme);
+            document.body.dispatchEvent(new CustomEvent(currentTheme + "-theme-set"));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            switchButton = document.querySelector('.theme-switcher')
+            currentTheme = detectCurrentScheme()
+
+            if (currentTheme === 'auto') {
+                autoChangeScheme(autoDefinedScheme);
+                autoDefinedScheme.addListener(autoChangeScheme);
+            } else {
+                document.documentElement.setAttribute('data-theme', currentTheme)
+            }
+
+            if (switchButton) {
+                switchButton.addEventListener('click', switchTheme, false)
+            }
+
+            showContent();
+        })
+
+        function detectCurrentScheme() {
+            if (localStorage !== null && localStorage.getItem(STORAGE_KEY)) {
+                return localStorage.getItem(STORAGE_KEY)
+            }
+            if (defaultTheme) {
+                return defaultTheme
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function showContent() {
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = 1;
+        }
+
+        function changeGiscusTheme (theme) {
+            function sendMessage(message) {
+              const iframe = document.querySelector('iframe.giscus-frame');
+              if (!iframe) return;
+              iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+            }
+
+            sendMessage({
+              setConfig: {
+                theme: theme
+              }
+            });
+        }
+    </script>
+
+
+        <ul class="social-icons noselect">
+
+
+    
+        
+        
+        <li>
+            <a href="mailto:Ricardo.Sung@outlook.com" title="Email" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="" title="Linkedin" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-linkedin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 11l0 5" /><path d="M8 8l0 .01" /><path d="M12 16l0 -5" /><path d="M16 16v-3a2 2 0 0 0 -4 0" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://github.com/RicardoSung" title="Github" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-github"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://t.me/RICARDOSONG" title="Telegram" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-telegram"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        <li>
+            <a href="https://twitter.com/Rethinker5" title="Twitter" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-twitter"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+
+
+
+    <li>
+            <a href="/index.xml" title="RSS" rel="me">
+            <span class="inline-svg">
+
+    
+
+
+    
+    
+    
+    
+    
+
+    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M4 4a16 16 0 0 1 16 16" /><path d="M4 11a9 9 0 0 1 9 9" /></svg>
+
+
+</span>
+
+            </a>
+        </li>
+    
+
+</ul>
+
+    </div>
+    <div class="header-top-right">
+
+    </div>
+</div>
+
+
+    <nav class="noselect">
+        
+        
+        <a class="" href="http://localhost:1313/" title="">Home</a>
+        
+        <a class="" href="http://localhost:1313/posts/" title="">Posts</a>
+        
+        <a class="" href="http://localhost:1313/tags/" title="">Tags</a>
+        
+        <a class="" href="http://localhost:1313/resume/" title="">Resume</a>
+        
+    </nav>
+
+
+
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1">
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Build Your IC Design Evironment Based on Cadence IC617 Package</h1>
+                
+
+            </header>
+            
+
+
+
+<div class="post-info noselect">
+    
+        <div class="post-date dt-published">
+            <time datetime="2021-11-14">2021-11-14</time>
+            
+        </div>
+    
+
+    <a class="post-hidden-url u-url" href="/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/">/posts/build-your-ic-design-evironment-based-on-cadence-ic617-package/</a>
+    <a href="http://localhost:1313/" class="p-name p-author post-hidden-author h-card" rel="me"></a>
+
+
+    <div class="post-taxonomies">
+        
+        
+            <ul class="post-tags">
+                
+                    
+                    <li><a href="/tags/ic-design/">#IC Design</a></li>
+                
+                    
+                    <li><a href="/tags/english/">#English</a></li>
+                
+                    
+                    <li><a href="/tags/virtuoso/">#Virtuoso</a></li>
+                
+                    
+                    <li><a href="/tags/linux/">#Linux</a></li>
+                
+                    
+                    <li><a href="/tags/tutorial/">#Tutorial</a></li>
+                
+            </ul>
+        
+        
+    </div>
+</div>
+
+        </div>
+        
+
+  
+  
+
+
+
+
+  
+  
+  
+  <details class="toc noselect">
+    <summary>Table of Contents</summary>
+    <div class="inner"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#announcement">Announcement</a></li>
+    <li><a href="#preparation">Preparation</a></li>
+    <li><a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#os">OS</a></li>
+        <li><a href="#environment">Environment</a></li>
+        <li><a href="#cadence">Cadence</a></li>
+        <li><a href="#patch">Patch</a></li>
+      </ul>
+    </li>
+    <li><a href="#enjoy-it">Enjoy it</a></li>
+  </ul>
+</nav></div>
+  </details>
+  
+
+
+
+<script>
+  var toc = document.querySelector(".toc");
+  if (toc) {
+    toc.addEventListener("click", function () {
+      if (event.target.tagName !== "A") {
+        event.preventDefault();
+        if (this.open) {
+          this.open = false;
+          this.classList.remove("expanded");
+        } else {
+          this.open = true;
+          this.classList.add("expanded");
+        }
+      }
+    });
+  }
+</script>
+
+        <div class="content e-content">
+            <p>For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about <code>Bandgap</code>, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.
+So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine). And if you want to install it on a RM (Real Machine), you can follow the same way, too.</p>
+<h2 id="announcement" >
+<div>
+    <a href="#announcement">
+        #
+    </a>
+    Announcement
+</div>
+</h2>
+<p>I try my best to protect copyright by using the licensed software. But I don&rsquo;t have access to the licensed Cadence, also the PDK, so you know &hellip;</p>
+<h2 id="preparation" >
+<div>
+    <a href="#preparation">
+        #
+    </a>
+    Preparation
+</div>
+</h2>
+<ol>
+<li>A DVD installation ISO of <code>RHEL</code> operating system.</li>
+<li><code>Cadence IC617 Pacckage</code>.</li>
+<li><code>WinSCP</code>.</li>
+<li>Virtual machine software, eg. <code>Virtual Box</code>, <code>VMware Workstation Player</code> and <code>Hyper-V</code>.
+<em>I highly recommond you using Vrtual Box or VMware Workstation Player, because I felt the mouse pointer is quite fluent  as in Windows Desk. Maybe Windows11 and my AMD 3900x caused it? Well, I don&rsquo;t know~~~</em></li>
+</ol>
+<h2 id="installation" >
+<div>
+    <a href="#installation">
+        #
+    </a>
+    Installation
+</div>
+</h2>
+<p>I have divided the installation inroduction to two parts - OS installation and Cadence Installation. And I will do it using <code>VMware Workstation Player</code>.</p>
+<h3 id="os" >
+<div>
+    <a href="#os">
+        ##
+    </a>
+    OS
+</div>
+</h3>
+<ol>
+<li>Create a new virtual machine and add RHEL iso
+<img src="https://ricardosung.tech/post-images/1636858516697.png" alt="1"></li>
+<li>Create your user name. It doesn&rsquo;t matter if <code>Full name</code> mismatch <code>User name</code>.
+<img src="https://ricardosung.tech/post-images/1636858704056.png" alt="2"></li>
+<li>Choose the location, where you want to install it and name the VM as your pleases.
+<img src="https://ricardosung.tech/post-images/1636858881895.png" alt="3"></li>
+<li>Space allocation is 40GB at least. Because the operating system costs arround 2GB and the software package costs at least 18GB.
+<img src="https://ricardosung.tech/post-images/1636859108686.png" alt="4"></li>
+<li>Customize hardware. I recommond you to give the VM at least 8GB memory and 4 cores. Then click &ldquo;finish&rdquo; button and wait for the auto installation. It may cost you 10-20minutes depending on your PC&rsquo;s performance.
+<img src="https://ricardosung.tech/post-images/1636859882501.png" alt="5"></li>
+<li>Have fun and enjoy your RHEL? No! After login the system, you need to login your RedHat account to activate the RHEL.</li>
+<li>Go to Settings -&gt; Details -&gt; About, and then type in your RedHat account name and password, if you don&rsquo;t have any organization, just keep it blank.</li>
+<li>Check for updates using <code>dnf</code> or <code>yum</code>.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>su
+</span></span><span style="display:flex;"><span>dnf update <span style="color:#ff6ac1">&amp;&amp;</span> dnf upgrade
+</span></span></code></pre></div><h3 id="environment" >
+<div>
+    <a href="#environment">
+        ##
+    </a>
+    Environment
+</div>
+</h3>
+<p>Before installing Cadence IC617, you must fit its dependence. Please open a terminal and type in the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dnf install ksh
+</span></span><span style="display:flex;"><span>dnf install csh
+</span></span><span style="display:flex;"><span>dnf install xterm
+</span></span><span style="display:flex;"><span>dnf install libXext.so.6
+</span></span><span style="display:flex;"><span>dnf install libXt.so.6
+</span></span><span style="display:flex;"><span>dnf install libGLU.so.1 --setopt<span style="color:#ff6ac1">=</span><span style="color:#ff5c57">protected_multilib</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">false</span> 
+</span></span><span style="display:flex;"><span>dnf install libelf.so.1
+</span></span><span style="display:flex;"><span>dnf install libXrender.so.1
+</span></span><span style="display:flex;"><span>dnf install libXp.so.6
+</span></span><span style="display:flex;"><span>dnf install libXrandr.so.2
+</span></span><span style="display:flex;"><span>dnf install libXp
+</span></span><span style="display:flex;"><span>dnf install ld-linux.so.2
+</span></span><span style="display:flex;"><span>dnf install openmotif
+</span></span><span style="display:flex;"><span>dnf install libnsl.so.1
+</span></span><span style="display:flex;"><span>dnf install libnsl
+</span></span><span style="display:flex;"><span>dnf install ncurses
+</span></span><span style="display:flex;"><span>dnf install libXtst
+</span></span><span style="display:flex;"><span>dnf install libXi
+</span></span><span style="display:flex;"><span>dnf install python
+</span></span><span style="display:flex;"><span>dnf install net-tools
+</span></span><span style="display:flex;"><span>dnf install libstdc++
+</span></span><span style="display:flex;"><span>dnf install gcc
+</span></span><span style="display:flex;"><span>dnf install gcc-c++
+</span></span><span style="display:flex;"><span>dnf install redhat-lsb
+</span></span><span style="display:flex;"><span>dnf install libXss.so.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ln -s /usr/bin/awk /bin/awk
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> /lib64
+</span></span><span style="display:flex;"><span>ln -s libcrypto.so.1.1 libcrypto.so.6
+</span></span><span style="display:flex;"><span>ln -s libreadline.so.6 libreadline.so.5
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> /usr/lib64
+</span></span><span style="display:flex;"><span>ln -s libhistory.so.6 libhistory.so.5
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># set the hostname of OS</span>
+</span></span><span style="display:flex;"><span>hostnamectl --static set-hostname xxx
+</span></span></code></pre></div><h3 id="cadence" >
+<div>
+    <a href="#cadence">
+        ##
+    </a>
+    Cadence
+</div>
+</h3>
+<p><strong>If it tells you don&rsquo;t have any permission to do something or some installation failed, just use <code>su</code> to get the root privilege.</strong></p>
+<ol>
+<li>Send the package to VM. First, you need to know the VM ip. Type in <code>ifconfig</code> in shell and your VM ip is shown like this:
+<img src="https://ricardosung.tech/post-images/1636877311327.png" alt="6">
+Then add the VM in WinSCP using SCP protocol. And save the details, so that you can transfer files between the RM and VM without type in the ip and so on again.
+<img src="https://ricardosung.tech/post-images/1636877413523.png" alt="7">
+Finally, drag the package from RM to VM in WinSCP. But before that, create a folder firstly and set the privilige of the folder to 777.
+<img src="https://ricardosung.tech/post-images/1636878270478.png" alt="8">
+Wait until transfer completed.
+<img src="https://ricardosung.tech/post-images/1636878355774.png" alt="9"></li>
+<li>Create a folder to install Cadence IC617, and to avoid some potential problems, I use <code>/opt/Cadence</code>.
+<img src="https://ricardosung.tech/post-images/1636879625814.png" alt="10"></li>
+<li>Back to the package archive folder, and install <code>Iscape</code> first. Because <code>Iscape</code> is a tool to install IC617. Use this command <code>sh iscape.sh</code>
+<img src="https://ricardosung.tech/post-images/1636879927220.png" alt="11"></li>
+<li>Click <code>Preferences</code> -&gt; <code>InstallScape</code> -&gt; <code>Directions</code>, and change <code>Default Install Directory</code> to the new created folder <code>/opt/Cadence</code>. What&rsquo;s more, you can change other directions whatever you like, but keep others as default.
+<img src="https://ricardosung.tech/post-images/1636880243906.png" alt="12"></li>
+<li>Choose <code>Local directory/Media install</code> and browse to find the install package <code>IC617Hotfix</code>
+<img src="https://ricardosung.tech/post-images/1636880498067.png" alt="13"></li>
+<li>Check the checkbox of <code>IC_617</code> and next.
+<img src="https://ricardosung.tech/post-images/1636880574268.png" alt="14"></li>
+<li>Select all <code>PIC</code> and check if the install directin is right.
+<img src="https://ricardosung.tech/post-images/1636880733670.png" alt="15">
+Choose the base CD in the same directory <code>IC617xxx_base</code>, which is the original install file of Cadence. You know <code>hotfix</code> means <code>kpi</code> of programmers, which doesn&rsquo;t contain the original version.
+<img src="https://ricardosung.tech/post-images/1636892865063.png" alt="16">
+Keep pressing <code>Enter</code> and <code>y</code> to  install &ldquo;Valid library and Sim primitives&rdquo; and &ldquo;XL library and Gate primitives&rdquo;.
+<img src="https://ricardosung.tech/post-images/1636895098426.png" alt="18">
+When you are asked if &ldquo;Prepare libraries for AMS Designer&rdquo;. type in <code>2</code> to &ldquo;Quit&rdquo;.
+<img src="https://ricardosung.tech/post-images/1636895217134.png" alt="19">
+Do not press <code>n</code> until the program asks &ldquo;Do you want to use a different OpenAccess installation (y/n/q)?&rdquo;.
+<img src="https://ricardosung.tech/post-images/1636894777772.png" alt="17">
+If you see both &ldquo;Install Status&rdquo; and &ldquo;Configure Status&rdquo; are &ldquo;success&rdquo;, you can go to the next step or you can <code>Configure releases</code> to reconfigure.
+<img src="https://ricardosung.tech/post-images/1636895670501.png" alt="20"></li>
+<li>Install &ldquo;Spectre18&rdquo; and &ldquo;XCELIUMMAIN&rdquo; in the same way as installing &ldquo;IC617&rdquo;. And <strong>Do type in <code>n</code></strong> when bing asked if you want to  use a different OpenAccess installation (y/n/q).
+<img src="https://ricardosung.tech/post-images/1636896342861.png" alt="21">
+<img src="https://ricardosung.tech/post-images/1636896353583.png" alt="22">
+<img src="https://ricardosung.tech/post-images/1636896446769.png" alt="23"></li>
+<li>I believe you may feel amazed when you see the file type of Calibre installation package. It is &ldquo;.exe&rdquo;! Yes, it is &ldquo;.exe&rdquo;, but you cannot install it on Windows.
+First, create an installation folder in <code>/opt/mentor/Calibre2019</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir /opt/mentor/Calibre2019
+</span></span><span style="display:flex;"><span>mv /<span style="color:#ff6ac1">(</span>original place<span style="color:#ff6ac1">)</span>/Calibre/*  /opt/mentor/Calibre2019
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> /opt/mentor/Calibre2019
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ff9f43">777</span> aoj_cal_2019.3_15.11_mib.exe
+</span></span><span style="display:flex;"><span>./aoj_cal_2019.3_15.11_mib.exe <span style="color:#ff6ac1">(</span> -tgt /target_folder<span style="color:#ff6ac1">)</span>
+</span></span></code></pre></div><p>Then type in <code>D</code> and <code>yes</code>.
+<img src="https://ricardosung.tech/post-images/1636948544144.png" alt="24">
+And wait &hellip;
+<img src="https://ricardosung.tech/post-images/1636949941818.png" alt="25"></p>
+<h3 id="patch" >
+<div>
+    <a href="#patch">
+        ##
+    </a>
+    Patch
+</div>
+</h3>
+<ol>
+<li>Generate IC617 license.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>su
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> patch
+</span></span><span style="display:flex;"><span>python3 cdslicgen.py
+</span></span><span style="display:flex;"><span>cp ./license.dat /opt/Cadence/IC617/share/license
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ff9f43">777</span> /opt/Cadence/IC617/share/license/license.dat
+</span></span></code></pre></div><ol start="2">
+<li>Generate Calibre license.
+Type in <code>ifconfig</code> to find the local &ldquo;Mac address&rdquo;, which is called &ldquo;ether&rdquo;.
+<img src="https://ricardosung.tech/post-images/1636952546558.png" alt="26"></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 mgclicgen.py <span style="color:#ff6ac1">(</span>Mac address<span style="color:#ff6ac1">)</span>
+</span></span></code></pre></div><p>You may meet an error. I&rsquo;m sorry, but I don&rsquo;t know how to solve it by adding a command in the python file. You can replace &ldquo;HOSTID&rdquo; by the Mac address manually and save the crack code as a new &ldquo;license.dat&rdquo;. Then</p>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cp license.dat /opt/mentor/license/
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ff9f43">777</span> /opt/mentor/license/license.dat
+</span></span></code></pre></div><ol start="3">
+<li>The only difference between IC617 license and XCELIUMMAIN license is</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>FEATURE Xcelium_Limited_Single_Core
+</span></span><span style="display:flex;"><span>FEATURE XceliumLimitedSingleCoreLegacy
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_Single_Core
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_Single_Core_Legacy
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_Safety
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_Safety_Option
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_Multi_Core
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_For_Partners
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_SC_DMS_Option
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_MC_GLS_SDF_Option
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_MC_LP_Option
+</span></span><span style="display:flex;"><span>FEATURE Xcelium_MC_DFT_Option
+</span></span><span style="display:flex;"><span>FEATURE Integrated_Metrics_Center
+</span></span></code></pre></div><p>which you need to add to <code>/opt/cadence/IC617/share/license/license.dat</code>.
+4. Patch to crack Cadence IC617.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>su
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">cd</span> patch
+</span></span><span style="display:flex;"><span>sh ./1patch.sh /opt/Cadence/IC617
+</span></span><span style="display:flex;"><span>sh ./1patch.sh /opt/Cadence/SPECTRE181
+</span></span><span style="display:flex;"><span>sh ./1patch.sh /opt/Cadence/XCELIUM1803
+</span></span><span style="display:flex;"><span>sh ./1patch.sh /opt/mentor/Calibre2019
+</span></span></code></pre></div><ol start="5">
+<li>Add to path. Modify <code>.bashrc</code> in home location and paste them to the following lines. Remember to change the &ldquo;hostname&rdquo; below.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#78787e">#--------------------------------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  User&#39;s Guide</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  Copy this .bashrc environment setting file to the working (design project) directory, e.g.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  /home/johndoe/project1, /home/johndoe/project2, ...., etc.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  On terminal, cd to the working directory and then source the .bashrc file by typing the</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  following at the shell prompt $:</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  . .bashrc</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  Note:  a space is required between &#34;.&#34; and &#34;.bashrc&#34; in the above command.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  Now all the environment variables in .bashrc file have been loaded into the current shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  terminal and commands can be issued at the shell prompt $ to launch various Cadence</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  tools, for instance, &#34;virtuoso &amp;&#34; (without the quotes).  Some frequently used commands are</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  listed in this file together with corresponding environment settings.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  You may finish the Cadence session at any time by closing the running Cadence tool.  To</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  start up another Cadence session, just issue another Cadence command at the shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  prompt $, e.g. &#34;innovus &amp;&#34; (without the quotes), etc. To exit the entire Cadence</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  environment, close the terminal.  By closing the terminal, all loaded Cadence and Calibre</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  environment variables are terminated since all of these variables are loaded and</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  contained in the terminated shell terminal.  The benefit of sourcing .bashrc to a local shell</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  terminal instead of setting them in the $HOME/.bashrc is that all of the loaded Cadence &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  Calibre environment variables don&#39;t globally affect system environment settings and</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  therefore you can run other programs on the system normally and won&#39;t disturb the</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  Cadence session or vice versa.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  If you&#39;re setting up a multiuser server, create a client copy of this .bashrc file and make</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  necessary changes accordingly, e.g. point CDS_LIC_FILE to the server&#39;s license directory</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  as port@hostname.  Instruct users to download it to the working directory on the client</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  machine and source the client copy before starting up any Cadence tool.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#--------------------------------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># For proper distributed processing execution using Cadence PVS software, it requires</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># that the following is set as the first line in .bashrc</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Note: the space between the ! and $prompt is required!</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff6ac1">if</span> <span style="color:#ff6ac1">(</span>! <span style="color:#ff5c57">$prompt</span><span style="color:#ff6ac1">)</span>; <span style="color:#ff6ac1">then</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff5c57">exit</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff6ac1">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">##############################################################</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence Design Systems</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Master IC CAD flow including schematic capture, simulation, layout, and verification.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">##############################################################</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CADHOME</span><span style="color:#ff6ac1">=</span>/opt/Cadence
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Requied for Cadence on Linux</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">LANG</span><span style="color:#ff6ac1">=</span>C
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set netlisting mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_Netlisting_Mode</span><span style="color:#ff6ac1">=</span>Analog
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Specify a search order for .cdsenv</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Load .cdsenv in the working directory ($CWD)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_LOAD_ENV</span><span style="color:#ff6ac1">=</span>CWD
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># browser setup for Cadence Help</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MOZILLA_HOME</span><span style="color:#ff6ac1">=</span>/usr/bin/firefox
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence - IC</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># IC Schematic Entry, Simulation, Layout, Verification (Diva)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/IC617
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Some of these variables are used by various other tools, e.g. foundry&#39;s PDK.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set them to be safe</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDSDIR</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDSHOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">Cadence_DIR</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_INST_DIR</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_ROOT</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDSROOT</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up either CDS_LIC_FILE or LM_LICENSE_FILE, but NOT both or it&#39;ll</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># take long time to search license!!!</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set variable CDS_LIC_ONLY to ignore LM_LICENSE_FILE if it exists.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Use absolute PATH to license.dat file instead of port@hostname</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># The license server is no longer needed once all features are set to uncounted or 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># (unlimited use) for the FEATURE lines in license.dat.  The SERVER, VENDOR and</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># USE_SERVER lines can be safely removed from license.dat file, i.e. license.dat here</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># contains FEATURE lines only.  DO NOT START UP LICENSE SERVER DAEMON!!!</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_LIC_FILE</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS</span>/share/license/license.dat
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_LIC_ONLY</span><span style="color:#ff6ac1">=</span><span style="color:#ff9f43">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Support for 64-bit executables (this should be set for 64-bit hosts - IMPORTANT!!!)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_AUTO_64BIT</span><span style="color:#ff6ac1">=</span>ALL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Master IC PATH</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CDSDIR</span>/tools/dfII/bin:<span style="color:#ff5c57">$CDSDIR</span>/tools/plot/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up OA (OpenAccess)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># It is STRONGLY recommended that you DO NOT change the OA installation that</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># each tool uses because tools are tested with the version of OA shipped with the</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># particular tool such as EDI142. However, if it is necessary to use a different</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># version of OA, you can do so with one of the following approaches:</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># 1) Use the Configure utility on InstallScape to specify a different OA installation.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># 2) Use the OA_HOME environment variable to override the default OA installation.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># DO NOT set up OA_HOME as recommended above!  Instead use the default OA</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># installed within each Cadence tool, or use Configure utility on InstallScape to</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># re-set OA back to the original default OA installation in each product such as.EDI,</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># EXT, etc. if they were ever changed.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up Cadence unsupported systems such as Ubuntu Linux</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># IC617 supports Ubuntu14.04 so this variable is no longer required</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export OA_UNSUPPORTED_PLAT=linux_rhel50_gcc44x</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># To run Virtuoso Schematic and Verilog Driven Mixed-Signal Flow,  the following</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># environment variable must be set before starting Virtuoso.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDS_ENABLE_VMS</span><span style="color:#ff6ac1">=</span><span style="color:#ff9f43">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence Analog Simulators (MMSIM) - Spectre, SpectreRF, &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># RelXpert (Reliability Simulator)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MMSIMHOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/SPECTRE181
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$MMSIMHOME</span>/bin:<span style="color:#ff5c57">$MMSIMHOME</span>/tools/relxpert/bin
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence QRC Extraction, Advanced Analysis &amp; Modeling (EXT)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Note: QRC must appear in the PATH before Assura executables</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">QRC_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/EXT151
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$QRC_HOME</span>/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Enhance precision of QRC for DFM MOS extraction</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">QRC_MOS_LW_PRECISION</span><span style="color:#ff6ac1">=</span>Y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence Assura (ASSURA) - DRC. LVS, parasitic extraction</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># These executables should be on the PATH after DFII executables</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export ASSURAHOME=$CADHOME/ASSURA41</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export PATH=$PATH:$ASSURAHOME/tools/bin:$ASSURAHOME/tools/assura/bin</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Setting this variable enables Assura to work with PVS licenses only without</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># attempts to check-out Assura licenses first and thus speeds up execution.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export ASSURA_USE_PVS_LICENSE=1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up foundry DFM PATH for Assura - CRNxxG/CRNxxLP process for current project</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">TSMC_ASU_DFM_PATH</span><span style="color:#ff6ac1">=</span>/opt/PDKs/tsmc/CRNxxG/Assura/lvs_rcx/DFM
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export TSMC_ASU_DFM_PATH=/opt/PDKs/tsmc/CRNxxLP/Assura/lvs_rcx/DFM</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence Physical Verification System, MaskCompose, &amp; QuickView (PVS)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># K2_VIEWER_HOME must be set before Quickview is invoked. LM_LICENSE_FILE</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># is required to run any K2 product.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">K2_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/PVS151/tools/K2
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">K2_VIEWER_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$K2_HOME</span>/Viewer
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">K2_MASKCOMPOSE_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$K2_HOME</span>/MaskCompose
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">K2_MC_DATA</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$HOME</span>/Projects
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">LM_LICENSE_FILE</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDS_LIC_FILE</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/PVS151/bin:<span style="color:#ff5c57">$CADHOME</span>/PVS151/tools/bin:<span style="color:#ff5c57">$K2_MASKCOMPOSE_HOME</span>/bin
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">XKEYSYMDB</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDSDIR</span>/tools/plot/etc/XKeysymDB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Commands on terminal to launch Quickview or MaskCompose</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#k2_viewer &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#k2_mcs &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">##############################################################</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence Digital Flow - HDL Simulations, Synthesis, P&amp;R</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">##############################################################</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Genus Synthesis Solution (GENUS) - Logic &amp; Physical Synthesis</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/GENUS152/tools/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch Genus</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># genus</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># RTL Power Analysis (Joules)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/JLS151/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to start Joules</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># joules &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Innovus Implementation System (INNOVUS) - P&amp;R</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/INNOVUS152/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch Innovus</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># innovus &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence C-to-Silicon Compiler (CTOS)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/CTOS142/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch CTOS</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># ctosgui &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Encounter Conformal (CONFRML) - Constraint Designer, Low Power Designer,</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># &amp; ECO Designer</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/CONFRML152/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch Confirmal with license options:</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># -xl/-gxl/-rcv/-eco/-ecogxl/-lp/-lpxl/-ccd/-ccdxl/-lpgxl/-verify;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#  default is set to -l if no option is given.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># example:  &#34;lec -lp -verify -gui &amp;&#34; for Low Power license and Verify license</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># lec -lpgxl -verify -gui &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Silicon Signoff &amp; Verification (SSV) - including Tempus Timing Signoff</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># &amp; Voltus IC Power Integrity</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/SSV152/tools/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch tempus or voltus</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># tempus &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># voltus &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Incisive Verification Platform - Digital HDL simulators</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/bin:<span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/tools/bin::<span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/tools/vtools/vfault/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># For 3-step (ncvlog, ncelab, and ncsim) flow to run Virtuoso AMS Designer simulator,</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># the following library path environment variable has to be set.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># For single-step (irun) running AMS simulator, LD_LIBRARY_PATH is not required.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">LD_LIBRARY_PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/tools/lib/64bit:<span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/tools/lib
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Enable noise analysis in AMS designer</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">AMS_ENABLE_NOISE</span><span style="color:#ff6ac1">=</span>YES
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up Universal Verification Methodology (UVM) Environment Variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># uvm_home defines the path to the UVM class library</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># ml_uvm defines the path to the ml_uvm code</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># ml_seq_dir defines the path to the SystemVerilog ml_uvm_seq package for using</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># sequencer stubs</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># The SystemVerilog package ml_uvm_seq is included in the Specman installation.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># To use it, you must add the following command-line options to your compilation flow,</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># as additional command-line arguments to irun or ncvlog :</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># irun ... ${ML_SEQ_DIR}/ml_uvm_seq.sv -incdir ${ML_SEQ_DIR}</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">uvm_home</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/tools/uvm
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">ml_uvm</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/tools/uvm/uvm_lib/uvm_ml/sc/ml_uvm
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">ml_seq_dir</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/specman/src
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up the HOME Environment Variable for Incisive Verification Kits</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Source the appropriate environment setup file (Note: a space is required</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># between . and $SOCV_KIT_HOME/env.sh)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">SOCV_KIT_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/INCISIVE151/kits/VerificationKit
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#. $SOCV_KIT_HOME/env.sh</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to start up Incisive Verification Kits</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># start_kit &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#***********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch NClaunch</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#***********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># nclaunch &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to start up Specman &amp; SimVision</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># specman -gui &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to invoke Desktop Manager</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># emanager -desktop &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># vmanager &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Encounter Diagnostics &amp; Test (ET)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/ET151/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch ET,  or with license options: -architect/-truetime/-diag</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># commands eta, ett and ediag are equivalent to et -architect, et -truetime and et -diag</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># which invokes Encounter Test Architect,  Encounter True_time Delay Test and</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Encounter Diagnostics, respectively.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># eta &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># ett &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># ediag &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Verification IP Product Catalog (VIPCAT)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># VIP products are configured using a GUI called PureView.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDN_VIP_ROOT</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CADHOME</span>/VIPCAT113
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">Cadence_VIP_LIC_ORDER</span><span style="color:#ff6ac1">=</span>newrev:soc:portfolio:alacarte
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">ABVIP_ISNT_DIR</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDN_VIP_ROOT</span>/tools/abvip
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># In e , set SPECMAN_PATH to the location of the specific UVC directory</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">SPECMAN_PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CDN_VIP_ROOT</span>/utils:<span style="color:#ff5c57">$CDN_VIP_ROOT</span>/packages:<span style="color:#ff5c57">$CDN_VIP_ROOT</span>/vips/enet/vr_enet
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">DENALI</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CDN_VIP_ROOT</span>/tools/denali_64bit
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$DENALI</span>/bin
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># In SV, add the UVC by including the specific VIP SV directory in the irun command:</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#irun -incdir $CDN_VIP_ROOT/vips/enet/vr_enet/sv</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch PureView to configure VIP products.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># pureview</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Manufacturability and Variability Sign-Off (MVS) - Litho Analyzers,</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># CMP Predictor</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CADHOME</span>/MVS152/tools/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Commands on terminal to launch Litho Analyzers, CMP Predictor</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#lpa &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#lea &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># need to figure out correct license keys in license.dat for CMP Predictor</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># (current ones don&#39;t work)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#cmms -ccp &amp;</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#cmms -ccpo &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Library Characterizer (Liberate)</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Include the integrated Spectre in PATH</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export ALTOSHOME=$CADHOME/LIBERATE151</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export PATH=$PATH:$ALTOSHOME/bin</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export PATH=$PATH:$ALTOSHOME/tools.lnx86/spectre/bin</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#export ALTOS_64=1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up NCSU CDK</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># This is optional for educational purpose; use foundry provided PDKs</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># instead for production projects by including foundry PDKs in cds.lib</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># in the working directory.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CDK_DIR</span><span style="color:#ff6ac1">=</span>/opt/PDKs/ncsu-cdk-1.6.0.beta
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Mentor Graphics Calibre</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_HOME</span><span style="color:#ff6ac1">=</span>/opt/mentor
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CALIBRE_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$MGC_HOME</span>/Calibre2019/aoj_cal_2019.3_15.11
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGLS_LICENSE_FILE</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$MGC_HOME</span>/license/license.dat
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$PATH</span>:<span style="color:#ff5c57">$CALIBRE_HOME</span>/bin
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_LIB_PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$CALIBRE_HOME</span>/lib
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">CALIBRE_OS_MSG_LEVEL</span><span style="color:#ff6ac1">=</span><span style="color:#ff9f43">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#***********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Enable Calibre RealTime with Cadence Virtuoso</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#***********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_CALIBRE_REALTIME_VIRTUOSO_ENABLED</span><span style="color:#ff6ac1">=</span><span style="color:#ff9f43">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># This variable enables Calibre Interactive to save all GUI settings including default</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># values to a runset file for future re-run</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_CALIBRE_SAVE_ALL_RUNSET_VALUES</span><span style="color:#ff6ac1">=</span><span style="color:#ff9f43">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set up socket connection with Virtuoso schematic or layout viewer (using default ports</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># 9199 for schematic and 9189 for layout) in the form of host:port</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_CALIBRE_SCHEMATIC_SERVER</span><span style="color:#ff6ac1">=</span>hostname:9199S
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_CALIBRE_LAYOUT_SERVER</span><span style="color:#ff6ac1">=</span>hostname:9189
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># The license server is no longer needed once all features are set to uncounted or 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># (unlimited use) for the FEATURE lines in license.dat. file.  The SERVER, VENDOR and</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># USE_SERVER lines can be safely removed from license.dat file, i.e. license.dat here</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># contains FEATURE lines only.  DO NOT START UP LICENSE SERVER DAEMON!!!</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#***********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Set the name of the executable for displaying PDF documentation from Calibre Help</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># menu. The default is acroread if it exists.  Make sure evince has been installed before</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># setting up the following (on Ubuntu type command &#34;sudo apt-get install evince&#34;).</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#***********************************************************************</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">MGC_PDF_READER</span><span style="color:#ff6ac1">=</span>evince
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Command on terminal to launch Cadence Virtuoso tools</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Adding &amp; runs the process in the background allowing to continue using</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># the current terminal.</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#virtuoso &amp;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">SYSTEM_CDS_LIB_DIR</span><span style="color:#ff6ac1">=</span>/opt/Cadence/IC617/share/cdssetup
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">OA_UNSUPPORTED_PLAT</span><span style="color:#ff6ac1">=</span>linux_rhel50_gcc48x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># User specific aliases and functions</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># User specific aliases and functions</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">####################</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e"># Cadence</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">#####################</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">INCISIVDIR</span><span style="color:#ff6ac1">=</span>/opt/Cadence/XCELIUM1803/
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">VRST_HOME</span><span style="color:#ff6ac1">=</span>/opt/Cadence/XCELIUM1803/
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">LM_LICENSE_FILE</span><span style="color:#ff6ac1">=</span>/opt/Cadence/license/Cadence.dat
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">LD_LIBRARY_PATH</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$LD_LIBRARY_PATH</span>:/opt/Cadence/XCELIUM1803/tools.lnx86/lib
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">irun</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/lib/bin/irun&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">simv</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/lib/bin/simvision&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">simvision</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/simvision -64 &amp;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">ncvlog</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvlog&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">ncsim</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvsim&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">ncelab</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncelab&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">ncvhdl_p</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;/opt/Cadence/XCELIUM1803/tools.lnx86/bin/ncvhdl_p&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">SPECMAN_HOME</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$INCISIVDIR</span>/components/sn
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">SPECMAN_DIR</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">$SPECMAN_HOME</span>/
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;</span><span style="color:#ff5c57">$PATH</span><span style="color:#5af78e">:</span><span style="color:#ff5c57">$INCISIVDIR</span><span style="color:#5af78e">/bin&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;</span><span style="color:#ff5c57">$PATH</span><span style="color:#5af78e">:</span><span style="color:#ff5c57">$INCISIVDIR</span><span style="color:#5af78e">/tools.lnx86/bin&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">export</span> <span style="color:#ff5c57">PATH</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;</span><span style="color:#ff5c57">$PATH</span><span style="color:#5af78e">:</span><span style="color:#ff5c57">$INCISIVDIR</span><span style="color:#5af78e">/tools.lnx86/dfII/bin&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">i</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;icfb&amp;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">v</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;virtuoso&amp;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">WORKdir</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;~/newpdk/HHGRACE_PDK_BCD350GE/prj&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">alias</span> <span style="color:#ff5c57">cdw</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;cd </span><span style="color:#ff5c57">$WORKdir</span><span style="color:#5af78e">&#34;</span>
+</span></span></code></pre></div><h2 id="enjoy-it" >
+<div>
+    <a href="#enjoy-it">
+        #
+    </a>
+    Enjoy it
+</div>
+</h2>
+<p>Go to your workspace and start it.
+But to use it gracefully I highly recommand you to create a start bash and a desktop icon.</p>
+<p><code>start.sh</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#78787e">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span><span style="color:#ff5c57">cd</span> /home/ricardo/Project
+</span></span><span style="display:flex;"><span>virtuoso&amp;
+</span></span></code></pre></div><p>Then give the privilige to run the shell script using <code>chmod 777 start.sh</code>.</p>
+<p><code>Virtuoso.desktop</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#ff6ac1">[</span>Desktop Entry<span style="color:#ff6ac1">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Encoding</span><span style="color:#ff6ac1">=</span>UTF-8
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Version</span><span style="color:#ff6ac1">=</span>1.0
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Type</span><span style="color:#ff6ac1">=</span>Application
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Terminal</span><span style="color:#ff6ac1">=</span><span style="color:#ff5c57">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Exec</span><span style="color:#ff6ac1">=</span>/home/ricardo/Project/start.sh
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Name</span><span style="color:#ff6ac1">=</span>Virtuoso
+</span></span><span style="display:flex;"><span><span style="color:#ff5c57">Icon</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;the folder where you save the jpg of Virtuoso&#34;</span>
+</span></span></code></pre></div><p>Finally give the privilige to run the  <code>.desktop</code> using <code>chmod 777 Virtuoso.desktop</code>.</p>
+<p><em>Enjoy it!</em></p>
+
+        </div>
+
+    </article>
+
+    
+    
+        
+    
+
+    
+        
+        
+            <h3 class="read-next-title noselect">Read next</h3>
+            <ul class="read-next-posts noselect">
+                
+                <li><a href="/posts/resume/">Resume</a></li>
+                
+            </ul>
+        
+    
+
+    
+
+    
+        
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+    
+
+        </main>
+        
+            <footer class="common-footer noselect">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+
+        <div style="display: flex; align-items: center; gap:8px">
+            © Ricardo Sung, 2024
+            
+        </div>
+        <div style="display:flex;align-items: center">
+            
+            
+            
+            
+            
+            
+        </div>
+        <div>
+            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/Junyi-99/hugo-theme-anubis2">Anubis2</a>.<br>
+            
+
+        </div>
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=http://localhost:1313/ class="p-name u-url url fn" rel="me"></a>
+
+    
+
+    
+</p>
+
+</footer>
+
+        
+    </div>
+</body>
+</html>
