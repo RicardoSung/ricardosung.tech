@@ -991,35 +991,32 @@ But to use it gracefully I highly recommand you to create a start bash and a des
     
     <item>
       <title>Resume</title>
-      <link>/posts/resume/</link>
-      <pubDate>Sat, 23 Oct 2021 16:31:45 +0000</pubDate>
+      <link>/resume/resume/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/posts/resume/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Welcome to my blog. Here is my resume.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;education-experience&#34; &gt;
+      <guid>/resume/resume/</guid>
+      <description>&lt;h1 id=&#34;education-experience&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#education-experience&#34;&gt;
-        #
+        ##
     &lt;/a&gt;
     Education Experience
 &lt;/div&gt;
-&lt;/h2&gt;
+&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;University of Macau&lt;/strong&gt;     Aug. 2022 - June 2025
 Macau SAR, P.R.China
 &lt;em&gt;Master of Philosophy in Microelectronics, PMSCEMIC&lt;/em&gt;
 &lt;strong&gt;University of Electronic Science and Technology of China&lt;/strong&gt;     Sep. 2018 - June 2022
 Chengdu, Sichuan, P.R.China
 &lt;em&gt;Bachelor of Optoelectronic Information Science and Engineering&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&#34;paper-publication&#34; &gt;
+&lt;h1 id=&#34;paper-publication&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#paper-publication&#34;&gt;
-        #
+        ##
     &lt;/a&gt;
     Paper Publication
 &lt;/div&gt;
-&lt;/h2&gt;
+&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Optimization of CNN-Based Garbage Classification Model&lt;/strong&gt;    Oct. 2020
 &lt;em&gt;Archived in the ACM Digital Library, indexed by Ei Compendex and Scopus&lt;/em&gt;
 Artificial Intelligence &amp;amp; Computer Vision&lt;/p&gt;
@@ -1029,14 +1026,14 @@ Artificial Intelligence &amp;amp; Computer Vision&lt;/p&gt;
 &lt;li&gt;Tested the model on edge board like Raspberry Pi 4 and Jetson Nano which had better performance than before.&lt;/li&gt;
 &lt;li&gt;Explored ways to use machine learning, computer vision and Python.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;project-experience&#34; &gt;
+&lt;h1 id=&#34;project-experience&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#project-experience&#34;&gt;
-        #
+        ##
     &lt;/a&gt;
     Project Experience
 &lt;/div&gt;
-&lt;/h2&gt;
+&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Low-power, high transient response LDO design without off-chip capacitors&lt;/strong&gt;
 &lt;em&gt;Major Participant&lt;/em&gt;    Nov. 2020 - Aug. 2021&lt;/p&gt;
 &lt;ul&gt;
@@ -1068,25 +1065,25 @@ Artificial Intelligence &amp;amp; Computer Vision&lt;/p&gt;
 &lt;li&gt;Programmed a mobile app to receive warnings sent by servers to remind children’s guardians of the states in cars about their children.&lt;/li&gt;
 &lt;li&gt;Won the third prize of the National University Student’s Opt-Sci-Tech Competition (2019).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;work-experience&#34; &gt;
+&lt;h1 id=&#34;work-experience&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#work-experience&#34;&gt;
-        #
+        ##
     &lt;/a&gt;
     Work Experience
 &lt;/div&gt;
-&lt;/h2&gt;
+&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Excellent President of Application Electronics Association&lt;/strong&gt;    Sep. 2019 – Sep. 2021
 &lt;em&gt;Organized lectures and competitions about electronic design and program.&lt;/em&gt;
 &lt;strong&gt;Member of UESTC Linux User Group&lt;/strong&gt;    July 2020 – July 2021&lt;/p&gt;
-&lt;h2 id=&#34;honors--awards&#34; &gt;
+&lt;h1 id=&#34;honors--awards&#34; &gt;
 &lt;div&gt;
     &lt;a href=&#34;#honors--awards&#34;&gt;
-        #
+        ##
     &lt;/a&gt;
     Honors &amp;amp; Awards
 &lt;/div&gt;
-&lt;/h2&gt;
+&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;First Prize of the National University Student Integrated Circuit Innovation and Entrepreneurship Competition in Southwest Devision, 2021.&lt;/li&gt;
 &lt;li&gt;Second Prize of the National University Student’s Opt-Sci-Tech Competition, 2021.&lt;/li&gt;
