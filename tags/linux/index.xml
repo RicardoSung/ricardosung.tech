@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Ricardo Sung&#39;s Blog</title>
+    <link>https://ricardosung.tech/tags/linux/</link>
+    <description>Recent content in Linux on Ricardo Sung&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>© Ricardo Sung</copyright>
+    <lastBuildDate>Sun, 14 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://ricardosung.tech/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Build Your IC Design Evironment Based on Cadence IC617 Package</title>
+      <link>https://ricardosung.tech/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
+      <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
+      <guid>https://ricardosung.tech/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
+      <description>&lt;p&gt;For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about &lt;code&gt;Bandgap&lt;/code&gt;, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.&lt;br /&gt;&#xA;So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine). And if you want to install it on a RM (Real Machine), you can follow the same way, too.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

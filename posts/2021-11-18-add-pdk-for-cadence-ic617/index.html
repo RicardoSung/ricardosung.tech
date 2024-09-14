@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html><head lang="en">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Add PDK for Cadence IC617 - Ricardo Sung&#39;s Blog</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
+Now I will try to install TSMC 180nm RF as an example.
+Download and extract the files
+The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
+unar xxx.part01.rar
+Enter your workspace and install PDK
+
+Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK.
+
+cd /home/ricardo/Download/tsmc180
+perl pdkInstall.pl 
+
+Here 1P6M means 1 Poly Layer with 6 Metal Layer.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool." />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="https://ricardosung.tech/posts/2021-11-18-add-pdk-for-cadence-ic617/">
+  <meta property="og:site_name" content="Ricardo Sung&#39;s Blog">
+  <meta property="og:title" content="Add PDK for Cadence IC617">
+  <meta property="og:description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
+Now I will try to install TSMC 180nm RF as an example.
+Download and extract the files The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
+unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK. cd /home/ricardo/Download/tsmc180 perl pdkInstall.pl Here 1P6M means 1 Poly Layer with 6 Metal Layer.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-11-18T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-11-18T00:00:00+00:00">
+    <meta property="article:tag" content="IC Design">
+    <meta property="article:tag" content="English">
+    <meta property="article:tag" content="Virtuoso">
+    <meta property="article:tag" content="Tutorial">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Add PDK for Cadence IC617">
+  <meta name="twitter:description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
+Now I will try to install TSMC 180nm RF as an example.
+Download and extract the files The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
+unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK. cd /home/ricardo/Download/tsmc180 perl pdkInstall.pl Here 1P6M means 1 Poly Layer with 6 Metal Layer.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.">
+<script src="https://ricardosung.tech/js/feather.min.js"></script>
+	
+	
+        <link href="https://ricardosung.tech/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://ricardosung.tech/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://ricardosung.tech/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+		<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		</script>
+
+		
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				displayMath: [['$$','$$'], ['\[','\]']],
+				processEscapes: true,
+				processEnvironments: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+				TeX: { equationNumbers: { autoNumber: "AMS" },
+						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
+			}
+		});
+		</script>
+	
+
+	
+	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+		
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					renderMathInElement(document.body, {
+							delimiters: [
+									{left: "$$", right: "$$", display: true},
+									{left: "$", right: "$", display: false}
+							]
+					});
+			});
+			</script>
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://ricardosung.tech/">Ricardo Sung&#39;s Blog</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/tags">Tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="https://ricardosung.tech/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Add PDK for Cadence IC617</h1>
+			<div class="meta">Posted on Nov 18, 2021</div>
+		</div>
+		
+
+		
+
+		<section class="body">
+			<p>No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.<br />
+Now I will try to install TSMC 180nm RF as an example.</p>
+<h2 id="download-and-extract-the-files">Download and extract the files</h2>
+<p>The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are <code>.rar</code> type,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>unar xxx.part01.rar
+</span></span></code></pre></div><h2 id="enter-your-workspace-and-install-pdk">Enter your workspace and install PDK</h2>
+<ol>
+<li>Here my workspace is <code>/home/ricardo/Project</code> and my PDK folder is <code>/home/ricardo/Project/PDK</code>.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /home/ricardo/Download/tsmc180
+</span></span><span style="display:flex;"><span>perl pdkInstall.pl 
+</span></span></code></pre></div><p><img src="./images/1637245461033.png" alt="1" /><br />
+Here <code>1P6M</code> means <code>1 Poly Layer with 6 Metal Layer</code>.<br />
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># enter the father folder where you store your PDK in you workspace</span>
+</span></span><span style="display:flex;"><span>cd /home/ricardo/Project/PDK
+</span></span><span style="display:flex;"><span>mkdir tsmc180OA
+</span></span><span style="display:flex;"><span>mkdir tsmc180OA/cdb
+</span></span><span style="display:flex;"><span>cp tsmc180/cds.lib tsmc180OA/cdb
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># modify cds.lib in tsmc180OA/cdb</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># delet all lines and add the CDB PDK path pointing to pdk</span>
+</span></span><span style="display:flex;"><span>DEFINE tsmc18rf /home/ricardo/Project/PDK/tsmc180/tsmc18rf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># use the conversion tool to convert CDB to OA</span>
+</span></span><span style="display:flex;"><span>cd /home/ricardo/Project/PDK/tsmc180OA
+</span></span><span style="display:flex;"><span>virtuoso&amp;
+</span></span></code></pre></div><p>Click <code>tools</code>-&gt;<code>Conversion Toolbox</code>-&gt;<code>CDB to OpenAccess Translator</code> and select the <code>cds.lib</code> which is modified in OA path.<br />
+<img src="./images/1637286857242.png" alt="2" /><br />
+Then you will see a folder called <code>tsmc18rf</code> generated in <code>tsmc180OA</code>.<br />
+<img src="./images/1637287422170.png" alt="3" /><br />
+And copy the folder to merge the same name folder <code>tsmc18rf</code> to <code>tsmc180</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cp /home/ricardo/Project/PDK/tsmc180OA/tsmc18rf /home/ricardo/Project/PDK/tsmc180
+</span></span></code></pre></div><ol start="3">
+<li>Go to <code>/home/ricardo/Project/PDK/tsmc180/tsmc19rf</code>, edit <code>libInit.il</code> and commit <code>hspiceS</code> using <code>;;</code>.<br />
+<img src="./images/1637287432034.png" alt="4" /><br />
+*Actually I do not know why to commit <code>hspiceS</code>, but it do work well after I add the PDK in Cadence with uncommited <code>libInit.il</code>. *</li>
+<li>Cut and Passte &ldquo;CONTROLS&rdquo; section to the <code>fist</code> section in <code>teckfile</code><br />
+<img src="./images/1637288558812.png" alt="5" /></li>
+<li>Back to workspcae and run <code>virtuoso&amp;</code>.</li>
+<li>Add lib to <code>Tools</code>-&gt;<code>Library Manager</code>.</li>
+<li>Enjoy it!</li>
+</ol>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ic-design">IC Design</a></li>
+					
+					<li><a href="/tags/english">English</a></li>
+					
+					<li><a href="/tags/virtuoso">Virtuoso</a></li>
+					
+					<li><a href="/tags/tutorial">Tutorial</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+    (function () {
+        
+        
+        if (window.location.hostname == "localhost")
+            return;
+
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        var disqus_shortname = 'yourDisqusShortname';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2024  © Ricardo Sung | All rights reserved.  
+    
+  </div>
+</footer>
+
+
+</div>
+    </body>
+</html>
