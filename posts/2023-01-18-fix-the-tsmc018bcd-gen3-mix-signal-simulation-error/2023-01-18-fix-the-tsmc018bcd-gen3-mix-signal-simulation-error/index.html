@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Fix the TSMC018BCD Gen3 Mix-signal Simulation Error - Ricardo Sung&#39;s Blog</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="When using AMS simulator in Virtuoso," />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/2023-01-18-fix-the-tsmc018bcd-gen3-mix-signal-simulation-error/2023-01-18-fix-the-tsmc018bcd-gen3-mix-signal-simulation-error/">
+  <meta property="og:site_name" content="Ricardo Sung&#39;s Blog">
+  <meta property="og:title" content="Fix the TSMC018BCD Gen3 Mix-signal Simulation Error">
+  <meta property="og:description" content="When using AMS simulator in Virtuoso,">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-01-18T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-01-18T00:00:00+00:00">
+    <meta property="article:tag" content="IC Design">
+    <meta property="article:tag" content="English">
+    <meta property="article:tag" content="Virtuoso">
+    <meta property="article:tag" content="Tutorial">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Fix the TSMC018BCD Gen3 Mix-signal Simulation Error">
+  <meta name="twitter:description" content="When using AMS simulator in Virtuoso,">
+<script src="http://localhost:1313/js/feather.min.js"></script>
+	
+	
+        <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+		<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		</script>
+
+		
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				displayMath: [['$$','$$'], ['\[','\]']],
+				processEscapes: true,
+				processEnvironments: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+				TeX: { equationNumbers: { autoNumber: "AMS" },
+						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
+			}
+		});
+		</script>
+	
+
+	
+	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+		
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					renderMathInElement(document.body, {
+							delimiters: [
+									{left: "$$", right: "$$", display: true},
+									{left: "$", right: "$", display: false}
+							]
+					});
+			});
+			</script>
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">Ricardo Sung&#39;s Blog</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/tags">Tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</h1>
+			<div class="meta">Posted on Jan 18, 2023</div>
+		</div>
+		
+
+		
+
+		<section class="body">
+			<p>The post is suitable for one working in AMSV(IME) of UM. I&rsquo;m not sure if the error comes from the incomplete PDK or lack of some connection libraries. But actully I&rsquo;ve fixed them with Lewis&rsquo;s help, who is a stuff of IME.</p>
+<h2 id="what-are-the-errors">What are the errors?</h2>
+<p>The error popped out when I followed the steps of some tutorial videos or blogs, like</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=skym0kck5ho&amp;list=PLOQ7ARw-angeaYSo4psMkmxF6AW7yPvDj">Hussein Hussein, AMS - Verilog code in cadence</a></li>
+<li><a href="https://www.youtube.com/watch?v=-4ANK_fL7oY&amp;t=600s">沅晉李, Run mixed-signal in cadence virtuoso. Take a digital low-dropout regulator (DLDO) for example.</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Ji4y1P7uV/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a87efd00681832a103a8c00e390d7ff8">核弹军, 如何在Virtuoso中进行AMS混合信号仿真</a></li>
+<li><a href="https://blog.csdn.net/mymatin1004/article/details/98804521">mymatin1004, 使用 Cadence ams 仿真器 对 混合信号电路 进行仿真</a>.</li>
+</ol>
+<p>As the figure below shows, <em>instance of design is unresolved</em>.<br />
+<img src="./images/1674051785447.png" alt="error" /><br />
+Yes, I did search the error, but all the &ldquo;solutions&rdquo; I&rsquo;ve tested  didn&rsquo;t work. Hera are the &ldquo;solutions&rdquo;, though which don&rsquo;t work in my case, but sometime they may help you out.</p>
+<ol>
+<li>Go to <code>ADE -&gt; Setup -&gt; Model Library Setup</code>, and check if the <code>model files </code>are the same as those when using spectre only.</li>
+<li>Go to <code>ADE -&gt; Setup -&gt; Connect Rules/IE Setup</code>, then change <code>global supply value/net</code> or just use <code>connectLib.ConnRules</code> in <code>Connect Rule/Connect Module Based Setup</code>. Well, you can switch from this one to the other one, just try it.<br />
+<img src="./images/1674053083453.png" alt="1" /><br />
+<img src="./images/1674053133407.png" alt="2" /></li>
+<li>Go to <code>ADE -&gt; Simulation -&gt;Netlist and Run Options</code>, change <code>NETLIST AND RUN MODE</code> from <code>Cellview-based netlister with ncvlog ncelab, nsim</code> to <code>OSS-base netlister with irun</code> or <code>AMS Unified Netlister with irun</code>.<br />
+<img src="./images/1674053659612.png" alt="3" /></li>
+<li>Check if you have configured <code>config</code> correctly, especially <code>stop list</code>. Most time this solution is not necessary, because beginners always use templates to start <code>config</code> configuration.</li>
+</ol>
+<h2 id="the-way-to-fix-the-error">The way to fix the error</h2>
+<p>I asked Lewis for help, and he told me to try <code>Xcelium</code> rather than <code>irun</code> or <code>ncvlog</code>. As soon as I read the e-mail, <code>Xcelium</code> made me confused. But <code>Google.com</code> is a nice tool, right? <a href="http://www.lujun.org.cn/?p=3714">Jun&rsquo;s blog</a> explains it perfectly.<br />
+So in a word, my solution is to change the simulation enviroment. <code>Xcelium</code> is the newest tool, and at the same time, the version of <code>Virtuoso</code> needs changing, too. The correct <code>conf.sh</code> is shown below, which you may change some softeares&rsquo; versions (To see versions of software, plz open <code>Terminal</code> and type in <code>module av</code>.), and in my case, it works well.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>setenv CDS_AUTO_64BIT spectre
+</span></span><span style="display:flex;"><span>module unload icfb
+</span></span><span style="display:flex;"><span>module unload assura
+</span></span><span style="display:flex;"><span>module unload cadence/mmsim
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># module load cadence/icfb/ic6</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># module load cadence/spectre/171_627</span>
+</span></span><span style="display:flex;"><span>module unload cadence/icfb
+</span></span><span style="display:flex;"><span>module load cadence/icfb/618_250
+</span></span><span style="display:flex;"><span>module unload cadence/spectre
+</span></span><span style="display:flex;"><span>module load cadence/spectre/21_10_173
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>module unload calibre
+</span></span><span style="display:flex;"><span>module unload mentor/calibre
+</span></span><span style="display:flex;"><span>module load mentor/calibre/2015.4_33.23
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># module unload incisiv</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># module load cadence/incisiv/1520_047</span>
+</span></span><span style="display:flex;"><span>module unload cadence/xcelium
+</span></span><span style="display:flex;"><span>module load cadence/xcelium/2203_01
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>module load sonnet/sonnetsuites/sonnet
+</span></span><span style="display:flex;"><span>module load empyrean/alps/2019_12_SP2
+</span></span><span style="display:flex;"><span>virtuoso &amp;
+</span></span></code></pre></div><p>Then open <code>Virtuoso</code>, and check if <code>NETLIST AND RUN MODE</code> of <code>ADE -&gt; Simulation -&gt; Netlist and Run Options</code> is changed to <code>AMS Unified Netlister with xrun</code>. After that, you can continue the tutorial vidoes or blogs, and have a good time doing mix-signal simualtion.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ic-design">IC Design</a></li>
+					
+					<li><a href="/tags/english">English</a></li>
+					
+					<li><a href="/tags/virtuoso">Virtuoso</a></li>
+					
+					<li><a href="/tags/tutorial">Tutorial</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+    (function () {
+        
+        
+        if (window.location.hostname == "localhost")
+            return;
+
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        var disqus_shortname = 'yourDisqusShortname';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2024  © Ricardo Sung | All rights reserved.  
+    
+  </div>
+</footer>
+</div>
+    </body>
+</html>

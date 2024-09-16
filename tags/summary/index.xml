@@ -14,7 +14,7 @@
       <link>https://ricardosung.tech/posts/2024-09-14-how-to-burn-your-chip/</link>
       <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
       <guid>https://ricardosung.tech/posts/2024-09-14-how-to-burn-your-chip/</guid>
-      <description>&lt;h2 id=&#34;diodes-cant-be-forwarded&#34;&gt;Diodes can&amp;rsquo;t be forwarded.&lt;/h2&gt;&#xA;&lt;p&gt;Referring to PDK doc, all regular diodes including LV diodes operating in the forward region are not allowed. As the diodes are forwarded, the parasitic BJT operates in forward-active region. Schottky diodes also have substrate injection if the forward voltage is over 0.6V. As empirical evidence has demonstrated, the subtracted leakeage current is as substantial as the forward current.&lt;br /&gt;&#xA;&lt;img src=&#34;./burn_chip/diode_forward.png&#34; alt=&#34;forward_diode&#34; /&gt;&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;diodes-cant-be-forwarded&#34;&gt;Diodes can&amp;rsquo;t be forwarded.&lt;/h2&gt;&#xA;&lt;p&gt;Referring to PDK doc, all regular diodes including LV diodes operating in the forward region are not allowed. As the diodes are forwarded, the parasitic BJT operates in forward-active region. Schottky diodes also have substrate injection if the forward voltage is over 0.6V. As empirical evidence has demonstrated, the subtracted leakeage current is as substantial as the forward current.&lt;br /&gt;&#xA;&lt;img src=&#34;./images/diode_forward.png&#34; alt=&#34;forward_diode&#34; /&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

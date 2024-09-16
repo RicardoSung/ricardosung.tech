@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>To Improve RHEL 8.5 - Ricardo Sung&#39;s Blog</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Ways to improve RHEL and essential softwares." />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/2021-11-17-to-improve-rhel-85/2021-11-17-to-improve-rhel-85/">
+  <meta property="og:site_name" content="Ricardo Sung&#39;s Blog">
+  <meta property="og:title" content="To Improve RHEL 8.5">
+  <meta property="og:description" content="Ways to improve RHEL and essential softwares.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-11-17T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-11-17T00:00:00+00:00">
+    <meta property="article:tag" content="Virtuoso">
+    <meta property="article:tag" content="IC Design">
+    <meta property="article:tag" content="English">
+    <meta property="article:tag" content="Tutorial">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="To Improve RHEL 8.5">
+  <meta name="twitter:description" content="Ways to improve RHEL and essential softwares.">
+<script src="http://localhost:1313/js/feather.min.js"></script>
+	
+	
+        <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+		<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		</script>
+
+		
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				displayMath: [['$$','$$'], ['\[','\]']],
+				processEscapes: true,
+				processEnvironments: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+				TeX: { equationNumbers: { autoNumber: "AMS" },
+						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
+			}
+		});
+		</script>
+	
+
+	
+	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+		
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					renderMathInElement(document.body, {
+							delimiters: [
+									{left: "$$", right: "$$", display: true},
+									{left: "$", right: "$", display: false}
+							]
+					});
+			});
+			</script>
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">Ricardo Sung&#39;s Blog</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">All posts</a>
+		
+		<a href="/tags">Tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">To Improve RHEL 8.5</h1>
+			<div class="meta">Posted on Nov 17, 2021</div>
+		</div>
+		
+
+		
+
+		<section class="body">
+			<p>After installing RHEL, there is something that must be done. Actually, I have tested the latest RHEL 9, but as a comsumer, I think it is to hard to use, because EPEL packages are not as much as that in RHEL 8.5. So I switch my OS to RHEL 8.5.</p>
+<h2 id="enable-epel">Enable EPEL</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+</span></span><span style="display:flex;"><span>dnf clean all
+</span></span><span style="display:flex;"><span>dnf update
+</span></span><span style="display:flex;"><span>subscription-manager repos --enable <span style="color:#e6db74">&#34;codeready-builder-for-rhel-8-</span><span style="color:#66d9ef">$(</span>arch<span style="color:#66d9ef">)</span><span style="color:#e6db74">-rpms&#34;</span>
+</span></span></code></pre></div><h2 id="install-nvidia-driver">Install NVIDIA driver</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>lspci -vnn | grep VGA
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Download NVIDIA driver for Linux x86_64 from [official website](https://www.nvidia.com/Download/index.aspx?lang=en-us).</span>
+</span></span><span style="display:flex;"><span>cd Download
+</span></span><span style="display:flex;"><span>dnf group install <span style="color:#e6db74">&#34;Development Tools&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Disable nouveau</span>
+</span></span><span style="display:flex;"><span>nano /etc/modprobe.d/blacklist.conf 
+</span></span><span style="display:flex;"><span>blacklist nouveau
+</span></span><span style="display:flex;"><span>mv  /boot/initramfs-<span style="color:#66d9ef">$(</span>uname -r<span style="color:#66d9ef">)</span>.img   /boot/initramfs-<span style="color:#66d9ef">$(</span>uname -r<span style="color:#66d9ef">)</span>.img.bak
+</span></span><span style="display:flex;"><span>dracut --force /boot/initramfs-<span style="color:#66d9ef">$(</span>uname -r<span style="color:#66d9ef">)</span>.img
+</span></span><span style="display:flex;"><span>reboot
+</span></span><span style="display:flex;"><span>lsmod | grep nouveau <span style="color:#75715e"># Check if you have disabled nouveau correctly. No responce is right.</span>
+</span></span><span style="display:flex;"><span>init <span style="color:#ae81ff">3</span> <span style="color:#75715e">#to go to no-graphic mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># alt + F2 to enter tty2 and then login</span>
+</span></span><span style="display:flex;"><span>su
+</span></span><span style="display:flex;"><span>./<span style="color:#f92672">(</span>nvidia_driver<span style="color:#f92672">)</span>.run
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># do not install 32-bit and press &#34;yes&#34; to restart x.</span>
+</span></span><span style="display:flex;"><span>reboot
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check if NVIDIA driver is installed.</span>
+</span></span><span style="display:flex;"><span>nvidia-smi
+</span></span><span style="display:flex;"><span>nvidia-settings
+</span></span></code></pre></div><h2 id="install-google-chrome">Install Google-Chrome</h2>
+<p>Download google-chrome installation package from google.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dnf install liberation-fonts
+</span></span><span style="display:flex;"><span>dnf install libvulkan.so.1
+</span></span><span style="display:flex;"><span>rpm -ivh ./<span style="color:#f92672">(</span>google-chrome<span style="color:#f92672">)</span>.rpm
+</span></span></code></pre></div><h2 id="mount-ntfs-disk">Mount NTFS disk</h2>
+<p>To mount NTFS disk, I need a package called <code>NTFS-3G</code>. When I search for solution, it is amazing that almost everyone says that &ldquo;yum install ntfs-3g&rdquo; after adding <code>EPEL</code> to yum can work, but actually it do works!<br />
+hhh.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>yum install ntfs-3g
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># then double-click the disk in file manager, and you can access to it.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># you can still mount the disk manually</span>
+</span></span><span style="display:flex;"><span>mkdir /mnt/win/temp
+</span></span><span style="display:flex;"><span>mkdir /mnt/win/doc
+</span></span><span style="display:flex;"><span>mount -t ntfs-3g /dev/nvme0n1p4 /mnt/win/temp
+</span></span><span style="display:flex;"><span>mount -t ntfs-3g /dev/sda1 /mnt/win/doc
+</span></span></code></pre></div><h2 id="onedriver">OneDriver</h2>
+<p>I use OneDrive to sync my files so I struggled to find an easy use tool to access to onedrive, until I find <a href="https://github.com/jstaf/onedriver">OneDriver</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo dnf copr enable jstaf/onedriver
+</span></span><span style="display:flex;"><span>sudo dnf install onedriver
+</span></span></code></pre></div><h2 id="gridea">Gridea</h2>
+<p>Gridea is what I use to build my blog, however, no rpm version is provided. I need to convert deb or dmg to rpm, or I will need to use the &ldquo;junk&rdquo; AppImage. Jesus! I finally take <code>.snap</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo yum install snapd
+</span></span><span style="display:flex;"><span>sudo systemctl enable --now snapd.socket
+</span></span><span style="display:flex;"><span>sudo ln -s /var/lib/snapd/snap /snap
+</span></span><span style="display:flex;"><span>wget https://github.com/getgridea/gridea/releases/download/v0.9.2/gridea_0.9.2_amd64.snap
+</span></span><span style="display:flex;"><span>sudo snap install <span style="color:#f92672">(</span>gricea<span style="color:#f92672">)</span>.snap --dangerous
+</span></span><span style="display:flex;"><span>snap run gridea
+</span></span></code></pre></div><h2 id="v2raya">V2rayA</h2>
+<p>There is no version for RHEL8 actually, so you cannot add copr by <code>dnf copr enable zhullyb/v2rayA</code>. Follow these:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>dnf copr enable zhullyb/v2rayA centos-steam-8-x86_64
+</span></span><span style="display:flex;"><span>dnf install v2ray-core v2rayA
+</span></span></code></pre></div><h2 id="convert-deb-to-rpm">Convert deb to rpm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>yum install alien
+</span></span><span style="display:flex;"><span>alien --to-rpm --scripts xxx.deb
+</span></span><span style="display:flex;"><span>rpm -Uvh xxx.rpm
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># if some errors occur</span>
+</span></span><span style="display:flex;"><span>yum install https://rpmfind.net/linux/fedora/linux/releases/35/Everything/x86_64/os/Packages/r/rpmrebuild-2.16-1.fc35.noarch.rpm
+</span></span><span style="display:flex;"><span>rpmrebuild -pe xxx.rpm
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># remove the error path</span>
+</span></span><span style="display:flex;"><span>rpm -e --nodeps xxx
+</span></span></code></pre></div><h2 id="rar">RAR</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>yum install unar
+</span></span><span style="display:flex;"><span>unar xxx.rar
+</span></span></code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/virtuoso">Virtuoso</a></li>
+					
+					<li><a href="/tags/ic-design">IC Design</a></li>
+					
+					<li><a href="/tags/english">English</a></li>
+					
+					<li><a href="/tags/tutorial">Tutorial</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+    (function () {
+        
+        
+        if (window.location.hostname == "localhost")
+            return;
+
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        var disqus_shortname = 'yourDisqusShortname';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2024  © Ricardo Sung | All rights reserved.  
+    
+  </div>
+</footer>
+</div>
+    </body>
+</html>
