@@ -2,46 +2,46 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>English on Ricardo Sung&#39;s Blog</title>
-    <link>http://localhost:1313/tags/english/</link>
+    <link>https://ricardosung.tech/tags/english/</link>
     <description>Recent content in English on Ricardo Sung&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>© Ricardo Sung</copyright>
     <lastBuildDate>Wed, 18 Jan 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/english/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ricardosung.tech/tags/english/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Fix the TSMC018BCD Gen3 Mix-signal Simulation Error</title>
-      <link>http://localhost:1313/posts/2023-01-18-fix-the-tsmc018bcd-gen3-mix-signal-simulation-error/</link>
+      <link>https://ricardosung.tech/posts/2023-01-18-fix-the-tsmc018bcd-gen3-mix-signal-simulation-error/</link>
       <pubDate>Wed, 18 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2023-01-18-fix-the-tsmc018bcd-gen3-mix-signal-simulation-error/</guid>
+      <guid>https://ricardosung.tech/posts/2023-01-18-fix-the-tsmc018bcd-gen3-mix-signal-simulation-error/</guid>
       <description>The post is suitable for one working in AMSV(IME) of UM. I&amp;rsquo;m not sure if the error comes from the incomplete PDK or lack of some connection libraries. But actully I&amp;rsquo;ve fixed them with Lewis&amp;rsquo;s help, who is a stuff of IME.&#xA;What are the errors? The error popped out when I followed the steps of some tutorial videos or blogs, like&#xA;Hussein Hussein, AMS - Verilog code in cadence 沅晉李, Run mixed-signal in cadence virtuoso.</description>
     </item>
     <item>
       <title>My Research Process</title>
-      <link>http://localhost:1313/posts/2023-01-15-my-research-process/</link>
+      <link>https://ricardosung.tech/posts/2023-01-15-my-research-process/</link>
       <pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2023-01-15-my-research-process/</guid>
+      <guid>https://ricardosung.tech/posts/2023-01-15-my-research-process/</guid>
       <description>Someone may complain that it&amp;rsquo;s too early for me to write a post about this topic, because I haven&amp;rsquo;t even publish any essay in integrated circuit area. I know maybe there are some issues in the post, but I really need to do it after being asked by my friend.&#xA;Literature Management I still remember the first literature management software, which UESTC taught me, was EndNotes. Now, though I won&amp;rsquo;t use EndNotes anymore, it&amp;rsquo;s really a nice software except its price.</description>
     </item>
     <item>
       <title>Add PDK for Cadence IC617</title>
-      <link>http://localhost:1313/posts/2021-11-18-add-pdk-for-cadence-ic617/</link>
+      <link>https://ricardosung.tech/posts/2021-11-18-add-pdk-for-cadence-ic617/</link>
       <pubDate>Thu, 18 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2021-11-18-add-pdk-for-cadence-ic617/</guid>
+      <guid>https://ricardosung.tech/posts/2021-11-18-add-pdk-for-cadence-ic617/</guid>
       <description>No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.&#xA;Now I will try to install TSMC 180nm RF as an example.&#xA;Download and extract the files The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,&#xA;unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK.</description>
     </item>
     <item>
       <title>To Improve RHEL 8.5</title>
-      <link>http://localhost:1313/posts/2021-11-17-to-improve-rhel-85/</link>
+      <link>https://ricardosung.tech/posts/2021-11-17-to-improve-rhel-85/</link>
       <pubDate>Wed, 17 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2021-11-17-to-improve-rhel-85/</guid>
+      <guid>https://ricardosung.tech/posts/2021-11-17-to-improve-rhel-85/</guid>
       <description>After installing RHEL, there is something that must be done. Actually, I have tested the latest RHEL 9, but as a comsumer, I think it is to hard to use, because EPEL packages are not as much as that in RHEL 8.5. So I switch my OS to RHEL 8.5.&#xA;Enable EPEL dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm dnf clean all dnf update subscription-manager repos --enable &amp;#34;codeready-builder-for-rhel-8-$(arch)-rpms&amp;#34; Install NVIDIA driver lspci -vnn | grep VGA # Download NVIDIA driver for Linux x86_64 from [official website](https://www.</description>
     </item>
     <item>
       <title>Build Your IC Design Evironment Based on Cadence IC617 Package</title>
-      <link>http://localhost:1313/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
+      <link>https://ricardosung.tech/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
       <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
+      <guid>https://ricardosung.tech/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
       <description>For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about Bandgap, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.&#xA;So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine).</description>
     </item>
   </channel>

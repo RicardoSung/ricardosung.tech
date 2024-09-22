@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Research on Ricardo Sung&#39;s Blog</title>
-    <link>http://localhost:1313/tags/research/</link>
+    <link>https://ricardosung.tech/tags/research/</link>
     <description>Recent content in Research on Ricardo Sung&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>© Ricardo Sung</copyright>
     <lastBuildDate>Sun, 15 Jan 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/research/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ricardosung.tech/tags/research/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My Research Process</title>
-      <link>http://localhost:1313/posts/2023-01-15-my-research-process/</link>
+      <link>https://ricardosung.tech/posts/2023-01-15-my-research-process/</link>
       <pubDate>Sun, 15 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2023-01-15-my-research-process/</guid>
+      <guid>https://ricardosung.tech/posts/2023-01-15-my-research-process/</guid>
       <description>Someone may complain that it&amp;rsquo;s too early for me to write a post about this topic, because I haven&amp;rsquo;t even publish any essay in integrated circuit area. I know maybe there are some issues in the post, but I really need to do it after being asked by my friend.&#xA;Literature Management I still remember the first literature management software, which UESTC taught me, was EndNotes. Now, though I won&amp;rsquo;t use EndNotes anymore, it&amp;rsquo;s really a nice software except its price.</description>
     </item>
   </channel>
