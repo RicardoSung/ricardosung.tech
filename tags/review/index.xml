@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Review on Ricardo Sung&#39;s Blog</title>
+    <link>https://ricardosung.tech/tags/review/</link>
+    <description>Recent content in Review on Ricardo Sung&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>© Ricardo Sung</copyright>
+    <lastBuildDate>Tue, 31 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://ricardosung.tech/tags/review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2024 Review</title>
+      <link>https://ricardosung.tech/posts/2024-12-31-2024-review/</link>
+      <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://ricardosung.tech/posts/2024-12-31-2024-review/</guid>
+      <description>What I experienced this year In late December 2023, I came up with an idea to improve the published AC-DC converter which was proposed in ISSCC2024.&#xA;After last year&amp;rsquo;s industrial collaboration project, I decided to do something I was interested in. But it was not a good start this year, since my supervisor determined to cut down my stipend from MOP8000 to MOP4000. Why? He said the decrease in my stipend could encourage me put more effort in future works.</description>
+    </item>
+  </channel>
+</rss>

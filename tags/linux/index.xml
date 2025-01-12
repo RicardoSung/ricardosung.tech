@@ -14,7 +14,7 @@
       <link>https://ricardosung.tech/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</link>
       <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
       <guid>https://ricardosung.tech/posts/2021-11-14-build-your-ic-design-evironment-based-on-cadence-ic617-package/</guid>
-      <description>&lt;p&gt;For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about &lt;code&gt;Bandgap&lt;/code&gt;, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.&lt;br /&gt;&#xA;So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine). And if you want to install it on a RM (Real Machine), you can follow the same way, too.&lt;/p&gt;</description>
+      <description>For beginners, you may feel confident after reading papers. I mean I still remember when I first read a paper about Bandgap, what I thought is that the circuit is so easy, which I could make it as soon as the speed of light. However, the real scene was quit different, even thought the paper has clainmed the size of mosfets, capacitors and resistors.&#xA;So, here, I will tell you all how to install Cadence IC617 on a VM (Virtual Machine).</description>
     </item>
   </channel>
 </rss>
