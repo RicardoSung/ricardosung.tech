@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tape-Out on Ricardo Sung&#39;s Blog</title>
-    <link>https://ricardosung.tech/tags/tape-out/</link>
+    <link>http://localhost:1313/tags/tape-out/</link>
     <description>Recent content in Tape-Out on Ricardo Sung&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>© Ricardo Sung</copyright>
     <lastBuildDate>Sat, 14 Sep 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://ricardosung.tech/tags/tape-out/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/tape-out/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to burn your chip</title>
-      <link>https://ricardosung.tech/posts/2024-09-14-how-to-burn-your-chip/</link>
+      <link>http://localhost:1313/posts/2024-09-14-how-to-burn-your-chip/</link>
       <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>https://ricardosung.tech/posts/2024-09-14-how-to-burn-your-chip/</guid>
-      <description>Diodes can&amp;rsquo;t be forwarded. Referring to PDK doc, all regular diodes including LV diodes operating in the forward region are not allowed. As the diodes are forwarded, the parasitic BJT operates in forward-active region. Schottky diodes also have substrate injection if the forward voltage is over 0.6V. As empirical evidence has demonstrated, the subtracted leakeage current is as substantial as the forward current.&#xA;However, if the schottkey diodes are used for MOS bootstrap, well, they can works well.</description>
+      <guid>http://localhost:1313/posts/2024-09-14-how-to-burn-your-chip/</guid>
+      <description>&lt;h2 id=&#34;diodes-cant-be-forwarded&#34;&gt;Diodes can&amp;rsquo;t be forwarded.&lt;/h2&gt;&#xA;&lt;p&gt;Referring to PDK doc, all regular diodes including LV diodes operating in the forward region are not allowed. As the diodes are forwarded, the parasitic BJT operates in forward-active region. Schottky diodes also have substrate injection if the forward voltage is over 0.6V. As empirical evidence has demonstrated, the subtracted leakeage current is as substantial as the forward current.&lt;/p&gt;&#xA;&lt;p&gt;However, if the schottkey diodes are used for MOS bootstrap, well, they can works well. Because the period of forward operation is limited, it can be neglected. Actually, we do need to consider the leakage current for $\mu$W application.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

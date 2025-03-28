@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html><head lang="en">
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Add PDK for Cadence IC617 - Ricardo Sung&#39;s Blog</title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
 Now I will try to install TSMC 180nm RF as an example.
-Download and extract the files The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
-unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK." />
+Download and extract the files
+The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
+unar xxx.part01.rar
+Enter your workspace and install PDK
+
+Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK.
+
+cd /home/ricardo/Download/tsmc180
+perl pdkInstall.pl 
+
+Here 1P6M means 1 Poly Layer with 6 Metal Layer.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool." />
 	<meta property="og:image" content=""/>
-	<meta property="og:url" content="https://ricardosung.tech/posts/2021-11-18-add-pdk-for-cadence-ic617/">
+	<meta property="og:url" content="http://localhost:1313/posts/2021-11-18-add-pdk-for-cadence-ic617/">
   <meta property="og:site_name" content="Ricardo Sung&#39;s Blog">
   <meta property="og:title" content="Add PDK for Cadence IC617">
   <meta property="og:description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
 Now I will try to install TSMC 180nm RF as an example.
 Download and extract the files The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
-unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK.">
-  <meta property="og:locale" content="en-us">
+unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK. cd /home/ricardo/Download/tsmc180 perl pdkInstall.pl Here 1P6M means 1 Poly Layer with 6 Metal Layer.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2021-11-18T00:00:00+00:00">
@@ -23,20 +34,23 @@ unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /h
     <meta property="article:tag" content="English">
     <meta property="article:tag" content="Virtuoso">
     <meta property="article:tag" content="Tutorial">
-<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Add PDK for Cadence IC617">
-<meta name="twitter:description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Add PDK for Cadence IC617">
+  <meta name="twitter:description" content="No PDK no life. If you have used Cadence or other EDAs for PCB design, with symbols and footprints you can draw your schematics and PCB. So does IC617.
 Now I will try to install TSMC 180nm RF as an example.
 Download and extract the files The shared tsmc18rf PDK downloaded from website is divided to several compressed files. If they are .rar type,
-unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK.">
-<script src="https://ricardosung.tech/js/feather.min.js"></script>
+unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /home/ricardo/Project and my PDK folder is /home/ricardo/Project/PDK. cd /home/ricardo/Download/tsmc180 perl pdkInstall.pl Here 1P6M means 1 Poly Layer with 6 Metal Layer.
+2. Convert CDB to OA. That is because Cadence after IC610 only supports PDK of OA. But take it easy. Cadence has a conversion tool.">
+<script src="http://localhost:1313/js/feather.min.js"></script>
 	
 	
-        <link href="https://ricardosung.tech/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+        <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
 	
 
 	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://ricardosung.tech/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://ricardosung.tech/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
 	
 
 	
@@ -85,7 +99,7 @@ unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /h
 <body>
         <div class="content"><header>
 	<div class="main">
-		<a href="https://ricardosung.tech/">Ricardo Sung&#39;s Blog</a>
+		<a href="http://localhost:1313/">Ricardo Sung&#39;s Blog</a>
 	</div>
 	<nav>
 		
@@ -98,7 +112,7 @@ unar xxx.part01.rar Enter your workspace and install PDK Here my workspace is /h
 		<a href="/tags">Tags</a>
 		
 		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-		<script src="https://ricardosung.tech/js/themetoggle.js"></script>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
 		
 	</nav>
 </header>
@@ -186,28 +200,6 @@ And copy the folder to merge the same name folder <code>tsmc18rf</code> to <code
     
   </div>
 </footer>
-
-
-  
-    
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MY34WT4WZ"></script>
-      <script>
-        var doNotTrack = false;
-        if ( false ) {
-          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
-          var doNotTrack = (dnt == "1" || dnt == "yes");
-        }
-        if (!doNotTrack) {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-8MY34WT4WZ');
-        }
-      </script>
-    
-  
-
-
 </div>
     </body>
 </html>
