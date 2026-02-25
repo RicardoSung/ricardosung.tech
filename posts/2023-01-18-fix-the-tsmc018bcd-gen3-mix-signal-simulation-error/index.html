@@ -133,7 +133,7 @@ Yes, I did search the error, but all the &ldquo;solutions&rdquo; I&rsquo;ve test
 <h2 id="the-way-to-fix-the-error">The way to fix the error</h2>
 <p>I asked Lewis for help, and he told me to try <code>Xcelium</code> rather than <code>irun</code> or <code>ncvlog</code>. As soon as I read the e-mail, <code>Xcelium</code> made me confused. But <code>Google.com</code> is a nice tool, right? <a href="http://www.lujun.org.cn/?p=3714">Jun&rsquo;s blog</a> explains it perfectly.<br />
 So in a word, my solution is to change the simulation enviroment. <code>Xcelium</code> is the newest tool, and at the same time, the version of <code>Virtuoso</code> needs changing, too. The correct <code>conf.sh</code> is shown below, which you may change some softeares&rsquo; versions (To see versions of software, plz open <code>Terminal</code> and type in <code>module av</code>.), and in my case, it works well.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>setenv CDS_AUTO_64BIT spectre
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>setenv CDS_AUTO_64BIT spectre
 </span></span><span style="display:flex;"><span>module unload icfb
 </span></span><span style="display:flex;"><span>module unload assura
 </span></span><span style="display:flex;"><span>module unload cadence/mmsim
@@ -185,7 +185,7 @@ So in a word, my solution is to change the simulation enviroment. <code>Xcelium<
 <footer>
   <div style="display:flex"></div>
   <div class="footer-info">
-    2025  © Ricardo Sung | All rights reserved.  
+    2026  © Ricardo Sung | All rights reserved.  
     
   </div>
 </footer>
@@ -194,7 +194,7 @@ So in a word, my solution is to change the simulation enviroment. <code>Xcelium<
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MY34WT4WZ"></script>
       <script>
         var doNotTrack = false;
-        if ( false ) {
+        if ( true ) {
           var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
           var doNotTrack = (dnt == "1" || dnt == "yes");
         }
