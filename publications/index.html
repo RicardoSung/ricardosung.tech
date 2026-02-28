@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Publications - Fei Song (宋飞, Ricardo Sung)</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta property="og:image" content=""/>
+	<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/publications/index.xml" title="Fei Song (宋飞, Ricardo Sung)" />
+	<meta property="og:url" content="http://localhost:1313/publications/">
+  <meta property="og:site_name" content="Fei Song (宋飞, Ricardo Sung)">
+  <meta property="og:title" content="Publications">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Publications">
+<script src="http://localhost:1313/js/feather.min.js"></script>
+	
+	
+        <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+		<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+		</script>
+
+		
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				displayMath: [['$$','$$'], ['\[','\]']],
+				processEscapes: true,
+				processEnvironments: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+				TeX: { equationNumbers: { autoNumber: "AMS" },
+						 extensions: ["AMSmath.js", "AMSsymbols.js"] }
+			}
+		});
+		</script>
+	
+
+	
+	
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+		
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+					renderMathInElement(document.body, {
+							delimiters: [
+									{left: "$$", right: "$$", display: true},
+									{left: "$", right: "$", display: false}
+							]
+					});
+			});
+			</script>
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">Fei Song (宋飞, Ricardo Sung)</a>
+	</div>
+	<nav>
+		
+		<a href="/posts">Posts</a>
+		
+		<a href="/failure">Failure</a>
+		
+		<a href="/resume.pdf">Resume.pdf</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+
+
+
+
+<style>
+.pub-year-group {
+  margin-bottom: 2.5em;
+}
+.pub-year-group h2 {
+  margin-bottom: 0.3em;
+}
+.pub-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pub-entry {
+  border-left: 3px solid var(--bordercl);
+  padding: 0.6em 0 0.6em 1em;
+  margin-bottom: 1.2em;
+}
+.pub-type {
+  font-size: 0.75em;
+  color: grey;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25em;
+}
+.pub-title {
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0 0 0.3em 0;
+}
+.pub-title a {
+  border-bottom: none;
+}
+.pub-title a:hover {
+  background: none;
+  color: var(--maincolor);
+}
+.pub-authors {
+  font-size: 0.88em;
+  color: #666;
+  margin-bottom: 0.2em;
+}
+.pub-venue {
+  font-size: 0.85em;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 0.3em;
+}
+.pub-links a {
+  display: inline-block;
+  font-size: 0.78em;
+  border: 1.5px solid var(--maincolor);
+  border-bottom: 1.5px solid var(--maincolor);
+  padding: 0.05em 0.5em;
+  border-radius: 3px;
+  margin-right: 0.4em;
+  text-decoration: none;
+}
+.pub-links a:hover {
+  background-color: var(--maincolor);
+  color: #fff;
+}
+</style>
+
+<main>
+  <div id="pub-list"></div>
+</main>
+
+<script>
+(function () {
+
+   
+  var BIB_TEXT = "\"@inproceedings{song2020optimization,\\n  title={Optimization of CNN-based garbage classification model},\\n  author={Song, Fei and Zhang, Ying and Zhang, Jing},\\n  booktitle={Proceedings of the 4th international conference on computer science and application engineering},\\n  pages={1--5},\\n  year={2020},\\n  doi=[10.1145/3424978.3425089]\\n}\\n\\n@inproceedings{song202585,\\n  title={An 85-to-230V AC to 3.3-to-4.6 VDc 1.52 W Capacitor-Drop Sigma-Floating-SC AC-DC Converter with 81.3\\\\% Peak Efficiency},\\n  author={Song, Fei and Han, Shousheng and Martins, Rui P and Lu, Yan},\\n  booktitle={2025 IEEE International Solid-State Circuits Conference (ISSCC)},\\n  volume={68},\\n  pages={1--3},\\n  year={2025},\\n  organization={IEEE},\\n  doi={10.1109/ISSCC49661.2025.10904504}\\n}\\n\\n@inproceedings{han2025lego,\\n  title={A LEGO-Like Easy-Stacking Step-Up SC Converter with Ultra-High and Wide VCR Using All Input-Stress-Only Devices},\\n  author={Han, Shousheng and Song, Fei and Zhu, Zhongyao and Wu, Xiaoming and Jiang, Hanjun and Ren, Tianling and Lu, Yan},\\n  booktitle={2025 IEEE Custom Integrated Circuits Conference (CICC)},\\n  pages={1--3},\\n  year={2025},\\n  organization={IEEE},\\n  doi={10.1109/CICC63670.2025.10983382}\\n}\\n\\n@article{song20251,\\n  title={A 1.52-W Capacitor-Drop Sigma-Floating-SC AC/DC Converter for Grid Power to IoT Devices},\\n  author={Song, Fei and Han, Shousheng and Martins, Rui P and Lu, Yan},\\n  journal={IEEE Journal of Solid-State Circuits},\\n  year={2025},\\n  publisher={IEEE},\\n  doi={10.1109/JSSC.2025.3603990}\\n}\"";
+
+   
+  var SELF_NAME = 'Song, Fei';
+
+  var TYPE_LABELS = {
+    article:       'Journal Article',
+    journal:       'Journal Article',
+    inproceedings: 'Conference Paper',
+    conference:    'Conference Paper',
+    phdthesis:     'PhD Thesis',
+    mastersthesis: "Master's Thesis",
+    book:          'Book',
+    techreport:    'Tech Report',
+    misc:          'Preprint',
+    preprint:      'Preprint',
+  };
+
+   
+
+  function extractBraced(s, pos) {
+     
+    var depth = 0, start = pos + 1;
+    while (pos < s.length) {
+      if (s[pos] === '{') depth++;
+      else if (s[pos] === '}') { if (--depth === 0) return [s.slice(start, pos), pos + 1]; }
+      pos++;
+    }
+    return [s.slice(start), s.length];
+  }
+
+  function parseValue(s, pos) {
+    while (pos < s.length && /\s/.test(s[pos])) pos++;
+    if (pos >= s.length) return ['', pos];
+    if (s[pos] === '{') return extractBraced(s, pos);
+    if (s[pos] === '"') {
+      var start = ++pos;
+      while (pos < s.length && s[pos] !== '"') pos++;
+      return [s.slice(start, pos), pos + 1];
+    }
+     
+    var vs = pos;
+    while (pos < s.length && !/[,}\n]/.test(s[pos])) pos++;
+    return [s.slice(vs, pos).trim(), pos];
+  }
+
+  function parseFields(body) {
+    var fields = {}, i = 0, n = body.length;
+    while (i < n) {
+      while (i < n && /[\s,]/.test(body[i])) i++;
+      if (i >= n) break;
+      var ns = i;
+      while (i < n && !/[=\s]/.test(body[i])) i++;
+      var name = body.slice(ns, i).trim().toLowerCase();
+      if (!name) { i++; continue; }
+      while (i < n && body[i] !== '=') i++;
+      i++;
+      var res = parseValue(body, i);
+      i = res[1];
+      fields[name] = res[0].replace(/\s+/g, ' ').trim();
+    }
+    return fields;
+  }
+
+  function cleanLatex(s) {
+    return s
+      .replace(/\\([%$&#_{}])/g, '$1')
+      .replace(/\\[a-zA-Z]+\{([^}]*)\}/g, '$1')
+      .replace(/\\[a-zA-Z]+/g, '')
+      .replace(/[{}]/g, '')
+      .trim();
+  }
+
+  function parseBib(text) {
+    var entries = [], i = 0;
+    while (i < text.length) {
+      var at = text.indexOf('@', i);
+      if (at === -1) break;
+      i = at + 1;
+
+      var ts = i;
+      while (i < text.length && !/[{\s]/.test(text[i])) i++;
+      var etype = text.slice(ts, i).trim().toLowerCase();
+
+      while (i < text.length && text[i] !== '{') i++;
+      if (i >= text.length) break;
+
+      var bodyRes = extractBraced(text, i);
+      var body = bodyRes[0]; i = bodyRes[1];
+
+      if (['comment', 'string', 'preamble'].indexOf(etype) !== -1) continue;
+
+      var comma = body.indexOf(',');
+      if (comma === -1) continue;
+
+      var key    = body.slice(0, comma).trim();
+      var fields = parseFields(body.slice(comma + 1));
+
+      var authorsRaw = fields.author || '';
+      delete fields.author;
+      var authors = authorsRaw
+        ? authorsRaw.split(/\s+and\s+/i).map(function (a) { return a.trim(); }).filter(Boolean)
+        : [];
+
+      var doi = (fields.doi || '').replace(/^[\[{]|[\]}]$/g, '').trim();
+
+      var entry = {
+        key:     key,
+        type:    etype,
+        title:   cleanLatex(fields.title || ''),
+        authors: authors,
+        year:    fields.year || '',
+        doi:     doi,
+      };
+
+      ['journal','booktitle','volume','number','pages',
+       'publisher','organization','url','note'].forEach(function (f) {
+        if (fields[f]) entry[f] = cleanLatex(fields[f]);
+      });
+
+      entries.push(entry);
+    }
+
+    entries.sort(function (a, b) {
+      var yd = (parseInt(b.year) || 0) - (parseInt(a.year) || 0);
+      return yd !== 0 ? yd : a.key.localeCompare(b.key);
+    });
+    return entries;
+  }
+
+   
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function render(entries) {
+    if (!entries.length) {
+      document.getElementById('pub-list').innerHTML =
+        '<p style="color:grey;">No publications found in pub.bib.</p>';
+      return;
+    }
+
+     
+    var yearMap = {}, yearOrder = [];
+    entries.forEach(function (e) {
+      if (!yearMap[e.year]) { yearMap[e.year] = []; yearOrder.push(e.year); }
+      yearMap[e.year].push(e);
+    });
+
+    var html = '';
+    yearOrder.forEach(function (year) {
+      html += '<div class="pub-year-group"><h2>' + esc(year) + '</h2><ul class="pub-list">';
+
+      yearMap[year].forEach(function (e) {
+        var typeLabel = TYPE_LABELS[e.type] || 'Publication';
+
+         
+        var venue = e.journal || e.booktitle || '';
+        if (venue) {
+          if (e.volume) venue += ', vol.\u00a0' + e.volume;
+          if (e.pages)  venue += ', pp.\u00a0' + e.pages.replace(/--/g, '\u2013');
+        }
+
+         
+        var link = e.doi ? 'https://doi.org/' + e.doi : (e.url || '');
+        var titleHtml = link
+          ? '<a href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(e.title) + '</a>'
+          : esc(e.title);
+
+         
+        var authHtml = e.authors.map(function (a, idx) {
+          var text = a.indexOf(SELF_NAME) !== -1 ? '<strong>' + esc(a) + '</strong>' : esc(a);
+          return idx < e.authors.length - 1 ? text + ',' : text;
+        }).join(' ');
+
+         
+        var links = '';
+        if (e.doi) links += '<a href="https://doi.org/' + esc(e.doi) + '" target="_blank" rel="noopener">DOI ↗</a>';
+        if (e.url) links += '<a href="' + esc(e.url) + '" target="_blank" rel="noopener">Link ↗</a>';
+
+        html += '<li class="pub-entry">'
+          + '<div class="pub-type">' + esc(typeLabel) + '</div>'
+          + '<div class="pub-title">' + titleHtml + '</div>'
+          + (authHtml ? '<div class="pub-authors">' + authHtml + '</div>' : '')
+          + (venue    ? '<div class="pub-venue">' + esc(venue) + ', ' + esc(year) + '</div>' : '')
+          + (links    ? '<div class="pub-links">' + links + '</div>' : '')
+          + '</li>';
+      });
+
+      html += '</ul></div>';
+    });
+
+    document.getElementById('pub-list').innerHTML = html;
+  }
+
+   
+  render(parseBib(BIB_TEXT));
+
+})();
+</script>
+
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2026  © Ricardo Sung | All rights reserved.  
+    
+  </div>
+</footer>
+</div>
+    </body>
+</html>
