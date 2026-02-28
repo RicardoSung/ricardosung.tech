@@ -78,7 +78,7 @@
 		
 		<a href="/failure">Failure</a>
 		
-		<a href="/resume.pdf">Resume.pdf</a>
+		<a href="/home/resume.pdf">Resume.pdf</a>
 		
 		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
 		<script src="https://ricardosung.tech/js/themetoggle.js"></script>
@@ -158,6 +158,20 @@
 .sort-btn.active {
   background-color: var(--maincolor);
   color: #fff;
+}
+body.dark-active .sort-btn,
+body.dark-active .tag-btn {
+  border-color: var(--darkMaincolor);
+}
+body.dark-active .tag-btn:hover,
+body.dark-active .sort-btn:hover,
+body.dark-active .tag-btn.active,
+body.dark-active .sort-btn.active {
+  background-color: var(--darkMaincolor);
+  color: black;
+}
+#post-list h1 {
+  line-height: 1.35;
 }
 #no-results {
   color: grey;
@@ -455,6 +469,19 @@
   </div>
 
   <script>
+   
+  (function () {
+    function applyDark() {
+      var isDark = (localStorage.getItem('theme-storage') || 'light') === 'dark';
+      document.body.classList.toggle('dark-active', isDark);
+    }
+    applyDark();
+    var orig = window.setTheme;
+    if (typeof orig === 'function') {
+      window.setTheme = function (mode) { orig(mode); applyDark(); };
+    }
+  })();
+
   (function () {
     var selectedTags = [];
     var sortField = 'date';
