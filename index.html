@@ -345,7 +345,7 @@ Though the road is long and the journey arduous, I shall seek truth both high an
   background: transparent;
   color: inherit;
 }
-.pub-sort-dd {
+.pub-dd-menu {
   position: absolute;
   right: 0;
   top: calc(100% + 4px);
@@ -357,7 +357,7 @@ Though the road is long and the journey arduous, I shall seek truth both high an
   z-index: 200;
   min-width: 110px;
 }
-.pub-sort-dd button {
+.pub-dd-menu button {
   display: block;
   width: 100%;
   text-align: left;
@@ -369,10 +369,10 @@ Though the road is long and the journey arduous, I shall seek truth both high an
   white-space: nowrap;
   color: inherit;
 }
-.pub-sort-dd button:hover {
+.pub-dd-menu button:hover {
   background: rgba(128,128,128,0.12);
 }
-.pub-sort-dd button.pub-sort-active {
+.pub-dd-menu button.pub-dd-active {
   font-weight: 700;
   color: var(--maincolor);
 }
@@ -440,7 +440,7 @@ body.dark-active .pub-more-btn:hover {
   background-color: var(--darkMaincolor);
   color: black;
 }
-body.dark-active .pub-sort-dd button.pub-sort-active {
+body.dark-active .pub-dd-menu button.pub-dd-active {
   color: var(--darkMaincolor);
 }
 </style>
@@ -457,12 +457,24 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
       </button>
     </div>
     <div style="position:relative;">
+      <button class="pub-icon-btn" id="pub-filter-btn"
+              title="Filter" aria-label="Filter publications">
+        <i class="fas fa-filter"></i>
+      </button>
+      <div class="pub-dd-menu" id="pub-filter-menu" style="display:none;">
+        <button data-filter="all" class="pub-dd-active">All</button>
+        <button data-filter="journal">Journal</button>
+        <button data-filter="conference">Conference</button>
+        <button data-filter="book">Book</button>
+      </div>
+    </div>
+    <div style="position:relative;">
       <button class="pub-icon-btn" id="pub-sort-btn"
               title="Sort" aria-label="Sort publications">
         <i class="fas fa-sort"></i>
       </button>
-      <div class="pub-sort-dd" id="pub-sort-menu" style="display:none;">
-        <button data-sort="date-desc" class="pub-sort-active">Date ↓</button>
+      <div class="pub-dd-menu" id="pub-sort-menu" style="display:none;">
+        <button data-sort="date-desc" class="pub-dd-active">Date ↓</button>
         <button data-sort="date-asc">Date ↑</button>
         <button data-sort="title-asc">Title A→Z</button>
         <button data-sort="title-desc">Title Z→A</button>
@@ -478,6 +490,17 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
   var allEntries = [];
   var currentSort = 'date-desc';
   var currentSearch = '';
+  var currentFilter = 'all';
+
+  function inferCategory(type, fields) {
+    var t = (type || '').toLowerCase();
+    if (t === 'article') return 'journal';
+    if (t === 'inproceedings' || t === 'conference' || t === 'proceedings') return 'conference';
+    if (t === 'book' || t === 'inbook' || t === 'incollection') return 'book';
+    if (fields.journal) return 'journal';
+    if (fields.booktitle) return 'conference';
+    return 'book';
+  }
 
    
   function extractBraced(s, pos) {
@@ -530,7 +553,7 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
   }
 
   function parseBib(text) {
-    var entries = [], i = 0;
+    var entries = [], i = 0, order = 0;
     while (i < text.length) {
       var at = text.indexOf('@', i);
       if (at === -1) break;
@@ -552,7 +575,8 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
         ? raw.split(/\s+and\s+/i).map(function (a) { return a.trim(); }).filter(Boolean)
         : [];
       var doi = (fields.doi || '').replace(/^[\[{]|[\]}]$/g, '').trim();
-      var entry = { key: key, type: etype,
+      var entry = { key: key, type: etype, bibOrder: order++,
+        category: inferCategory(etype, fields),
         title: cleanLatex(fields.title || ''), authors: authors,
         year: fields.year || '', doi: doi };
       ['journal','booktitle','volume','number','pages',
@@ -574,10 +598,10 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
   function sortEntries(entries) {
     var arr = entries.slice();
     arr.sort(function (a, b) {
-      if (currentSort === 'date-asc')   return ((parseInt(a.year)||0) - (parseInt(b.year)||0)) || a.key.localeCompare(b.key);
+      if (currentSort === 'date-asc')   return (a.bibOrder - b.bibOrder) || a.key.localeCompare(b.key);
       if (currentSort === 'title-asc')  return a.title.localeCompare(b.title);
       if (currentSort === 'title-desc') return b.title.localeCompare(a.title);
-      return ((parseInt(b.year)||0) - (parseInt(a.year)||0)) || a.key.localeCompare(b.key);
+      return (b.bibOrder - a.bibOrder) || a.key.localeCompare(b.key);
     });
     return arr;
   }
@@ -587,9 +611,11 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
    
   function filterAndRender() {
     var q = currentSearch.toLowerCase().trim();
-    var entries = q
-      ? allEntries.filter(function (e) { return e.searchable.indexOf(q) !== -1; })
-      : allEntries;
+    var entries = allEntries.filter(function (e) {
+      var searchMatch = !q || e.searchable.indexOf(q) !== -1;
+      var filterMatch = currentFilter === 'all' || e.category === currentFilter;
+      return searchMatch && filterMatch;
+    });
     render(sortEntries(entries), false);
   }
 
@@ -668,6 +694,8 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
   function initControls() {
     var searchBtn = document.getElementById('pub-search-btn');
     var searchInp = document.getElementById('pub-search-input');
+    var filterBtn = document.getElementById('pub-filter-btn');
+    var filterMenu = document.getElementById('pub-filter-menu');
     var sortBtn   = document.getElementById('pub-sort-btn');
     var sortMenu  = document.getElementById('pub-sort-menu');
 
@@ -691,10 +719,39 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
       filterAndRender();
     });
 
+    filterBtn.addEventListener('click', function (e) {
+      var open = filterMenu.style.display !== 'none';
+      filterMenu.style.display = open ? 'none' : '';
+      filterBtn.classList.toggle('active', !open);
+      if (!open) {
+        sortMenu.style.display = 'none';
+        sortBtn.classList.remove('active');
+      }
+      e.stopPropagation();
+    });
+
+    filterMenu.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== this && !btn.dataset.filter) btn = btn.parentNode;
+      if (!btn || !btn.dataset || !btn.dataset.filter) return;
+      currentFilter = btn.dataset.filter;
+      this.querySelectorAll('button').forEach(function (b) {
+        b.classList.toggle('pub-dd-active', b === btn);
+      });
+      filterMenu.style.display = 'none';
+      filterBtn.classList.remove('active');
+      filterAndRender();
+      e.stopPropagation();
+    });
+
     sortBtn.addEventListener('click', function (e) {
       var open = sortMenu.style.display !== 'none';
       sortMenu.style.display = open ? 'none' : '';
       sortBtn.classList.toggle('active', !open);
+      if (!open) {
+        filterMenu.style.display = 'none';
+        filterBtn.classList.remove('active');
+      }
       e.stopPropagation();
     });
 
@@ -704,7 +761,7 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
       if (!btn || !btn.dataset || !btn.dataset.sort) return;
       currentSort = btn.dataset.sort;
       this.querySelectorAll('button').forEach(function (b) {
-        b.classList.toggle('pub-sort-active', b === btn);
+        b.classList.toggle('pub-dd-active', b === btn);
       });
       sortMenu.style.display = 'none';
       sortBtn.classList.remove('active');
@@ -713,6 +770,10 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
     });
 
     document.addEventListener('click', function () {
+      if (filterMenu.style.display !== 'none') {
+        filterMenu.style.display = 'none';
+        filterBtn.classList.remove('active');
+      }
       if (sortMenu.style.display !== 'none') {
         sortMenu.style.display = 'none';
         sortBtn.classList.remove('active');
@@ -981,7 +1042,7 @@ body.dark-active .pub-sort-dd button.pub-sort-active {
     
   </div>
   <div class="footer-info" style="margin-left:auto;">
-    Last Updated: 2026-03-31
+    Last Updated: 2026-04-01
   </div>
 </footer>
 
