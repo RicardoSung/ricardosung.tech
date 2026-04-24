@@ -25,6 +25,14 @@
     return document.getElementById("dark-mode-toggle");
   }
 
+  function getThemeIcon(icon) {
+    if (icon === "sun") {
+      return '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>';
+    }
+
+    return '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.99 12.42A8.5 8.5 0 1 1 11.58 3.01 6.5 6.5 0 0 0 20.99 12.42z"></path></svg>';
+  }
+
   function updateToggle(mode) {
     var toggle = getToggle();
     var isDark = mode === "dark";
@@ -33,7 +41,10 @@
       return;
     }
 
-    toggle.textContent = isDark ? "Light" : "Dark";
+    toggle.innerHTML = getThemeIcon(isDark ? "sun" : "moon");
+    toggle.style.display = "inline-flex";
+    toggle.style.alignItems = "center";
+    toggle.style.verticalAlign = "middle";
     toggle.style.cursor = "pointer";
     toggle.setAttribute("role", "button");
     toggle.setAttribute("tabindex", "0");
