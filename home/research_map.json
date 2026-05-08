@@ -1,0 +1,56 @@
+{
+  "left_area": {
+    "label": "Power Management Integrated Circuit",
+    "sublabel": "Integrated Circuit",
+    "color": "#5b9e6e"
+  },
+  "right_area": {
+    "label": "System-on-Chip",
+    "sublabel": "Architecture & Design",
+    "color": "#5b7db1"
+  },
+  "papers": [
+    {
+      "id": "PAPER-1",
+      "title": "Your paper subtitle here",
+      "zone": "left",
+      "angle": 200,
+      "url": ""
+    },
+    {
+      "id": "PAPER-2",
+      "title": "Your paper subtitle here",
+      "zone": "left",
+      "angle": 160,
+      "url": ""
+    },
+    {
+      "id": "PAPER-3",
+      "title": "Your paper subtitle here",
+      "zone": "overlap",
+      "angle": 90,
+      "url": ""
+    },
+    {
+      "id": "PAPER-4",
+      "title": "Your paper subtitle here",
+      "zone": "overlap",
+      "angle": 270,
+      "url": ""
+    },
+    {
+      "id": "PAPER-5",
+      "title": "Your paper subtitle here",
+      "zone": "right",
+      "angle": 340,
+      "url": ""
+    },
+    {
+      "id": "PAPER-6",
+      "title": "Your paper subtitle here",
+      "zone": "right",
+      "angle": 20,
+      "url": ""
+    }
+  ]
+}
