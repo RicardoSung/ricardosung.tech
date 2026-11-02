@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head lang="en">
+<html lang="en"><head lang="en">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Posts - Fei Song (宋飞, Ricardo Sung)</title><link rel="icon" type="image/svg+xml" href=/favicon.svg /><meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
@@ -20,8 +20,7 @@
 
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="https://ricardosung.tech/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://ricardosung.tech/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
-	
+
 
 	
 	
@@ -65,24 +64,28 @@
 	
 
 	
+	<link rel="stylesheet" href="/css/paper.min.1ef5b3ce5cf88379db7c466016649697040e1f5bf67f335bc1842e005485963d.css">
+	
+
+	
 </head>
-<body>
-        <div class="content"><header>
-	<div class="main">
-		<a href="https://ricardosung.tech/">Fei Song (宋飞, Ricardo Sung)</a>
-	</div>
-	<nav>
-		
-		<a href="/posts">Posts</a>
-		
-		<a href="/failure">Failure</a>
-		
-		<a href="/home/resume.pdf">Resume.pdf</a>
-		
-		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-		<script src="https://ricardosung.tech/js/themetoggle.js"></script>
-		
-	</nav>
+<body class="paper-site">
+        <div class="content site-sheet" id="site-content"><header>
+  <div class="main">
+    <span class="site-name">Fei Song (宋飞, Ricardo Sung)</span>
+  </div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <span class="site-nav-links"><a href="/">Home</a>
+      <a href="/posts" aria-current="page">Posts</a>
+      <a href="/failure">Failure</a>
+      <a href="/home/resume.pdf">Resume.pdf</a>
+      
+    </span>
+    
+      | <button id="dark-mode-toggle" type="button" onclick="toggleTheme()" aria-label="Switch to dark mode"></button>
+      <script src="/js/themetoggle.js"></script>
+    
+  </nav>
 </header>
 
 
@@ -120,16 +123,7 @@
   display: block;
   width: 100%;
   text-align: left;
-  background: none;
-  border: 2px solid var(--maincolor);
-  color: inherit;
-  cursor: pointer;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 0.82em;
-  padding: 0.18em 0.6em;
-  border-radius: 3px;
-  margin-bottom: 0.35em;
-  box-sizing: border-box;
+  margin-bottom: 0.4em;
 }
 .filter-section {
   display: flex;
@@ -142,32 +136,6 @@
 }
 .tag-btn {
   display: inline-block;
-  background: none;
-  border: 2px solid var(--maincolor);
-  color: inherit;
-  cursor: pointer;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 0.82em;
-  padding: 0.18em 0.6em;
-  border-radius: 3px;
-}
-.tag-btn:hover,
-.sort-btn:hover,
-.tag-btn.active,
-.sort-btn.active {
-  background-color: var(--maincolor);
-  color: #fff;
-}
-body.dark-active .sort-btn,
-body.dark-active .tag-btn {
-  border-color: var(--darkMaincolor);
-}
-body.dark-active .tag-btn:hover,
-body.dark-active .sort-btn:hover,
-body.dark-active .tag-btn.active,
-body.dark-active .sort-btn.active {
-  background-color: var(--darkMaincolor);
-  color: black;
 }
 #post-list h1 {
   line-height: 1.35;
@@ -299,7 +267,7 @@ body.dark-active .sort-btn.active {
     
     <div id="post-list">
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Chinese&#34;]"
         data-date="1782518400"
         data-title="为什么来美国求学：一切的开始">
@@ -312,7 +280,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Review&#34;,&#34;Chinese&#34;]"
         data-date="1778544000"
         data-title="2026实习小记">
@@ -325,7 +293,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Summary&#34;,&#34;Tape-out&#34;]"
         data-date="1726272000"
         data-title="how to burn your chip">
@@ -338,7 +306,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Chinese&#34;,&#34;Cycling&#34;]"
         data-date="1680134400"
         data-title="国产小众公路车的选择">
@@ -351,7 +319,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Chinese&#34;,&#34;Cycling&#34;]"
         data-date="1680048000"
         data-title="自组公路车指北">
@@ -364,7 +332,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Chinese&#34;,&#34;Travel&#34;]"
         data-date="1674259200"
         data-title="travel tips for macau sar">
@@ -377,7 +345,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;IC Design&#34;,&#34;English&#34;,&#34;Virtuoso&#34;,&#34;Tutorial&#34;]"
         data-date="1674000000"
         data-title="fix the tsmc018bcd gen3 mix-signal simulation error">
@@ -390,7 +358,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Research&#34;,&#34;English&#34;,&#34;Tutorial&#34;]"
         data-date="1673740800"
         data-title="my research process">
@@ -403,7 +371,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;体验报告&#34;,&#34;Chinese&#34;]"
         data-date="1637625600"
         data-title="oneplus watch 体验报告">
@@ -416,7 +384,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;IC Design&#34;,&#34;English&#34;,&#34;Virtuoso&#34;,&#34;Tutorial&#34;]"
         data-date="1637193600"
         data-title="add pdk for cadence ic617">
@@ -429,7 +397,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;Virtuoso&#34;,&#34;IC Design&#34;,&#34;English&#34;,&#34;Tutorial&#34;]"
         data-date="1637107200"
         data-title="to improve simulation environment">
@@ -442,7 +410,7 @@ body.dark-active .sort-btn.active {
         </div>
       </section>
       
-      <section class="list-item"
+      <section class="list-item paper-post"
         data-tags="[&#34;IC Design&#34;,&#34;English&#34;,&#34;Virtuoso&#34;,&#34;Linux&#34;,&#34;Tutorial&#34;]"
         data-date="1636848000"
         data-title="build your ic design evironment based on cadence ic617 package">
@@ -459,44 +427,44 @@ body.dark-active .sort-btn.active {
     </div>
 
     
-    <aside class="controls-sidebar">
+    <aside class="controls-sidebar" aria-label="Post sorting and filters">
 
       <div class="control-section">
         <span class="control-label">Sort</span>
-        <button class="sort-btn active" id="sort-date">Date ↓</button>
-        <button class="sort-btn" id="sort-name">Name A→Z</button>
+        <button class="sort-btn active" id="sort-date" type="button" aria-pressed="true">Date ↓</button>
+        <button class="sort-btn" id="sort-name" type="button" aria-pressed="false">Name A→Z</button>
       </div>
 
       
       <div class="control-section filter-section">
         <span class="control-label">Filter</span>
-        <button class="tag-btn active" data-tag="">All</button>
+        <button class="tag-btn active" data-tag="" type="button" aria-pressed="true">All</button>
         
-        <button class="tag-btn" data-tag="Chinese">Chinese</button>
+        <button class="tag-btn" data-tag="Chinese" type="button" aria-pressed="false">Chinese</button>
         
-        <button class="tag-btn" data-tag="Cycling">Cycling</button>
+        <button class="tag-btn" data-tag="Cycling" type="button" aria-pressed="false">Cycling</button>
         
-        <button class="tag-btn" data-tag="English">English</button>
+        <button class="tag-btn" data-tag="English" type="button" aria-pressed="false">English</button>
         
-        <button class="tag-btn" data-tag="IC Design">IC Design</button>
+        <button class="tag-btn" data-tag="IC Design" type="button" aria-pressed="false">IC Design</button>
         
-        <button class="tag-btn" data-tag="Linux">Linux</button>
+        <button class="tag-btn" data-tag="Linux" type="button" aria-pressed="false">Linux</button>
         
-        <button class="tag-btn" data-tag="Research">Research</button>
+        <button class="tag-btn" data-tag="Research" type="button" aria-pressed="false">Research</button>
         
-        <button class="tag-btn" data-tag="Review">Review</button>
+        <button class="tag-btn" data-tag="Review" type="button" aria-pressed="false">Review</button>
         
-        <button class="tag-btn" data-tag="Summary">Summary</button>
+        <button class="tag-btn" data-tag="Summary" type="button" aria-pressed="false">Summary</button>
         
-        <button class="tag-btn" data-tag="Tape-out">Tape-out</button>
+        <button class="tag-btn" data-tag="Tape-out" type="button" aria-pressed="false">Tape-out</button>
         
-        <button class="tag-btn" data-tag="Travel">Travel</button>
+        <button class="tag-btn" data-tag="Travel" type="button" aria-pressed="false">Travel</button>
         
-        <button class="tag-btn" data-tag="Tutorial">Tutorial</button>
+        <button class="tag-btn" data-tag="Tutorial" type="button" aria-pressed="false">Tutorial</button>
         
-        <button class="tag-btn" data-tag="Virtuoso">Virtuoso</button>
+        <button class="tag-btn" data-tag="Virtuoso" type="button" aria-pressed="false">Virtuoso</button>
         
-        <button class="tag-btn" data-tag="体验报告">体验报告</button>
+        <button class="tag-btn" data-tag="体验报告" type="button" aria-pressed="false">体验报告</button>
         
       </div>
       
@@ -506,19 +474,6 @@ body.dark-active .sort-btn.active {
   </div>
 
   <script>
-   
-  (function () {
-    function applyDark() {
-      var isDark = (localStorage.getItem('theme-storage') || 'light') === 'dark';
-      document.body.classList.toggle('dark-active', isDark);
-    }
-    applyDark();
-    var orig = window.setTheme;
-    if (typeof orig === 'function') {
-      window.setTheme = function (mode) { orig(mode); applyDark(); };
-    }
-  })();
-
   (function () {
     var selectedTags = [];
     var sortField = 'date';
@@ -641,6 +596,9 @@ body.dark-active .sort-btn.active {
       });
 
       document.getElementById('no-results').style.display = visible === 0 ? '' : 'none';
+      document.querySelectorAll('.sort-btn, .tag-btn').forEach(function (button) {
+        button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+      });
     }
   })();
   </script>
@@ -648,13 +606,14 @@ body.dark-active .sort-btn.active {
 </main>
 
 <footer>
+  
   <div style="display:flex"></div>
   <div class="footer-info">
     2026  © Ricardo Sung | All rights reserved. 
     
   </div>
   <div class="footer-info" style="margin-left:auto;">
-    Last Updated: 2026-08-28
+    Last Updated: 2026-11-02
   </div>
 </footer>
 

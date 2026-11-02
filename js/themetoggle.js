@@ -1,5 +1,5 @@
 (function () {
-  var storageKey = "theme-storage";
+  var storageKey = "paper-theme";
 
   function getStoredTheme() {
     try {
@@ -57,6 +57,8 @@
     var nextMode = mode === "dark" ? "dark" : "light";
     var darkStyle = getDarkStyle();
 
+    document.documentElement.dataset.theme = nextMode;
+
     if (darkStyle) {
       darkStyle.disabled = nextMode !== "dark";
     }
@@ -98,16 +100,14 @@
 
     toggle.dataset.themeToggleBound = "true";
     toggle.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" || event.key === " ") {
+      if (toggle.tagName !== "BUTTON" && (event.key === "Enter" || event.key === " ")) {
         event.preventDefault();
         window.toggleTheme();
       }
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initThemeToggle);
-  } else {
-    initThemeToggle();
-  }
+  // The script follows the toggle in the header, so apply the saved theme
+  // immediately, before the rest of the page paints.
+  initThemeToggle();
 }());

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head lang="en">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Fei Song (宋飞, Ricardo Sung) | Home </title><link rel="icon" type="image/svg+xml" href=/favicon.svg /><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,8 +31,7 @@ Email: Email hidden without JavaScript
 
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="https://ricardosung.tech/css/main.35f1e4fceecf7306d27a892c68391916942e030e9dbb302dabe793ef93f2969d.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://ricardosung.tech/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
-	
+
 
 	
 	
@@ -76,33 +75,126 @@ Email: Email hidden without JavaScript
 	
 
 	
+	<link rel="stylesheet" href="/css/paper.min.1ef5b3ce5cf88379db7c466016649697040e1f5bf67f335bc1842e005485963d.css">
+	
+	
+	<link rel="stylesheet" href="/css/mac-intro.min.54fab377d18fb25b130da8db501087d6f810b4b948f4bd85350484d8b8182c5a.css">
+	<script>
+  (function () {
+    var root = document.documentElement;
+    
+    try {
+      root.dataset.theme = localStorage.getItem('paper-theme') === 'dark' ? 'dark' : 'light';
+    } catch (error) { root.dataset.theme = 'light'; }
+    try {
+      var navigation = performance.getEntriesByType('navigation')[0];
+      var isReload = navigation && navigation.type === 'reload';
+      if ((!isReload && location.hash) || (navigation && navigation.type === 'back_forward') ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      root.classList.add('intro-pending');
+      
+      window.__macIntroFallback = setTimeout(function () {
+        root.classList.remove('intro-pending', 'intro-playing');
+        var intro = document.getElementById('mac-intro');
+        var page = document.getElementById('site-content');
+        if (intro) intro.hidden = true;
+        if (page) { page.inert = false; page.removeAttribute('aria-hidden'); }
+      }, 20000);
+    } catch (error) {   }
+  }());
+</script>
+
+	<script defer src="/js/home-sections.js"></script>
+	<script defer src="/js/mac-intro.js"></script>
+	
+
+	
+	<meta name="generator" content="Hugo 0.168.0">
 </head>
 
-	<body>
-		<div class="content">
+	<body class="paper-site home-page">
+		<section class="mac-intro" id="mac-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
+  <div class="intro-topline">
+    <span id="intro-title">FEI SONG <span aria-hidden="true">/</span> PERSONAL ARCHIVE</span>
+    <button class="intro-skip" id="intro-skip" type="button">Skip intro <span aria-hidden="true">↗</span></button>
+  </div>
+  <div class="mac-camera" id="mac-camera" aria-hidden="true">
+    <div class="mac-stage">
+      <div class="mac-computer" id="mac-computer">
+        <div class="mac-ground"></div>
+        <div class="mac-face mac-back"></div>
+        <div class="mac-face mac-left"><span class="mac-handle"></span><span class="mac-vents"></span></div>
+        <div class="mac-face mac-right"><span class="mac-vents"></span></div>
+        <div class="mac-face mac-top"></div>
+        <div class="mac-face mac-bottom"></div>
+        <div class="mac-face mac-front">
+          <div class="crt-bezel">
+            <div class="mac-screen" id="mac-screen">
+              <div class="mac-idle">
+                <svg class="happy-mac" viewBox="0 0 34 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 2H29V33H5V2Z M2 34H32V40H2V34Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M9 7H25V23H9V7Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 11V14 M21 11V14 M13 18H20 M13 29H17 M22 29H26" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>Insert a disk to begin.</span>
+              </div>
+              <pre class="mac-boot" id="mac-boot"></pre>
+              <div class="mac-desktop">
+                <div class="desktop-menubar"><b>◆</b> File &nbsp; Edit &nbsp; View &nbsp; Special</div>
+                <div class="desktop-window">
+                  <div class="desktop-window-title">Fei Song</div>
+                  <div class="desktop-document"><span class="document-icon"></span>Home</div>
+                  <span class="desktop-welcome">Welcome to my corner of the web.</span>
+                </div>
+              </div>
+              <div class="crt-scanlines"></div>
+            </div>
+          </div>
+          <div class="mac-badge"><i></i><span>Macintosh</span></div>
+          <div class="mac-drive"><span></span></div>
+          <span class="mac-drive-light"></span>
+          <span class="mac-engraving">FEI'S PERSONAL ARCHIVE</span>
+        </div>
+        <div class="mac-floppy" id="mac-floppy">
+          <span class="floppy-shutter"></span>
+          <span class="floppy-label">FEI SONG<br><b>HOME.DISK</b></span>
+          <span class="floppy-notch"></span>
+        </div>
+        <div class="mac-keyboard"><span></span></div>
+        <div class="mac-mouse"><span></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="intro-caption">
+    <span class="intro-step" id="intro-step" role="status" aria-live="polite">01 / STARTUP</span>
+    <span class="intro-progress" aria-hidden="true"><i id="intro-progress"></i></span>
+    <span class="intro-footnote">A small beginning. A world of ideas.</span>
+  </div>
+</section>
+
+		<div class="content site-sheet" id="site-content" tabindex="-1">
 			<header>
-	<div class="main">
-		
-		<a href="https://ricardosung.tech/">Fei Song (宋飞, Ricardo Sung)</a>
-	</div>
-	<nav>
-		
-		<a href="/posts">Posts</a>
-		
-		<a href="/failure">Failure</a>
-		
-		<a href="/home/resume.pdf">Resume.pdf</a>
-		
-		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-		<script src="https://ricardosung.tech/js/themetoggle.js"></script>
-		
-	</nav>
+  <div class="main">
+    <span class="site-name">Fei Song (宋飞, Ricardo Sung)</span>
+  </div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <span class="site-nav-links"><a href="/" aria-current="page">Home</a>
+      <a href="/posts">Posts</a>
+      <a href="/failure">Failure</a>
+      <a href="/home/resume.pdf">Resume.pdf</a>
+      
+    </span>
+    
+      | <button id="dark-mode-toggle" type="button" onclick="toggleTheme()" aria-label="Switch to dark mode"></button>
+      <script src="/js/themetoggle.js"></script>
+    
+  </nav>
 </header>
+
 
 			
 			<section class="body">
 				<head>
-	<meta name="generator" content="Hugo 0.165.0">
 	<script src="https://kit.fontawesome.com/be82e3287f.js" crossorigin="anonymous"></script>
 	 <style>
         @font-face {
@@ -189,7 +281,7 @@ Though the road is long and the journey arduous, I shall seek truth both high an
 			question.textContent = a + " + " + b + " =";
 			input.value = "";
 			panel.style.display = "inline-flex";
-			input.focus();
+			if (!document.documentElement.classList.contains("intro-pending")) input.focus();
 		}
 
 		function revealEmail() {
@@ -223,7 +315,9 @@ Though the road is long and the journey arduous, I shall seek truth both high an
 		openChallenge();
 	}());
 </script>
-<h1 id="news">News</h1>
+<section class="paper-section" aria-label="News">
+  <div class="paper-section-content">
+    <h1 id="news">News</h1>
 <ul style="">
 	<li>The paper, titled "A LEGO-Like Easy-Stacking SC Boost Converter", was accepted by JSSC 2026. Dr. Han, cheers!
 	</li>
@@ -242,7 +336,12 @@ Though the road is long and the journey arduous, I shall seek truth both high an
 	</li> -->
 </ul>
 
-<h1 id="education">Education</h1>
+  </div>
+</section>
+
+<section class="paper-section" aria-label="Education">
+  <div class="paper-section-content">
+    <h1 id="education">Education</h1>
 <div style="display:flex;">
 	<div style="width:74%" align="left">
 	<a href="https://www.columbia.edu/"><b><i>Columbia University in the City of New York, NY, USA</i></b></a>
@@ -286,7 +385,12 @@ Though the road is long and the journey arduous, I shall seek truth both high an
 	</div>
 </div>
 
-<h1 id="work-experience">Work Experience</h1>
+  </div>
+</section>
+
+<section class="paper-section" aria-label="Work experience">
+  <div class="paper-section-content">
+    <h1 id="work-experience">Work Experience</h1>
 <div style="display:flex;">
 	<div style="width:74%" align="left">
 	<a href="https://columbia.edu/"><b><i>Columbia University in the City of New York, NY, USA</i></b></a>
@@ -334,8 +438,9 @@ Though the road is long and the journey arduous, I shall seek truth both high an
 	</div>
 </div>
 
-<br>
-<br>
+  </div>
+</section>
+
 <style>
 .pub-heading-row {
   display: flex;
@@ -428,32 +533,9 @@ Though the road is long and the journey arduous, I shall seek truth both high an
   background-color: var(--maincolor);
   color: #fff;
 }
-.pub-more-btn {
-  background: none;
-  border: 1.5px solid var(--maincolor);
-  color: var(--maincolor);
-  padding: 0.3em 1.2em;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9em;
-  margin-top: 0.4em;
-}
-.pub-more-btn:hover {
-  background: var(--maincolor);
-  color: #fff;
-}
-.pub-fade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--bg, #fff));
-  pointer-events: none;
-}
  
 body.dark-active {
-  --bg: #202124;
+  --bg: var(--paper);
 }
 body.dark-active .pub-links a {
   border-color: var(--darkMaincolor);
@@ -462,19 +544,13 @@ body.dark-active .pub-links a:hover {
   background-color: var(--darkMaincolor);
   color: black;
 }
-body.dark-active .pub-more-btn {
-  border-color: var(--darkMaincolor);
-  color: var(--darkMaincolor);
-}
-body.dark-active .pub-more-btn:hover {
-  background-color: var(--darkMaincolor);
-  color: black;
-}
 body.dark-active .pub-dd-menu button.pub-dd-active {
   color: var(--darkMaincolor);
 }
 </style>
 
+<section class="paper-section" aria-labelledby="publication">
+<div class="paper-section-content">
 <div class="pub-heading-row">
   <h1 id="publication">Publications</h1>
   <div class="pub-ctrl-group">
@@ -514,6 +590,8 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
 </div>
 
 <div id="pub-home-list"><em style="color:grey;">Loading publications…</em></div>
+</div>
+</section>
 
 <script>
 (function () {
@@ -636,8 +714,6 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
     return arr;
   }
 
-  var LIMIT = 4;
-
    
   function filterAndRender() {
     var q = currentSearch.toLowerCase().trim();
@@ -646,7 +722,7 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
       var filterMatch = currentFilter === 'all' || e.category === currentFilter;
       return searchMatch && filterMatch;
     });
-    render(sortEntries(entries), false);
+    render(sortEntries(entries));
   }
 
    
@@ -682,42 +758,15 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
     return items;
   }
 
-  function render(entries, showAll) {
+  function render(entries) {
     var container = document.getElementById('pub-home-list');
     if (!container) return;
     if (!entries.length) {
       container.innerHTML = '<p style="color:grey;">No publications found.</p>';
       return;
     }
-    var n = entries.length;
-    var toShow = (showAll || n <= LIMIT) ? entries : entries.slice(0, LIMIT);
-    var ol = '<ol reversed start="' + n + '" style="padding-left:1.2em;">' + buildItems(toShow) + '</ol>';
-    var html;
-    if (!showAll && n > LIMIT) {
-      html = '<div style="position:relative;">' + ol + '<div class="pub-fade"></div></div>'
-        + '<div style="text-align:center; margin-top:0.3em;">'
-        + '<button class="pub-more-btn" id="pub-read-more">Read more (' + (n - LIMIT) + ' more) ↓</button>'
-        + '</div>';
-    } else {
-      html = ol;
-      if (n > LIMIT) {
-        html += '<div style="text-align:center; margin-top:0.3em;">'
-          + '<button class="pub-more-btn" id="pub-read-less">Read less ↑</button>'
-          + '</div>';
-      }
-    }
-    container.innerHTML = html;
-    if (!showAll && n > LIMIT) {
-      document.getElementById('pub-read-more').addEventListener('click', function () {
-        render(entries, true);
-      });
-    } else if (showAll && n > LIMIT) {
-      document.getElementById('pub-read-less').addEventListener('click', function () {
-        render(entries, false);
-        var h = document.getElementById('publication');
-        if (h) h.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
+    container.innerHTML = '<ol reversed start="' + entries.length + '" style="padding-left:1.2em;">'
+      + buildItems(entries) + '</ol>';
   }
 
    
@@ -825,20 +874,11 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
     });
 })();
 
-(function () {
-  function applyDark() {
-    var isDark = (localStorage.getItem('theme-storage') || 'light') === 'dark';
-    document.body.classList.toggle('dark-active', isDark);
-  }
-  applyDark();
-  var orig = window.setTheme;
-  if (typeof orig === 'function') {
-    window.setTheme = function (mode) { orig(mode); applyDark(); };
-  }
-})();
 </script>
 
-<h1 id="projects">Projects</h1>
+<section class="paper-section" aria-label="Projects">
+  <div class="paper-section-content">
+    <h1 id="projects">Projects</h1>
 <div id="proj-wrap" style="position:relative;"><ol reversed id="proj-ol">
 	<li>
 		<div style="display:flex;">
@@ -1026,7 +1066,12 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
 })();
 </script>
 
-<h1 id="academic-service-peer-review">Academic Service (Peer Review)</h1>
+  </div>
+</section>
+
+<section class="paper-section" aria-label="Service">
+  <div class="paper-section-content">
+    <h1 id="academic-service-peer-review">Academic Service (Peer Review)</h1>
 <ul>
 <li>IEEE Transactions on Circuits and Systems I: Regular Papers</li>
 <li>IEEE Journal of the Electron Devices Society</li>
@@ -1035,7 +1080,12 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
 <li>Engineering Reports</li>
 </ul>
 
-<h1 id="honors--awards">Honors &amp; Awards</h1>
+  </div>
+</section>
+
+<section class="paper-section" aria-label="Honors">
+  <div class="paper-section-content">
+    <h1 id="honors--awards">Honors &amp; Awards</h1>
 <ol reversed>
 	<li>First Prize of the National University Student Integrated Circuit Innovation and Entrepreneurship Competition in Southwest Devision, 2021.</li>
 	<li>Second Prize of the National University Student's Opt-Sci-Tech Competition, 2021. </li>
@@ -1046,7 +1096,12 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
 	</li>
 </ol>
 
-<h1 id="leadership-experience">Leadership Experience</h1>
+  </div>
+</section>
+
+<section class="paper-section" aria-label="Leadership">
+  <div class="paper-section-content">
+    <h1 id="leadership-experience">Leadership Experience</h1>
 <ul style="list-style-type: none; padding-left:0;">
 	<li>
 		<div style="display:flex;">
@@ -1071,17 +1126,23 @@ body.dark-active .pub-dd-menu button.pub-dd-active {
 	</li>
 </ul>
 
+  </div>
+</section>
+
 
 			</section>
 
 			<footer>
+  
+  <button class="intro-replay" type="button" data-replay-intro hidden>↻ Replay the opening</button>
+  
   <div style="display:flex"></div>
   <div class="footer-info">
     2026  © Ricardo Sung | All rights reserved. 
     
   </div>
   <div class="footer-info" style="margin-left:auto;">
-    Last Updated: 2026-08-28
+    Last Updated: 2026-11-02
   </div>
 </footer>
 
